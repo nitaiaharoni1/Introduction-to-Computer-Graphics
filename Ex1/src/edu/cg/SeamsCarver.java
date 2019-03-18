@@ -50,7 +50,7 @@ public class SeamsCarver extends ImageProcessor {
         //Todo: change this section
         this.maskAfterSeamCarving = null;
         this.logger.log("begins preliminary calculations.");
-        if (this.numOfSeams > 0) {
+/*        if (this.numOfSeams > 0) {
             this.logger.log("initializes some additional fields.");
             this.kSeams = 0;
             this.M = new long[inHeight][inWidth];
@@ -60,7 +60,7 @@ public class SeamsCarver extends ImageProcessor {
             this.initXIndices();
             this.shiftedMask = this.duplicateWorkingMask();
             this.findSeams();
-        }
+        }*/
         //Todo: until here
 
         this.logger.log("preliminary calculations were ended.");
@@ -105,7 +105,7 @@ public class SeamsCarver extends ImageProcessor {
         });
     }
 
-    private int[][] calcE() {
+/*    private int[][] calcE() {
         int[][] E = new int[inHeight][inWidth];
         forEach((y, x) -> {
             Color c = new Color(workingImage.getRGB(x, y));
@@ -114,5 +114,5 @@ public class SeamsCarver extends ImageProcessor {
             ans.setRGB(x, y, color.getRGB());
         });
         return null;
-    }
+    }*/
 }
