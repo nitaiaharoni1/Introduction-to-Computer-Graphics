@@ -12,30 +12,29 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     // MARK: Fields
-    private int numOfSeams;
+    private int seamsNum;
     private ResizeOperation resizeOp;
     boolean[][] imageMask;
-    // TODO: Add some additional fields
-
     //Todo: change names and order
     private int[][] grey;
-    private long[][] M;
+    private long[][] M = new long[inHeight][inWidth];
     private int[][] minPaths;
     private int[][] xIndices;
     private boolean[][] shiftedMask;
     private int[][] seams;
-    private int kSeams;
+    private int k = 0;
     private boolean[][] maskAfterSeamCarving;
+    //Todo: untill here
 
     public SeamsCarver(Logger logger, BufferedImage workingImage, int outWidth, RGBWeights rgbWeights,
                        boolean[][] imageMask) {
         super((s) -> logger.log("Seam carving: " + s), workingImage, rgbWeights, outWidth, workingImage.getHeight());
 
-        numOfSeams = Math.abs(outWidth - inWidth);
+        seamsNum = Math.abs(outWidth - inWidth);
         this.imageMask = imageMask;
         if (inWidth < 2 | inHeight < 2)
             throw new RuntimeException("Can not apply seam carving: workingImage is too small");
-        if (numOfSeams > inWidth / 2)
+        if (seamsNum > inWidth / 2)
             throw new RuntimeException("Can not apply seam carving: too many seams...");
         // Setting resizeOp by with the appropriate method reference
         if (outWidth > inWidth)
@@ -48,22 +47,25 @@ public class SeamsCarver extends ImageProcessor {
         // TODO: You may initialize your additional fields and apply some preliminary calculations.
 
         //Todo: change this section
-        this.maskAfterSeamCarving = null;
-        this.logger.log("begins preliminary calculations.");
-/*        if (this.numOfSeams > 0) {
-            this.logger.log("initializes some additional fields.");
-            this.kSeams = 0;
-            this.M = new long[inHeight][inWidth];
-            this.minPaths = new int[inHeight][inWidth];
-            this.seams = new int[numOfSeams][inHeight];
+        maskAfterSeamCarving = null;
+        logger.log("begins preliminary calculations.");
+        if (seamsNum > 0) {
+            logger.log("initializes some additional fields.");
+            minPaths = new int[inHeight][inWidth];
+            seams = new int[seamsNum][inHeight];
             transformToGrey();
-            this.initXIndices();
-            this.shiftedMask = this.duplicateWorkingMask();
-            this.findSeams();
-        }*/
-        //Todo: until here
+            //initXIndices();
+            //shiftedMask = duplicateWorkingMask();
+            for (int i = 0; i < seamsNum; i++) {
+                calcM();
+                logger.log("finds seam no: " + (k + 1) + ".");
+                removeSeam();
+            }
+//while (++k < seamsNum);        }
+            //Todo: until here
 
-        this.logger.log("preliminary calculations were ended.");
+            logger.log("preliminary calculations were ended.");
+        }
     }
 
     public BufferedImage resize() {
@@ -99,20 +101,140 @@ public class SeamsCarver extends ImageProcessor {
 
     private void transformToGrey() {
         BufferedImage gr = greyscale();
-        this.grey = new int[inHeight][inWidth];
+        grey = new int[inHeight][inWidth];
         forEach((y, x) -> {
-            this.grey[y][x] = new Color(gr.getRGB(x, y)).getGreen();
+            grey[y][x] = new Color(gr.getRGB(x, y)).getGreen();
         });
     }
 
-/*    private int[][] calcE() {
-        int[][] E = new int[inHeight][inWidth];
+    private long calcE(int y, int x) {
+        int nextX = (x + 1 < inWidth - k) ? (x + 1) : (x - 1);
+        int nextY = (y + 1 < inHeight) ? (y + 1) : (y - 1);
+        long forbidden = shiftedMask[y][x] ? 2147483647L : 0L;
+        return Math.abs(grey[y][nextX] - grey[y][x]) + Math.abs(grey[nextY][x] - grey[y][x]) + forbidden;
+    }
+
+    private void removeSeam() {
+        logger.log("looking for the \"x\" index of the bottom row that holds the minimal cost.");
+        int minX = 0;
+        for (int x = 0; x < inWidth - k; ++x) {
+            if (M[inHeight - 1][x] < M[inHeight - 1][minX]) {
+                minX = x;
+            }
+        }
+        logger.log("minX = " + minX + ".");
+        logger.log("constructs the path of the minimal seam.");
+        logger.log("stores the path.");
+        for (int y = inHeight - 1; y > -1; --y) {
+            seams[k][y] = xIndices[y][minX];
+            final int greyColor = grey[y][minX];
+            if (minX > 0) {
+                grey[y][minX - 1] = (grey[y][minX - 1] + greyColor) / 2;
+            }
+            if (minX + 1 < inWidth - k) {
+                grey[y][minX + 1] = (grey[y][minX + 1] + greyColor) / 2;
+            }
+            //shiftLeft(y, minX);
+            minX = minPaths[y][minX];
+        }
+        logger.log("removes the seam.");
+    }
+
+    private void calcM() {
+        logger.log("calculates the costs matrix \"M\".");
+        pushForEachParameters();
+        setForEachWidth(inWidth - k);
         forEach((y, x) -> {
-            Color c = new Color(workingImage.getRGB(x, y));
-            int grey = (c.getRed() * r + c.getGreen() * g + c.getBlue() * b) / total;
-            Color color = new Color(grey, grey, grey);
-            ans.setRGB(x, y, color.getRGB());
+            MinCost minCost = getMin(y, x);
+            minPaths[y][x] = minCost.minX;
+            M[y][x] = calcE(y, x) + minCost.min;
         });
-        return null;
-    }*/
+        popForEachParameters();
+    }
+
+    private void shiftLeft(final int y, final int seamX) {
+        for (int x = seamX + 1; x < this.inWidth - this.k; ++x) {
+            this.xIndices[y][x - 1] = this.xIndices[y][x];
+            this.greyScaleImage[y][x - 1] = this.greyScaleImage[y][x];
+            this.shiftedMask[y][x - 1] = this.shiftedMask[y][x];
+        }
+    }
+
+    private void initXIndices() {
+        this.logger.log("creates a 2D matrix of original \"x\" indices.");
+        this.xIndices = new int[this.inHeight][this.inWidth];
+        this.forEach((y, x) -> this.xIndices[y][x] = x);
+    }
+
+    public BufferedImage showSeams(final int seamColorRGB) {
+        final BufferedImage ans = this.duplicateWorkingImage();
+        if (this.numOfSeams > 0) {
+            int[][] seams;
+            for (int length = (seams = this.seams).length, i = 0; i < length; ++i) {
+                final int[] seam = seams[i];
+                final Object o;
+                final int x;
+                final BufferedImage bufferedImage;
+                this.forEachHeight(y -> {
+                    x = o[y];
+                    bufferedImage.setRGB(x, y, seamColorRGB);
+                    return;
+                });
+            }
+        }
+        return ans;
+    }
+
+    private MinCost getMin( int y,  int x) {
+        long min = 0L;
+        int minX = x;
+        if (y > 0) {
+             long mv = M[y - 1][x];
+            long cr;
+            long cl;
+            long cv;
+            if (x > 0 & x + 1 < inWidth - k) {
+                cv = (cl = (cr = Math.abs(grey[y][x - 1] - grey[y][x + 1])));
+            } else {
+                cv = (cl = (cr = 255L));
+            }
+            long ml;
+            if (x > 0) {
+                cl += Math.abs(grey[y - 1][x] - grey[y][x - 1]);
+                ml = M[y - 1][x - 1];
+            } else {
+                cl = 0L;
+                ml = 2147483647L;
+            }
+            long mr;
+            if (x + 1 < inWidth - k) {
+                cr += Math.abs(grey[y - 1][x] - grey[y][x + 1]);
+                mr = M[y - 1][x + 1];
+            } else {
+                cr = 0L;
+                mr = 2147483647L;
+            }
+             long sumL = ml + cl;
+             long sumV = mv + cv;
+             long sumR = mr + cr;
+            min = Math.min(Math.min(sumL, sumV), sumR);
+            if (min == sumR & x + 1 < inWidth - k) {
+                minX = x + 1;
+            } else if (min == sumL & x > 0) {
+                minX = x - 1;
+            }
+        }
+        return new MinCost(min, minX);
+    }
+
+    private static class MinCost {
+         long min;
+         int minX;
+
+        MinCost( long min,  int minX) {
+            this.min = min;
+            this.minX = minX;
+        }
+    }
+
 }
