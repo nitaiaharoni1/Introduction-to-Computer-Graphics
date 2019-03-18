@@ -18,12 +18,12 @@ public class SeamsCarver extends ImageProcessor {
     //Todo: change names and order
     private int[][] grey;
     private long[][] M = new long[inHeight][inWidth];
-    private int[][] minPaths;
+    private int[][] minPaths = new int[inHeight][inWidth];
     private int[][] xIndices;
     private boolean[][] shiftedMask;
-    private int[][] seams;
+    private int[][] seams = new int[seamsNum][inHeight];
     private int k = 0;
-    private boolean[][] maskAfterSeamCarving;
+    private boolean[][] maskAfterSeamCarving = null;
     //Todo: untill here
 
     public SeamsCarver(Logger logger, BufferedImage workingImage, int outWidth, RGBWeights rgbWeights,
@@ -47,23 +47,18 @@ public class SeamsCarver extends ImageProcessor {
         // TODO: You may initialize your additional fields and apply some preliminary calculations.
 
         //Todo: change this section
-        maskAfterSeamCarving = null;
         logger.log("begins preliminary calculations.");
         if (seamsNum > 0) {
             logger.log("initializes some additional fields.");
-            minPaths = new int[inHeight][inWidth];
-            seams = new int[seamsNum][inHeight];
             transformToGrey();
-            //initXIndices();
-            //shiftedMask = duplicateWorkingMask();
-            for (int i = 0; i < seamsNum; i++) {
+            initXIndices();
+            shiftedMask = imageMask;
+            for (int i = k; i < seamsNum; i++) {
                 calcM();
                 logger.log("finds seam no: " + (k + 1) + ".");
                 removeSeam();
             }
-//while (++k < seamsNum);        }
             //Todo: until here
-
             logger.log("preliminary calculations were ended.");
         }
     }
@@ -83,8 +78,23 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     public BufferedImage showSeams(int seamColorRGB) {
-        // TODO: Implement this method (bonus), remove the exception.
-        throw new UnimplementedMethodException("showSeams");
+/*        final BufferedImage ans = this.duplicateWorkingImage();
+        if (this.numOfSeams > 0) {
+            int[][] seams;
+            for (int length = (seams = this.seams).length, i = 0; i < length; ++i) {
+                final int[] seam = seams[i];
+                final Object o;
+                final int x;
+                final BufferedImage bufferedImage;
+                this.forEachHeight(y -> {
+                    x = o[y];
+                    bufferedImage.setRGB(x, y, seamColorRGB);
+                    return;
+                });
+            }
+        }
+        return ans;*/
+        return null;
     }
 
     public boolean[][] getMaskAfterSeamCarving() {
@@ -102,9 +112,15 @@ public class SeamsCarver extends ImageProcessor {
     private void transformToGrey() {
         BufferedImage gr = greyscale();
         grey = new int[inHeight][inWidth];
-        forEach((y, x) -> {
+        forEach((x, y) -> {
             grey[y][x] = new Color(gr.getRGB(x, y)).getGreen();
         });
+    }
+
+    private boolean[][] duplicateWorkingMask() {
+        final boolean[][] res = new boolean[this.inHeight][this.inWidth];
+        this.forEach((x, y) -> res[y][x] = this.imageMask[y][x]);
+        return res;
     }
 
     private long calcE(int y, int x) {
@@ -142,12 +158,12 @@ public class SeamsCarver extends ImageProcessor {
 
     private void calcM() {
         logger.log("calculates the costs matrix \"M\".");
-        pushForEachParameters();
         setForEachWidth(inWidth - k);
-        forEach((y, x) -> {
-            MinCost minCost = getMin(y, x);
-            minPaths[y][x] = minCost.minX;
-            M[y][x] = calcE(y, x) + minCost.min;
+        pushForEachParameters();
+        forEach((x, y) -> {
+            mCell cell = getMCell(x, y);
+            minPaths[y][x] = cell.minPath;
+            M[y][x] = calcE(x, y) + cell.minCost;
         });
         popForEachParameters();
     }
@@ -155,7 +171,7 @@ public class SeamsCarver extends ImageProcessor {
     private void shiftLeft(final int y, final int seamX) {
         for (int x = seamX + 1; x < this.inWidth - this.k; ++x) {
             this.xIndices[y][x - 1] = this.xIndices[y][x];
-            this.greyScaleImage[y][x - 1] = this.greyScaleImage[y][x];
+            this.grey[y][x - 1] = this.grey[y][x];
             this.shiftedMask[y][x - 1] = this.shiftedMask[y][x];
         }
     }
@@ -163,33 +179,15 @@ public class SeamsCarver extends ImageProcessor {
     private void initXIndices() {
         this.logger.log("creates a 2D matrix of original \"x\" indices.");
         this.xIndices = new int[this.inHeight][this.inWidth];
-        this.forEach((y, x) -> this.xIndices[y][x] = x);
+        this.forEach((x, y) -> this.xIndices[y][x] = x);
     }
 
-    public BufferedImage showSeams(final int seamColorRGB) {
-        final BufferedImage ans = this.duplicateWorkingImage();
-        if (this.numOfSeams > 0) {
-            int[][] seams;
-            for (int length = (seams = this.seams).length, i = 0; i < length; ++i) {
-                final int[] seam = seams[i];
-                final Object o;
-                final int x;
-                final BufferedImage bufferedImage;
-                this.forEachHeight(y -> {
-                    x = o[y];
-                    bufferedImage.setRGB(x, y, seamColorRGB);
-                    return;
-                });
-            }
-        }
-        return ans;
-    }
 
-    private MinCost getMin( int y,  int x) {
-        long min = 0L;
-        int minX = x;
+    private mCell getMCell(int y, int x) {
+        long minCost = 0L;
+        int minPath = x;
         if (y > 0) {
-             long mv = M[y - 1][x];
+            long mv = M[y - 1][x];
             long cr;
             long cl;
             long cv;
@@ -214,26 +212,26 @@ public class SeamsCarver extends ImageProcessor {
                 cr = 0L;
                 mr = 2147483647L;
             }
-             long sumL = ml + cl;
-             long sumV = mv + cv;
-             long sumR = mr + cr;
-            min = Math.min(Math.min(sumL, sumV), sumR);
-            if (min == sumR & x + 1 < inWidth - k) {
-                minX = x + 1;
-            } else if (min == sumL & x > 0) {
-                minX = x - 1;
+            long sumL = ml + cl;
+            long sumV = mv + cv;
+            long sumR = mr + cr;
+            minCost = Math.min(Math.min(sumL, sumV), sumR);
+            if (minCost == sumR & x + 1 < inWidth - k) {
+                minPath = x + 1;
+            } else if (minCost == sumL & x > 0) {
+                minPath = x - 1;
             }
         }
-        return new MinCost(min, minX);
+        return new mCell(minCost, minPath);
     }
 
-    private static class MinCost {
-         long min;
-         int minX;
+    private static class mCell {
+        int minPath;
+        long minCost;
 
-        MinCost( long min,  int minX) {
-            this.min = min;
-            this.minX = minX;
+        mCell(long minCost, int minPath) {
+            this.minPath = minPath;
+            this.minCost = minCost;
         }
     }
 
