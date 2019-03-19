@@ -17,7 +17,8 @@ public class SeamsCarver extends ImageProcessor {
     boolean[][] imageMask;
     //Todo: change names and order
     private int[][] grey;
-    private long[][] M = new long[inHeight][inWidth];
+    private long[][] E;
+    private mCell[][] M = new mCell[inHeight][inWidth];
     private int[][] minPaths = new int[inHeight][inWidth];
     private int[][] xIndices;
     private boolean[][] shiftedMask;
@@ -51,9 +52,10 @@ public class SeamsCarver extends ImageProcessor {
         if (seamsNum > 0) {
             logger.log("initializes some additional fields.");
             transformToGrey();
-            initXIndices();
-            shiftedMask = imageMask;
+            //initXIndices();
+            //shiftedMask = imageMask;
             for (int i = k; i < seamsNum; i++) {
+                E = calcE(grey);
                 calcM();
                 logger.log("finds seam no: " + (k + 1) + ".");
                 removeSeam();
@@ -111,23 +113,38 @@ public class SeamsCarver extends ImageProcessor {
 
     private void transformToGrey() {
         BufferedImage gr = greyscale();
-        grey = new int[inHeight][inWidth];
-        forEach((x, y) -> {
-            grey[y][x] = new Color(gr.getRGB(x, y)).getGreen();
+        grey = getMatrixGreen(gr);
+    }
+
+    private int[][] getMatrixGreen(BufferedImage img) {
+        int[][] matrix = new int[img.getHeight()][img.getWidth()];
+        forEach((y, x) -> {
+            matrix[y][x] = new Color(img.getRGB(x, y)).getGreen();
         });
+        return matrix;
     }
 
     private boolean[][] duplicateWorkingMask() {
         final boolean[][] res = new boolean[this.inHeight][this.inWidth];
-        this.forEach((x, y) -> res[y][x] = this.imageMask[y][x]);
+        this.forEach((y, x) -> res[y][x] = this.imageMask[y][x]);
         return res;
     }
 
-    private long calcE(int y, int x) {
-        int nextX = (x + 1 < inWidth - k) ? (x + 1) : (x - 1);
-        int nextY = (y + 1 < inHeight) ? (y + 1) : (y - 1);
-        long forbidden = shiftedMask[y][x] ? 2147483647L : 0L;
-        return Math.abs(grey[y][nextX] - grey[y][x]) + Math.abs(grey[nextY][x] - grey[y][x]) + forbidden;
+    private long[][] calcE(int[][] mat) {
+        long[][] E = new long[mat.length][mat[0].length];
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                int J = j + 1, I = i + 1;
+                if (i + 1 >= mat.length) {
+                    I = i - 1;
+                }
+                if (j + 1 >= mat[0].length) {
+                    J = j - 1;
+                }
+                E[i][j] = Math.abs(mat[i][J] - mat[i][j]) + Math.abs(mat[I][j] - mat[i][j]);
+            }
+        }
+        return E;
     }
 
     private void removeSeam() {
@@ -156,16 +173,13 @@ public class SeamsCarver extends ImageProcessor {
         logger.log("removes the seam.");
     }
 
-    private void calcM() {
-        logger.log("calculates the costs matrix \"M\".");
-        setForEachWidth(inWidth - k);
-        pushForEachParameters();
-        forEach((x, y) -> {
-            mCell cell = getMCell(x, y);
-            minPaths[y][x] = cell.minPath;
-            M[y][x] = calcE(x, y) + cell.minCost;
-        });
-        popForEachParameters();
+    private void calcM(int[][] mat) {
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                mCell cell = getMCell(i, j);
+                M[i][j] = cell;
+            }
+        }
     }
 
     private void shiftLeft(final int y, final int seamX) {
@@ -179,35 +193,35 @@ public class SeamsCarver extends ImageProcessor {
     private void initXIndices() {
         this.logger.log("creates a 2D matrix of original \"x\" indices.");
         this.xIndices = new int[this.inHeight][this.inWidth];
-        this.forEach((x, y) -> this.xIndices[y][x] = x);
+        this.forEach((y, x) -> this.xIndices[y][x] = x);
     }
 
 
-    private mCell getMCell(int y, int x) {
+    private mCell getMCell(int i, int j) {
         long minCost = 0L;
-        int minPath = x;
-        if (y > 0) {
-            long mv = M[y - 1][x];
+        int minPath = j;
+        if (i > 0) {
+            mCell mv = M[i - 1][j];
             long cr;
             long cl;
             long cv;
-            if (x > 0 & x + 1 < inWidth - k) {
-                cv = (cl = (cr = Math.abs(grey[y][x - 1] - grey[y][x + 1])));
+            if (j > 0 && j + 1 < inWidth - k) {
+                cv = (cl = (cr = Math.abs(grey[i][j - 1] - grey[i][j + 1])));
             } else {
                 cv = (cl = (cr = 255L));
             }
-            long ml;
-            if (x > 0) {
-                cl += Math.abs(grey[y - 1][x] - grey[y][x - 1]);
-                ml = M[y - 1][x - 1];
+            mCell ml;
+            if (j > 0) {
+                cl += Math.abs(grey[i - 1][j] - grey[i][j - 1]);
+                ml = M[i - 1][j - 1];
             } else {
                 cl = 0L;
                 ml = 2147483647L;
             }
-            long mr;
-            if (x + 1 < inWidth - k) {
-                cr += Math.abs(grey[y - 1][x] - grey[y][x + 1]);
-                mr = M[y - 1][x + 1];
+            mCell mr;
+            if (j + 1 < inWidth - k) {
+                cr += Math.abs(grey[i - 1][j] - grey[i][j + 1]);
+                mr = M[i - 1][j + 1];
             } else {
                 cr = 0L;
                 mr = 2147483647L;
@@ -216,10 +230,10 @@ public class SeamsCarver extends ImageProcessor {
             long sumV = mv + cv;
             long sumR = mr + cr;
             minCost = Math.min(Math.min(sumL, sumV), sumR);
-            if (minCost == sumR & x + 1 < inWidth - k) {
-                minPath = x + 1;
-            } else if (minCost == sumL & x > 0) {
-                minPath = x - 1;
+            if (minCost == sumR & j + 1 < inWidth - k) {
+                minPath = j + 1;
+            } else if (minCost == sumL & j > 0) {
+                minPath = j - 1;
             }
         }
         return new mCell(minCost, minPath);
