@@ -60,10 +60,10 @@ public class SeamsCarver extends ImageProcessor {
             storeSeams(1);
             calcSeamMatrix();
             removeSeams();
+            calcE();
+            calcM();
+            calcMWithMask();
         }
-        setForEachInputParameters();
-        setForEachOutputParameters();
-        popForEachParameters();
         return paintResultImg();
     }
 
@@ -123,7 +123,7 @@ public class SeamsCarver extends ImageProcessor {
             for (int i = grey.length - 1; i >= 0; i--) {
                 seams[k][i] = jIndex;
                 M[i][jIndex] = Integer.MAX_VALUE;
-                long minL = Integer.MAX_VALUE, minU= Integer.MAX_VALUE, minR = Integer.MAX_VALUE;
+                long minL = Integer.MAX_VALUE, minU = Integer.MAX_VALUE, minR = Integer.MAX_VALUE;
                 if (i - 1 >= 0) {
                     if (jIndex - 1 > 0)
                         minL = M[i - 1][jIndex - 1];
