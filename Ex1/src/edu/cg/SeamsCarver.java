@@ -47,7 +47,6 @@ public class SeamsCarver extends ImageProcessor {
             calcE();
             calcM();
             calcMWithMask();
-            storeAllSeams();
         }
     }
 
@@ -64,6 +63,8 @@ public class SeamsCarver extends ImageProcessor {
             calcM();
             calcMWithMask();
         }
+        setForEachWidth(currentImg.length);
+        setForEachHeight(currentImg[0].length);
         return paintResultImg();
     }
 
@@ -73,6 +74,7 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     public BufferedImage showSeams(int seamColorRGB) {
+        storeSeams(seamsNum);
         BufferedImage ans = workingImage;
         for (int[] seam : seams) {
             for (int i = 0; i < seams[0].length; i++) {
@@ -87,26 +89,26 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     private BufferedImage paintResultImg() {
-        BufferedImage img = new BufferedImage(currentImg.length, currentImg[0].length, workingImage.getType());
+        BufferedImage img = new BufferedImage(currentImg[0].length, currentImg.length, workingImage.getType());
         for (int i = 0; i < currentImg.length; i++) {
             for (int j = 0; j < currentImg[0].length; j++) {
-                img.setRGB(i, j, currentImg[i][j].getRGB());
+                img.setRGB(j, i, currentImg[i][j].getRGB());
             }
         }
         return img;
     }
 
     private void initCurrentImg() {
-        currentImg = getColorMatrix(workingImage);
+        Color[][] matrix = new Color[workingImage.getHeight()][workingImage.getWidth()];
+        forEach((y, x) -> {
+            matrix[y][x] = new Color(workingImage.getRGB(x, y));
+        });
+        currentImg = matrix;
     }
 
     private void transformToGrey() {
         BufferedImage gr = greyscale();
         grey = getMatrixGreen(gr);
-    }
-
-    private void storeAllSeams() {
-        storeSeams(seamsNum);
     }
 
     private void storeSeams(int num) {
@@ -144,15 +146,11 @@ public class SeamsCarver extends ImageProcessor {
 
     private int[][] getMatrixGreen(BufferedImage img) {
         int[][] matrix = new int[img.getHeight()][img.getWidth()];
+        pushForEachParameters();
+        setForEachOutputParameters();
         forEach((y, x) -> matrix[y][x] = new Color(img.getRGB(x, y)).getGreen());
-        return matrix;
-    }
+        popForEachParameters();
 
-    private Color[][] getColorMatrix(BufferedImage img) {
-        Color[][] matrix = new Color[img.getHeight()][img.getWidth()];
-        forEach((y, x) -> {
-            matrix[y][x] = new Color(img.getRGB(x, y));
-        });
         return matrix;
     }
 
@@ -160,22 +158,36 @@ public class SeamsCarver extends ImageProcessor {
         E = new long[grey.length][grey[0].length];
         for (int i = 0; i < E.length; i++) {
             for (int j = 0; j < E[0].length; j++) {
-                int J = j + 1, I = i + 1;
-                if (i + 1 >= grey.length) {
-                    I = i - 1;
+                int jRight = j + 1;
+                int iDown = i + 1;
+                int jLeft = j - 1;
+                int iUp = i - 1;
+
+                if (iDown >= E.length) {
+                    iDown = i - 1;
                 }
-                if (j + 1 >= grey[0].length) {
-                    J = j - 1;
+                if (iUp < 0) {
+                    iUp = i + 1;
                 }
-                E[i][j] = Math.abs(grey[i][J] - grey[i][j]) + Math.abs(grey[I][j] - grey[i][j]);
+                if (jRight >= E[0].length) {
+                    jRight = j - 1;
+                }
+                if (jLeft < 0) {
+                    jLeft = j + 1;
+                }
+                E[i][j] = Math.abs(grey[i][jRight] - grey[i][j]) +Math.abs(grey[i][jLeft] - grey[i][j]) + Math.abs(grey[iDown][j] - grey[i][j]) + Math.abs(grey[iUp][j] - grey[i][j]);
             }
         }
     }
 
     private void removeSeams() {
+        seamsMatrix = new int[grey.length][grey[0].length];
         int[][] newGrey = new int[grey.length][grey[0].length - 1];
         Color[][] newImg = new Color[grey.length][grey[0].length - 1];
         boolean[][] newImageMask = new boolean[grey.length][grey[0].length - 1];
+        for (int i = 0; i < grey.length; i++) {
+            seamsMatrix[i][seams[0][i]] = -1;
+        }
         int indexI = 0, indexJ;
         for (int i = 0; i < seamsMatrix.length; i++) {
             indexJ = 0;
@@ -207,10 +219,7 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     private void calcSeamMatrix() {
-        seamsMatrix = new int[grey.length][grey[0].length];
-        for (int i = 0; i < grey.length; i++) {
-            seamsMatrix[i][seams[0][i]] = -1;
-        }
+
 
     }
 
@@ -229,7 +238,7 @@ public class SeamsCarver extends ImageProcessor {
         long minL, minU, minR;
         for (int i = 0; i < M.length; i++) {
             for (int j = 0; j < M[0].length; j++) {
-                if (i > 0 && j + 1 == M[0].length) {
+                if (i > 0 && (j + 1 >= M[0].length)) {
                     minL = M[i - 1][j - 1];
                     minU = M[i - 1][j];
 
