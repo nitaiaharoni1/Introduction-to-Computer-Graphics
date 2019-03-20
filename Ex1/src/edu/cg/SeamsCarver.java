@@ -44,9 +44,6 @@ public class SeamsCarver extends ImageProcessor {
         if (seamsNum > 0) {
             transformToGrey();
             initCurrentImg();
-            calcE();
-            calcM();
-            calcMWithMask();
         }
     }
 
@@ -56,15 +53,12 @@ public class SeamsCarver extends ImageProcessor {
 
     private BufferedImage reduceImageWidth() {
         for (int k = 0; k < seamsNum; k++) {
-            storeSeams(1);
-            calcSeamMatrix();
-            removeSeams();
             calcE();
+            calcEWithMask();
             calcM();
-            calcMWithMask();
+            storeSeams(1);
+            removeSeams();
         }
-        setForEachWidth(currentImg.length);
-        setForEachHeight(currentImg[0].length);
         return paintResultImg();
     }
 
@@ -107,61 +101,69 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     private void transformToGrey() {
-        BufferedImage gr = greyscale();
-        grey = getMatrixGreen(gr);
+        BufferedImage greyImg = greyscale();
+        int[][] matrix = new int[greyImg.getHeight()][greyImg.getWidth()];
+        forEach((y, x) -> {
+            matrix[y][x] = new Color(greyImg.getRGB(x, y)).getGreen();
+        });
+        grey = matrix;
     }
 
     private void storeSeams(int num) {
         seams = new int[num][grey.length];
+        seamsMatrix = new int[grey.length][grey[0].length];
+        int minIndex;
         for (int k = 0; k < num; k++) {
-            long minCost = Integer.MAX_VALUE;
-            int jIndex = -2;
-            for (int j = 0; j < grey[0].length - 1; j++) {
-                if (M[grey.length - 1][j] < minCost) {
-                    minCost = M[grey.length - 1][j];
-                    jIndex = j;
-                }
-            }
+            minIndex = findMinBottomCell();
             for (int i = grey.length - 1; i >= 0; i--) {
-                seams[k][i] = jIndex;
-                M[i][jIndex] = Integer.MAX_VALUE;
-                long minL = Integer.MAX_VALUE, minU = Integer.MAX_VALUE, minR = Integer.MAX_VALUE;
-                if (i - 1 >= 0) {
-                    if (jIndex - 1 > 0)
-                        minL = M[i - 1][jIndex - 1];
-                    if (jIndex + 1 < grey[0].length)
-                        minR = M[i - 1][jIndex + 1];
-                    minU = M[i - 1][jIndex];
-
-                    if (minL < minU && minL < minR) {
-                        jIndex = jIndex - 1;
-                    } else if (minR < minL && minR < minU) {
-                        jIndex = jIndex + 1;
-                    }
-                }
+                seams[k][i] = minIndex;
+                M[i][minIndex] = Integer.MAX_VALUE;
+                seamsMatrix[i][minIndex] = -1;
+                minIndex = findMinFromUpperCells(i, minIndex);
             }
         }
         logger.log("finished store seams");
     }
 
-    private int[][] getMatrixGreen(BufferedImage img) {
-        int[][] matrix = new int[img.getHeight()][img.getWidth()];
-        pushForEachParameters();
-        setForEachOutputParameters();
-        forEach((y, x) -> matrix[y][x] = new Color(img.getRGB(x, y)).getGreen());
-        popForEachParameters();
+    private int findMinFromUpperCells(int i, int minIndex) {
+        long minL = Integer.MAX_VALUE, minU = Integer.MAX_VALUE, minR = Integer.MAX_VALUE;
+        if (i > 0) {
+            if (minIndex > 0)
+                minL = M[i - 1][minIndex - 1];
+            if (minIndex < M[0].length - 1)
+                minR = M[i - 1][minIndex + 1];
+            minU = M[i - 1][minIndex];
 
-        return matrix;
+            if (minL < minU && minL < minR) {
+                minIndex = minIndex - 1;
+            } else if (minR < minL && minR < minU) {
+                minIndex = minIndex + 1;
+            }
+        }
+        return minIndex;
+    }
+
+    private int findMinBottomCell() {
+        long minCost = Integer.MAX_VALUE;
+        int minBottomIndex = -1;
+        for (int j = 0; j < grey[0].length; j++) {
+            if (M[grey.length - 1][j] < minCost) {
+                minCost = M[grey.length - 1][j];
+                minBottomIndex = j;
+            }
+        }
+        return minBottomIndex;
     }
 
     private void calcE() {
         E = new long[grey.length][grey[0].length];
+        int jRight, iDown, jLeft, iUp;
         for (int i = 0; i < E.length; i++) {
             for (int j = 0; j < E[0].length; j++) {
-                int jRight = j + 1;
-                int iDown = i + 1;
-                int jLeft = j - 1;
-                int iUp = i - 1;
+                jRight = j + 1;
+                iDown = i + 1;
+                jLeft = j - 1;
+                iUp = i - 1;
 
                 if (iDown >= E.length) {
                     iDown = i - 1;
@@ -175,31 +177,28 @@ public class SeamsCarver extends ImageProcessor {
                 if (jLeft < 0) {
                     jLeft = j + 1;
                 }
-                E[i][j] = Math.abs(grey[i][jRight] - grey[i][j]) +Math.abs(grey[i][jLeft] - grey[i][j]) + Math.abs(grey[iDown][j] - grey[i][j]) + Math.abs(grey[iUp][j] - grey[i][j]);
+                int greyIJ = grey[i][j];
+                E[i][j] = Math.abs(grey[i][jRight] - greyIJ) + Math.abs(grey[i][jLeft] - greyIJ) + Math.abs(grey[iDown][j] - greyIJ) + Math.abs(grey[iUp][j] - greyIJ);
             }
         }
     }
 
     private void removeSeams() {
-        seamsMatrix = new int[grey.length][grey[0].length];
         int[][] newGrey = new int[grey.length][grey[0].length - 1];
         Color[][] newImg = new Color[grey.length][grey[0].length - 1];
         boolean[][] newImageMask = new boolean[grey.length][grey[0].length - 1];
-        for (int i = 0; i < grey.length; i++) {
-            seamsMatrix[i][seams[0][i]] = -1;
-        }
         int indexI = 0, indexJ;
+
         for (int i = 0; i < seamsMatrix.length; i++) {
             indexJ = 0;
             for (int j = 0; j < seamsMatrix[0].length; j++) {
                 if (seamsMatrix[i][j] != -1) {
-                    newGrey[indexI][indexJ] = grey[i][j];
-                    newImg[indexI][indexJ] = currentImg[i][j];
-                    newImageMask[indexI][indexJ] = imageMask[i][j];
+                    newGrey[i][indexJ] = grey[i][j];
+                    newImg[i][indexJ] = currentImg[i][j];
+                    newImageMask[i][indexJ] = imageMask[i][j];
                     indexJ++;
                 }
             }
-            indexI++;
         }
         grey = newGrey;
         currentImg = newImg;
@@ -207,7 +206,6 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     private void addSeam() {
-        calcSeamsMatrix();
         BufferedImage ans = new BufferedImage(workingImage.getWidth() - 1, workingImage.getHeight() - 1, workingImage.getType());
         for (int i = 0; i < workingImage.getHeight(); i++) {
             for (int j = 0; j < workingImage.getWidth(); j++) {
@@ -218,19 +216,6 @@ public class SeamsCarver extends ImageProcessor {
         }
     }
 
-    private void calcSeamMatrix() {
-
-
-    }
-
-    private void calcSeamsMatrix() {
-        seamsMatrix = new int[grey[0].length][grey.length];
-        for (int k = 0; k < seams.length; k++) {
-            for (int i = 0; i < grey.length; i++) {
-                seamsMatrix[i][seams[k][i]] = -1;
-            }
-        }
-    }
 
     private void calcM() {
         M = new long[E.length][E[0].length];
@@ -277,15 +262,15 @@ public class SeamsCarver extends ImageProcessor {
         logger.log("finished calc M");
     }
 
-    private void calcMWithMask() {
+    private void calcEWithMask() {
         for (int i = 0; i < imageMask.length; i++) {
             for (int j = 0; j < imageMask[0].length; j++) {
                 if (imageMask[i][j] == true) {
-                    M[i][j] = Integer.MAX_VALUE;
+                    E[i][j] = Integer.MAX_VALUE;
                 }
             }
         }
-        logger.log("finished calc M with mask");
+        logger.log("finished calc E with mask");
     }
 
 }
