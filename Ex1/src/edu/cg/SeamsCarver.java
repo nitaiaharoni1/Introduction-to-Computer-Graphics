@@ -16,12 +16,12 @@ public class SeamsCarver extends ImageProcessor {
     private int seamsNum;
     private ResizeOperation resizeOp;
     boolean[][] imageMask;
-    private int[][] grey;
     private Color[][] currentImg;
+    private Color[][] seamsMatrix;
+    private int[][] grey;
     private long[][] E;
     private long[][] M;
     private int[][] seams;
-    private Color[][] seamsMatrix;
 
 
     public SeamsCarver(Logger logger, BufferedImage workingImage, int outWidth, RGBWeights rgbWeights,
@@ -56,7 +56,7 @@ public class SeamsCarver extends ImageProcessor {
             calcE();
             calcEWithMask();
             calcM();
-            storeSeams(1, grey.length);
+            storeSeams(1);
             calcSeamMatrix(0);
             removeSeams();
         }
@@ -67,7 +67,7 @@ public class SeamsCarver extends ImageProcessor {
         calcE();
         calcEWithMask();
         calcM();
-        storeSeams(seamsNum, outHeight);
+        storeSeams(seamsNum);
         sortSeams();
         for (int k = 0; k < seamsNum; k++) {
             calcSeamMatrix(k);
@@ -80,7 +80,7 @@ public class SeamsCarver extends ImageProcessor {
     private void updateSortedSeams() {
         for (int k = 0; k < seams.length; k++) {
             for (int j = 0; j < seams[0].length; j++) {
-                seams[k][j] += 1;
+                seams[k][j]++;
             }
         }
     }
@@ -151,18 +151,17 @@ public class SeamsCarver extends ImageProcessor {
         grey = matrix;
     }
 
-    private void storeSeams(int num, int height) {
-        seams = new int[num][height];
+    private void storeSeams(int num) {
+        seams = new int[num][grey.length];
         int minIndex;
         for (int k = 0; k < num; k++) {
             minIndex = findMinBottomCell();
-            for (int i = height - 1; i >= 0; i--) {
+            for (int i = grey.length - 1; i >= 0; i--) {
                 seams[k][i] = minIndex;
                 M[i][minIndex] = Integer.MAX_VALUE;
                 minIndex = findMinFromUpperCells(i, minIndex);
             }
         }
-        logger.log("finished store seams");
     }
 
     private int findMinFromUpperCells(int i, int minIndex) {
@@ -248,7 +247,7 @@ public class SeamsCarver extends ImageProcessor {
     private void addSeams() {
         Color[][] newImg = new Color[currentImg.length][currentImg[0].length + 1];
         Color[][] newSeamsMat = new Color[currentImg.length][currentImg[0].length + 1];
-
+        boolean[][] newImageMask = new boolean[imageMask.length][imageMask[0].length + 1];
         int indexJ;
         for (int i = 0; i < seamsMatrix.length; i++) {
             indexJ = 0;
@@ -256,19 +255,23 @@ public class SeamsCarver extends ImageProcessor {
                 if (seamsMatrix[i][j] == null) {
                     newImg[i][indexJ] = currentImg[i][j];
                     newSeamsMat[i][indexJ] = currentImg[i][j];
+                    newImageMask[i][indexJ] = imageMask[i][j];
                     indexJ++;
                     newImg[i][indexJ] = currentImg[i][j];
                     newSeamsMat[i][indexJ] = currentImg[i][j];
+                    newImageMask[i][indexJ] = imageMask[i][j];
                     indexJ++;
                 } else {
                     newImg[i][indexJ] = currentImg[i][j];
                     newSeamsMat[i][indexJ] = currentImg[i][j];
+                    newImageMask[i][indexJ] = imageMask[i][j];
                     indexJ++;
                 }
             }
         }
         currentImg = newImg;
         seamsMatrix = newSeamsMat;
+        imageMask = newImageMask;
     }
 
     private void calcSeamMatrix(int k) {
@@ -320,7 +323,6 @@ public class SeamsCarver extends ImageProcessor {
                 }
             }
         }
-        logger.log("finished calc M");
     }
 
     private void calcEWithMask() {
@@ -331,7 +333,6 @@ public class SeamsCarver extends ImageProcessor {
                 }
             }
         }
-        logger.log("finished calc E with mask");
     }
 
 }
