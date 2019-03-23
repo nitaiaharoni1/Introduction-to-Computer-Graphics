@@ -103,14 +103,18 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     public BufferedImage showSeams(int seamColorRGB) {
-//        storeSeams(seamsNum);
-//        BufferedImage ans = workingImage;
-//        for (int[] seam : seams) {
-//            for (int i = 0; i < seams[0].length; i++) {
-//                ans.setRGB(seam[i], i, seamColorRGB);
-//            }
-//        }
-        return null;
+        calcE();
+        calcEWithMask();
+        calcM();
+        storeSeams(seamsNum);
+        sortSeams();
+        BufferedImage res = workingImage;
+        for (int[] seam : seams) {
+            for (int i = 0; i < seams[0].length; i++) {
+                res.setRGB(seam[i], i, seamColorRGB);
+            }
+        }
+        return res;
     }
 
     public boolean[][] getMaskAfterSeamCarving() {

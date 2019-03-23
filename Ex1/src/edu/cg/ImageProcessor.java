@@ -95,28 +95,28 @@ public class ImageProcessor extends FunctioalForEachLoops {
         int g = rgbWeights.greenWeight;
         int b = rgbWeights.blueWeight;
         int total = rgbWeights.weightsAmount;
-        BufferedImage ans = newEmptyInputSizedImage();
+        BufferedImage res = newEmptyInputSizedImage();
         forEach((y, x) -> {
             Color c = new Color(workingImage.getRGB(x, y));
             int grey = (c.getRed() * r + c.getGreen() * g + c.getBlue() * b) / total;
             Color color = new Color(grey, grey, grey);
-            ans.setRGB(x, y, color.getRGB());
+            res.setRGB(x, y, color.getRGB());
         });
         logger.log("Changing to grey done!");
-        return ans;
+        return res;
     }
 
     public BufferedImage nearestNeighbor() {
         logger.log("Prepareing for nearestNeighbor resizing...");
-        BufferedImage ans = newEmptyOutputSizedImage();
+        BufferedImage res = newEmptyOutputSizedImage();
         setForEachOutputParameters();
         pushForEachParameters();
         forEach((y, x) -> {
             int y2 = Math.min((y * inHeight) / outHeight, inHeight - 1);
             int x2 = Math.min((x * inWidth) / outWidth, inWidth - 1);
-            ans.setRGB(x, y, workingImage.getRGB(x2, y2));
+            res.setRGB(x, y, workingImage.getRGB(x2, y2));
         });
         popForEachParameters();
-        return ans;
+        return res;
     }
 }
