@@ -2,6 +2,7 @@ package edu.cg;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class SeamsCarver extends ImageProcessor {
 
@@ -66,7 +67,6 @@ public class SeamsCarver extends ImageProcessor {
         calcE();
         calcM();
         storeSeams(seamsNum);
-        sortSeams();
         for (int k = 0; k < seamsNum; k++) {
             calcSeamMatrix(k);
             addSeams();
@@ -148,9 +148,11 @@ public class SeamsCarver extends ImageProcessor {
 
     private void storeSeams(int num) {
         seams = new int[num][grey.length];
+        int[] minIndexesBottom;
         int minIndex;
-        for (int k = 0; k < num; k++) {
-            minIndex = findMinBottomCell();
+        minIndexesBottom = findMinBottomCellsSorted(num);
+        for (int k = 0; k < minIndexesBottom.length; k++) {
+            minIndex = minIndexesBottom[k];
             for (int i = grey.length - 1; i >= 0; i--) {
                 seams[k][i] = minIndex;
                 M[i][minIndex] = Long.MAX_VALUE;
@@ -160,7 +162,7 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     private int findMinFromUpperCells(int i, int minJ) {
-        long minL = Long.MAX_VALUE, minU, minR = Long.MAX_VALUE;
+        long minL = Long.MAX_VALUE, minR = Long.MAX_VALUE, minU, min;
         if (i > 0) {
             if (minJ > 0)
                 minL = M[i - 1][minJ - 1];
@@ -168,46 +170,62 @@ public class SeamsCarver extends ImageProcessor {
                 minR = M[i - 1][minJ + 1];
             minU = M[i - 1][minJ];
 
-            if (minL < minU && minL < minR) {
-                minJ = minJ - 1;
-            } else if (minR < minL && minR < minU) {
-                minJ = minJ + 1;
+            min = Math.min(Math.min(minL, minR), minU);
+            if (min == minU) {
+            } else if (min == minL && minJ > 0) {
+                minJ -= 1;
+            } else if (min == minR && minJ < M[0].length - 1) {
+                minJ += 1;
             }
         }
         return minJ;
     }
 
-    private int findMinBottomCell() {
-        long minCost = Long.MAX_VALUE;
-        int minBottomIndex = -1;
-        int bottomRow = M.length - 1;
-        for (int j = 0; j < M[0].length; j++) {
-            if (M[bottomRow][j] < minCost) {
-                minCost = M[bottomRow][j];
-                minBottomIndex = j;
-                if (minCost == 0) break;
+    private int[] findMinBottomCellsSorted(int num) {
+        int[] minIndexesBottom = new int[num];
+        int minBottomIndex, bottomRow = M.length - 1;
+        long minCost;
+        for (int k = 0; k < num; k++) {
+            minBottomIndex = -1;
+            minCost = Long.MAX_VALUE;
+            for (int j = 0; j < M[0].length; j++) {
+                if (M[bottomRow][j] < minCost) {
+                    minCost = M[bottomRow][j];
+                    minBottomIndex = j;
+                    if (minCost == 0) break;
+                }
             }
+            M[bottomRow][minBottomIndex] = Long.MAX_VALUE;
+            minIndexesBottom[k] = minBottomIndex;
         }
-        return minBottomIndex;
+        if (num != 1)
+            Arrays.sort(minIndexesBottom);
+        return minIndexesBottom;
     }
 
     private void calcE() {
         E = new long[grey.length][grey[0].length];
         long greyIJ, maskCost;
-        int jRight, iDown;
+        int jRight, iDown, jLeft, iUp;
         for (int i = 0; i < E.length; i++) {
             for (int j = 0; j < E[0].length; j++) {
                 greyIJ = grey[i][j];
                 maskCost = 0;
                 jRight = j + 1;
                 iDown = i + 1;
+//                jLeft = j - 1;
+//                iUp = i - 1;
                 if (iDown >= E.length)
-                    iDown = i - 1;
+                    iDown = i;
+//                if (iUp <0 )
+//                    iUp = i;
                 if (jRight >= E[0].length)
-                    jRight = j - 1;
+                    jRight = j;
+//                if (jLeft < 0)
+//                    jLeft = j;
                 if (imageMask[i][j])
                     maskCost = Long.MAX_VALUE;
-                E[i][j] = Math.abs(grey[i][jRight] - greyIJ) + Math.abs(grey[iDown][j] - greyIJ) + maskCost;
+                E[i][j] = Math.abs(grey[i][jRight] - greyIJ) /*+ Math.abs(grey[i][jLeft] - greyIJ)*/ + Math.abs(grey[iDown][j] - greyIJ)/*+ Math.abs(grey[iUp][j] - greyIJ)*/ + maskCost;
             }
         }
     }
