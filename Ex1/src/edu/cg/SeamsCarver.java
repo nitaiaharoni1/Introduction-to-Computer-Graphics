@@ -76,7 +76,7 @@ public class SeamsCarver extends ImageProcessor {
     }
 
     private void updateSortedSeams(int k) {
-        for (int i = k+1; i < seams.length; i++) {
+        for (int i = k + 1; i < seams.length; i++) {
             for (int j = 0; j < seams[0].length; j++) {
                 seams[i][j]++;
             }
@@ -163,10 +163,11 @@ public class SeamsCarver extends ImageProcessor {
             minU = M[i - 1][minJ];
 
             min = Math.min(Math.min(minL, minR), minU);
-            if (min == minR && minJ < M[0].length-1) {
-                minJ = minJ + 1;
-            } else if(min == minL && minJ > 0) {
+            if (min == minU) {
+            } else if (min == minL && minJ > 0) {
                 minJ = minJ - 1;
+            } else if (min == minR && minJ < M[0].length - 1) {
+                minJ = minJ + 1;
             }
         }
         return minJ;
@@ -196,21 +197,28 @@ public class SeamsCarver extends ImageProcessor {
 
     private void calcE() {
         E = new long[grey.length][grey[0].length];
-        long greyIJ, maskCost;
-        int jRight, iDown, jLeft, iUp;
+        long greyIJ;
+        int jRight, iDown;
         for (int i = 0; i < E.length; i++) {
             for (int j = 0; j < E[0].length; j++) {
                 greyIJ = grey[i][j];
-                maskCost = 0;
                 jRight = j + 1;
                 iDown = i + 1;
                 if (iDown >= E.length)
                     iDown = i - 1;
                 if (jRight >= E[0].length)
                     jRight = j - 1;
-                if (imageMask[i][j])
-                    maskCost = Long.MAX_VALUE;
-                E[i][j] = Math.abs(grey[i][jRight] - greyIJ) + Math.abs(grey[iDown][j] - greyIJ) + maskCost;
+                if (imageMask[i][j]) {
+                    E[i][j] = Long.MAX_VALUE;
+                } else {
+                    E[i][j] = Math.abs(grey[i][jRight] - greyIJ) + Math.abs(grey[iDown][j] - greyIJ);
+                }
+                if (E[i][j] < 0) {
+                    E[i][j] = Long.MAX_VALUE;
+                }
+                if (E[i][j] < 0) {
+                    E[i][j] = Long.MAX_VALUE;
+                }
             }
         }
     }
@@ -226,10 +234,7 @@ public class SeamsCarver extends ImageProcessor {
             for (int j = 0; j < seamsMatrix[0].length; j++) {
                 if (seamsMatrix[i][j] != null) {
                     newGrey[i][indexJ] = grey[i][j];
-                    newImg[i][indexJ] = currentImg[i][j];
-                    newSeamsMat[i][indexJ] = currentImg[i][j];
-                    newImageMask[i][indexJ] = imageMask[i][j];
-                    indexJ++;
+                    indexJ = getIndexJ(newImg, newSeamsMat, newImageMask, indexJ, i, j);
                 }
             }
         }
@@ -248,25 +253,24 @@ public class SeamsCarver extends ImageProcessor {
             indexJ = 0;
             for (int j = 0; j < seamsMatrix[0].length; j++) {
                 if (seamsMatrix[i][j] == null) {
-                    newImg[i][indexJ] = currentImg[i][j];
-                    newSeamsMat[i][indexJ] = currentImg[i][j];
-                    newImageMask[i][indexJ] = imageMask[i][j];
-                    indexJ++;
-                    newImg[i][indexJ] = currentImg[i][j];
-                    newSeamsMat[i][indexJ] = currentImg[i][j];
-                    newImageMask[i][indexJ] = imageMask[i][j];
-                    indexJ++;
+                    indexJ = getIndexJ(newImg, newSeamsMat, newImageMask, indexJ, i, j);
+                    indexJ = getIndexJ(newImg, newSeamsMat, newImageMask, indexJ, i, j);
                 } else {
-                    newImg[i][indexJ] = currentImg[i][j];
-                    newSeamsMat[i][indexJ] = currentImg[i][j];
-                    newImageMask[i][indexJ] = imageMask[i][j];
-                    indexJ++;
+                    indexJ = getIndexJ(newImg, newSeamsMat, newImageMask, indexJ, i, j);
                 }
             }
         }
         currentImg = newImg;
         seamsMatrix = newSeamsMat;
         imageMask = newImageMask;
+    }
+
+    private int getIndexJ(Color[][] newImg, Color[][] newSeamsMat, boolean[][] newImageMask, int indexJ, int i, int j) {
+        newImg[i][indexJ] = currentImg[i][j];
+        newSeamsMat[i][indexJ] = currentImg[i][j];
+        newImageMask[i][indexJ] = imageMask[i][j];
+        indexJ++;
+        return indexJ;
     }
 
     private void calcSeamMatrix(int k) {
@@ -283,42 +287,48 @@ public class SeamsCarver extends ImageProcessor {
         for (int i = 0; i < M.length; i++) {
             for (int j = 0; j < M[0].length; j++) {
                 //Right Column
-                if ((i > 0) && (j == M[0].length - 1)){
+                if ((i > 0) && (j == M[0].length - 1)) {
                     minL = M[i - 1][j - 1];
                     minU = M[i - 1][j];
-
-                    //todo: grey[i][j - 1])?
                     Cl = Math.abs(255L - grey[i][j - 1]) + Math.abs(grey[i - 1][j] - grey[i][j - 1]);
                     Cu = Math.abs(255L - grey[i][j - 1]);
+                    minL = (minL + Cl < 0) ? Long.MAX_VALUE : (minL + Cl);
+                    minU = (minU + Cu < 0) ? Long.MAX_VALUE : (minU + Cu);
 
-                    M[i][j] = E[i][j] + Math.min(minL + Cl, minU + Cu);
+                    M[i][j] = E[i][j] + Math.min(minL, minU);
 
                     //Inside
                 } else if (i > 0 && j > 0) {
                     minL = M[i - 1][j - 1];
                     minU = M[i - 1][j];
                     minR = M[i - 1][j + 1];
-
                     Cl = Math.abs(grey[i][j + 1] - grey[i][j - 1]) + Math.abs(grey[i - 1][j] - grey[i][j - 1]);
                     Cu = Math.abs(grey[i][j + 1] - grey[i][j - 1]);
                     Cr = Math.abs(grey[i][j + 1] - grey[i][j - 1]) + Math.abs(grey[i - 1][j] - grey[i][j + 1]);
+                    minL = (minL + Cl < 0) ? Long.MAX_VALUE : (minL + Cl);
+                    minR = (minR + Cr < 0) ? Long.MAX_VALUE : (minR + Cr);
+                    minU = (minU + Cu < 0) ? Long.MAX_VALUE : (minU + Cu);
 
-                    M[i][j] = E[i][j] + Math.min(Math.min(minL + Cl, minU + Cu), minR + Cr);
+                    M[i][j] = E[i][j] + Math.min(Math.min(minL, minU), minR);
 
                     //Left Column
                 } else if (i > 0 && j == 0) {
                     minU = M[i - 1][j];
                     minR = M[i - 1][j + 1];
-
-                    //todo: grey[i][j + 1])?
                     Cu = Math.abs(grey[i][j + 1] - 255L);
                     Cr = Math.abs(grey[i][j + 1] - 255L) + Math.abs(grey[i - 1][j] - grey[i][j + 1]);
+                    minR = (minR + Cr < 0) ? Long.MAX_VALUE : (minR + Cr);
+                    minU = (minU + Cu < 0) ? Long.MAX_VALUE : (minU + Cu);
 
-                    M[i][j] = E[i][j] + Math.min(minR + Cr, minU + Cu);
+                    M[i][j] = E[i][j] + Math.min(minR, minU);
 
                     //Upper
                 } else if (i == 0) {
                     M[i][j] = E[i][j];
+                }
+
+                if (M[i][j] < 0) {
+                    M[i][j] = Long.MAX_VALUE;
                 }
             }
         }
