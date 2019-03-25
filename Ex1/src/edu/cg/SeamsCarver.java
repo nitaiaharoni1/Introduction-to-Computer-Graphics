@@ -162,7 +162,7 @@ public class SeamsCarver extends ImageProcessor {
                 minR = M[i - 1][minJ + 1];
             minU = M[i - 1][minJ];
 
-            min = Math.min(Math.min(minL, minR), minU);
+            min = Math.min(minU, Math.min(minL, minR));
             if (min == minU) {
             } else if (min == minL && minJ > 0) {
                 minJ = minJ - 1;
@@ -295,7 +295,7 @@ public class SeamsCarver extends ImageProcessor {
                     minL = (minL + Cl < 0) ? Long.MAX_VALUE : (minL + Cl);
                     minU = (minU + Cu < 0) ? Long.MAX_VALUE : (minU + Cu);
 
-                    M[i][j] = E[i][j] + Math.min(minL, minU);
+                    M[i][j] = E[i][j] + Math.min(minU, minL);
 
                     //Inside
                 } else if (i > 0 && j > 0) {
@@ -309,7 +309,7 @@ public class SeamsCarver extends ImageProcessor {
                     minR = (minR + Cr < 0) ? Long.MAX_VALUE : (minR + Cr);
                     minU = (minU + Cu < 0) ? Long.MAX_VALUE : (minU + Cu);
 
-                    M[i][j] = E[i][j] + Math.min(Math.min(minL, minU), minR);
+                    M[i][j] = E[i][j] + Math.min(minU, Math.min(minL, minR));
 
                     //Left Column
                 } else if (i > 0 && j == 0) {
@@ -320,7 +320,7 @@ public class SeamsCarver extends ImageProcessor {
                     minR = (minR + Cr < 0) ? Long.MAX_VALUE : (minR + Cr);
                     minU = (minU + Cu < 0) ? Long.MAX_VALUE : (minU + Cu);
 
-                    M[i][j] = E[i][j] + Math.min(minR, minU);
+                    M[i][j] = E[i][j] + Math.min(minU, minR);
 
                     //Upper
                 } else if (i == 0) {
