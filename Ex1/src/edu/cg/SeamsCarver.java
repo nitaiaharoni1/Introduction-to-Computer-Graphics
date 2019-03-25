@@ -56,7 +56,8 @@ public class SeamsCarver extends ImageProcessor {
         for (int k = 0; k < seamsNum; k++) {
             calcE();
             calcM();
-            storeSeams(1);
+            findMinBottomCells(1);
+            storeSeams();
             calcSeamMatrix(0);
             removeSeams();
         }
@@ -66,7 +67,8 @@ public class SeamsCarver extends ImageProcessor {
     private BufferedImage increaseImageWidth() {
         calcE();
         calcM();
-        storeSeams(seamsNum);
+        findMinBottomCells(seamsNum);
+        storeSeams();
         for (int k = 0; k < seamsNum; k++) {
             calcSeamMatrix(k);
             addSeams();
@@ -96,7 +98,8 @@ public class SeamsCarver extends ImageProcessor {
     public BufferedImage showSeams(int seamColorRGB) {
         calcE();
         calcM();
-        storeSeams(seamsNum);
+        findMinBottomCells(seamsNum);
+        storeSeams();
         BufferedImage showSeamsImg = duplicateWorkingImage();
         for (int[] seam : seams) {
             for (int i = 0; i < seams[0].length; i++) {
@@ -138,16 +141,14 @@ public class SeamsCarver extends ImageProcessor {
         grey = matrix;
     }
 
-    private void storeSeams(int num) {
-        seams = new int[num][grey.length];
-        int[] minIndexesBottom;
+    private void storeSeams() {
+        int num = seams.length;
         int minIndex;
-        minIndexesBottom = findMinBottomCellsSorted(num);
-        for (int k = 0; k < minIndexesBottom.length; k++) {
-            minIndex = minIndexesBottom[k];
-            for (int i = grey.length - 1; i >= 0; i--) {
+        for (int k = 0; k < num; k++) {
+            minIndex = seams[k][seams[0].length - 1];
+            for (int i = seams[0].length - 1; i >= 0; i--) {
                 seams[k][i] = minIndex;
-                M[i][minIndex] = Long.MAX_VALUE;
+                M[i][minIndex] = Long.MAX_VALUE - 1000;
                 minIndex = findMinFromUpperCells(i, minIndex);
             }
         }
@@ -173,13 +174,13 @@ public class SeamsCarver extends ImageProcessor {
         return minJ;
     }
 
-    private int[] findMinBottomCellsSorted(int num) {
-        int[] minIndexesBottom = new int[num];
+    private void findMinBottomCells(int num) {
+        seams = new int[num][inHeight];
         int minBottomIndex, bottomRow = M.length - 1;
         long minCost;
         for (int k = 0; k < num; k++) {
             minBottomIndex = -1;
-            minCost = Long.MAX_VALUE;
+            minCost = Long.MAX_VALUE - 1000;
             for (int j = 0; j < M[0].length; j++) {
                 if (M[bottomRow][j] < minCost) {
                     minCost = M[bottomRow][j];
@@ -187,12 +188,11 @@ public class SeamsCarver extends ImageProcessor {
                     if (minCost == 0) break;
                 }
             }
-            M[bottomRow][minBottomIndex] = Long.MAX_VALUE;
-            minIndexesBottom[k] = minBottomIndex;
+            M[bottomRow][minBottomIndex] = Long.MAX_VALUE - 1000;
+            seams[k][M.length - 1] = minBottomIndex;
         }
-        if (num != 1)
-            Arrays.sort(minIndexesBottom);
-        return minIndexesBottom;
+//        if (num != 1)
+//            Arrays.sort(minIndexesBottom);
     }
 
     private void calcE() {
@@ -212,9 +212,6 @@ public class SeamsCarver extends ImageProcessor {
                     E[i][j] = Long.MAX_VALUE;
                 } else {
                     E[i][j] = Math.abs(grey[i][jRight] - greyIJ) + Math.abs(grey[iDown][j] - greyIJ);
-                }
-                if (E[i][j] < 0) {
-                    E[i][j] = Long.MAX_VALUE;
                 }
                 if (E[i][j] < 0) {
                     E[i][j] = Long.MAX_VALUE;
