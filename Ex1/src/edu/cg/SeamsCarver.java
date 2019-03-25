@@ -70,48 +70,40 @@ public class SeamsCarver extends ImageProcessor {
         for (int k = 0; k < seamsNum; k++) {
             calcSeamMatrix(k);
             addSeams();
-            updateSortedSeams();
+            updateSortedSeams(k);
         }
         return paintResultImg();
     }
 
-    private void updateSortedSeams() {
-        for (int k = 0; k < seams.length; k++) {
-            for (int i = 0; i < seams[0].length; i++) {
-                seams[k][i] += 1;
+    private void updateSortedSeams(int k) {
+        for (int i = k+1; i < seams.length; i++) {
+            for (int j = 0; j < seams[0].length; j++) {
+                seams[i][j]++;
             }
         }
     }
 
-    private void sortSeams() {
-        int[][] sorted = new int[seams.length][seams[0].length];
-        for (int k = 0; k < seams.length; k++) {
-            long min = Long.MAX_VALUE;
-            int minIndex = -1;
-            for (int j = 0; j < seams.length; j++) {
-                if (seams[j][0] < min) {
-                    min = seams[j][0];
-                    minIndex = j;
-                }
-            }
-            sorted[k] = seams[minIndex].clone();
-            seams[minIndex][0] = Integer.MAX_VALUE;
-        }
-        seams = sorted;
-    }
-
+    /**
+     * @param seamColorRGB
+     * @return showSeamsImg
+     * <p>
+     * 1. Calculates Energy matrix
+     * 2. Calculates Costs matrix
+     * 3. Uses dynamic programming to find the optimal seam starting from the bottom row of the costs matrix
+     * 4. For seamsNum stores each minimal seam in a matrix.
+     * 5. Paints the seams on a duplicate of the working image in the seamColorRGB color
+     */
     public BufferedImage showSeams(int seamColorRGB) {
         calcE();
         calcM();
         storeSeams(seamsNum);
-        sortSeams();
-        BufferedImage res = workingImage;
+        BufferedImage showSeamsImg = duplicateWorkingImage();
         for (int[] seam : seams) {
             for (int i = 0; i < seams[0].length; i++) {
-                res.setRGB(seam[i], i, seamColorRGB);
+                showSeamsImg.setRGB(seam[i], i, seamColorRGB);
             }
         }
-        return res;
+        return showSeamsImg;
     }
 
     public boolean[][] getMaskAfterSeamCarving() {
@@ -171,11 +163,10 @@ public class SeamsCarver extends ImageProcessor {
             minU = M[i - 1][minJ];
 
             min = Math.min(Math.min(minL, minR), minU);
-            if (min == minU) {
-            } else if (min == minL && minJ > 0) {
-                minJ -= 1;
-            } else if (min == minR && minJ < M[0].length - 1) {
-                minJ += 1;
+            if (min == minR && minJ < M[0].length-1) {
+                minJ = minJ + 1;
+            } else if(min == minL && minJ > 0) {
+                minJ = minJ - 1;
             }
         }
         return minJ;
@@ -213,19 +204,13 @@ public class SeamsCarver extends ImageProcessor {
                 maskCost = 0;
                 jRight = j + 1;
                 iDown = i + 1;
-//                jLeft = j - 1;
-//                iUp = i - 1;
                 if (iDown >= E.length)
-                    iDown = i;
-//                if (iUp <0 )
-//                    iUp = i;
+                    iDown = i - 1;
                 if (jRight >= E[0].length)
-                    jRight = j;
-//                if (jLeft < 0)
-//                    jLeft = j;
+                    jRight = j - 1;
                 if (imageMask[i][j])
                     maskCost = Long.MAX_VALUE;
-                E[i][j] = Math.abs(grey[i][jRight] - greyIJ) /*+ Math.abs(grey[i][jLeft] - greyIJ)*/ + Math.abs(grey[iDown][j] - greyIJ)/*+ Math.abs(grey[iUp][j] - greyIJ)*/ + maskCost;
+                E[i][j] = Math.abs(grey[i][jRight] - greyIJ) + Math.abs(grey[iDown][j] - greyIJ) + maskCost;
             }
         }
     }
@@ -241,7 +226,10 @@ public class SeamsCarver extends ImageProcessor {
             for (int j = 0; j < seamsMatrix[0].length; j++) {
                 if (seamsMatrix[i][j] != null) {
                     newGrey[i][indexJ] = grey[i][j];
-                    indexJ = getIndexJ(newImg, newSeamsMat, newImageMask, indexJ, i, j);
+                    newImg[i][indexJ] = currentImg[i][j];
+                    newSeamsMat[i][indexJ] = currentImg[i][j];
+                    newImageMask[i][indexJ] = imageMask[i][j];
+                    indexJ++;
                 }
             }
         }
@@ -260,24 +248,25 @@ public class SeamsCarver extends ImageProcessor {
             indexJ = 0;
             for (int j = 0; j < seamsMatrix[0].length; j++) {
                 if (seamsMatrix[i][j] == null) {
-                    indexJ = getIndexJ(newImg, newSeamsMat, newImageMask, indexJ, i, j);
-                    indexJ = getIndexJ(newImg, newSeamsMat, newImageMask, indexJ, i, j);
+                    newImg[i][indexJ] = currentImg[i][j];
+                    newSeamsMat[i][indexJ] = currentImg[i][j];
+                    newImageMask[i][indexJ] = imageMask[i][j];
+                    indexJ++;
+                    newImg[i][indexJ] = currentImg[i][j];
+                    newSeamsMat[i][indexJ] = currentImg[i][j];
+                    newImageMask[i][indexJ] = imageMask[i][j];
+                    indexJ++;
                 } else {
-                    indexJ = getIndexJ(newImg, newSeamsMat, newImageMask, indexJ, i, j);
+                    newImg[i][indexJ] = currentImg[i][j];
+                    newSeamsMat[i][indexJ] = currentImg[i][j];
+                    newImageMask[i][indexJ] = imageMask[i][j];
+                    indexJ++;
                 }
             }
         }
         currentImg = newImg;
         seamsMatrix = newSeamsMat;
         imageMask = newImageMask;
-    }
-
-    private int getIndexJ(Color[][] newImg, Color[][] newSeamsMat, boolean[][] newImageMask, int indexJ, int i, int j) {
-        newImg[i][indexJ] = currentImg[i][j];
-        newSeamsMat[i][indexJ] = currentImg[i][j];
-        newImageMask[i][indexJ] = imageMask[i][j];
-        indexJ++;
-        return indexJ;
     }
 
     private void calcSeamMatrix(int k) {
@@ -294,7 +283,7 @@ public class SeamsCarver extends ImageProcessor {
         for (int i = 0; i < M.length; i++) {
             for (int j = 0; j < M[0].length; j++) {
                 //Right Column
-                if (i > 0 && j + 1 >= M[0].length) {
+                if ((i > 0) && (j == M[0].length - 1)){
                     minL = M[i - 1][j - 1];
                     minU = M[i - 1][j];
 
