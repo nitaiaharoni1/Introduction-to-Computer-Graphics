@@ -24,7 +24,7 @@ public class SeamsCarver extends ImageProcessor {
     private long[][] M;
     private int[][] seams;
 
-
+    // Constructor
     public SeamsCarver(Logger logger, BufferedImage workingImage, int outWidth, RGBWeights rgbWeights,
                        boolean[][] imageMask) {
         super((s) -> logger.log("Seam carving: " + s), workingImage, rgbWeights, outWidth, workingImage.getHeight());
@@ -52,6 +52,7 @@ public class SeamsCarver extends ImageProcessor {
         return resizeOp.resize();
     }
 
+    // Reduces Image width
     private BufferedImage reduceImageWidth() {
         for (int k = 0; k < seamsNum; k++) {
             calcE();
@@ -64,6 +65,7 @@ public class SeamsCarver extends ImageProcessor {
         return paintResultImg();
     }
 
+    // Increases image width
     private BufferedImage increaseImageWidth() {
         calcE();
         calcM();
@@ -72,12 +74,14 @@ public class SeamsCarver extends ImageProcessor {
         for (int k = 0; k < seamsNum; k++) {
             calcSeamMatrix(k);
             addSeams();
-            updateSortedSeams(k);
+            updateSeams(k);
         }
         return paintResultImg();
     }
 
-    private void updateSortedSeams(int k) {
+
+    // Updates the seams indexes after duplicating a seam
+    private void updateSeams(int k) {
         for (int i = k + 1; i < seams.length; i++) {
             for (int j = 0; j < seams[0].length; j++) {
                 seams[i][j]++;
@@ -113,6 +117,7 @@ public class SeamsCarver extends ImageProcessor {
         return imageMask;
     }
 
+    // Go over the current image and paints a new image by it
     private BufferedImage paintResultImg() {
         BufferedImage img = new BufferedImage(currentImg[0].length, currentImg.length, workingImage.getType());
         for (int i = 0; i < currentImg.length; i++) {
@@ -123,6 +128,7 @@ public class SeamsCarver extends ImageProcessor {
         return img;
     }
 
+    // Set current image as a Color matrix
     private void initCurrentImg() {
         Color[][] matrix1 = new Color[workingImage.getHeight()][workingImage.getWidth()];
         Color[][] matrix2 = new Color[workingImage.getHeight()][workingImage.getWidth()];
@@ -134,6 +140,8 @@ public class SeamsCarver extends ImageProcessor {
         seamsMatrix = matrix2;
     }
 
+
+    // Greyscaling the image as needed for the seam carving process
     private void transformToGrey() {
         BufferedImage greyImg = greyscale();
         long[][] matrix = new long[greyImg.getHeight()][greyImg.getWidth()];
@@ -141,6 +149,7 @@ public class SeamsCarver extends ImageProcessor {
         grey = matrix;
     }
 
+    // Saves the needed amount of seams (saves 1 in reduce size process)
     private void storeSeams() {
         int num = seams.length;
         int minIndex;
@@ -154,6 +163,8 @@ public class SeamsCarver extends ImageProcessor {
         }
     }
 
+
+    // Searching for the minimum of the 3 upper cells from the current pixel
     private int findMinFromUpperCells(int i, int minJ) {
         long minL = Long.MAX_VALUE, minR = Long.MAX_VALUE, minU, min;
         if (i > 0) {
@@ -174,6 +185,7 @@ public class SeamsCarver extends ImageProcessor {
         return minJ;
     }
 
+    // Finds the minimum pixels of the seamNum bottom pixels
     private void findMinBottomCells(int num) {
         seams = new int[num][inHeight];
         int minBottomIndex, bottomRow = M.length - 1;
@@ -195,6 +207,7 @@ public class SeamsCarver extends ImageProcessor {
 //            Arrays.sort(minIndexesBottom);
     }
 
+    // Calculates pixel energy matrix
     private void calcE() {
         E = new long[grey.length][grey[0].length];
         long greyIJ;
@@ -220,6 +233,7 @@ public class SeamsCarver extends ImageProcessor {
         }
     }
 
+    // Eliminate the needed seams from the image
     private void removeSeams() {
         long[][] newGrey = new long[grey.length][grey[0].length - 1];
         Color[][] newImg = new Color[currentImg.length][currentImg[0].length - 1];
@@ -241,6 +255,7 @@ public class SeamsCarver extends ImageProcessor {
         seamsMatrix = newSeamsMat;
     }
 
+    // Add the desired seam to the resides image
     private void addSeams() {
         Color[][] newImg = new Color[currentImg.length][currentImg[0].length + 1];
         Color[][] newSeamsMat = new Color[currentImg.length][currentImg[0].length + 1];
@@ -262,6 +277,7 @@ public class SeamsCarver extends ImageProcessor {
         imageMask = newImageMask;
     }
 
+    // A helper function
     private int getIndexJ(Color[][] newImg, Color[][] newSeamsMat, boolean[][] newImageMask, int indexJ, int i, int j) {
         newImg[i][indexJ] = currentImg[i][j];
         newSeamsMat[i][indexJ] = currentImg[i][j];
@@ -270,13 +286,14 @@ public class SeamsCarver extends ImageProcessor {
         return indexJ;
     }
 
+    // Update a matrix for seams marking
     private void calcSeamMatrix(int k) {
         for (int i = 0; i < seams[0].length; i++) {
             seamsMatrix[i][seams[k][i]] = null;
         }
     }
 
-
+    // Calculate the costs matrix M according to the formula
     private void calcM() {
         M = new long[E.length][E[0].length];
         long Cr, Cl, Cu;
