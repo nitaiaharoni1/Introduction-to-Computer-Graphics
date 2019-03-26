@@ -104,13 +104,6 @@ public class SeamsCarver extends ImageProcessor {
         calcM();
         findMinBottomCells(seamsNum);
         storeSeams();
-        for (int k = 0; k < seams.length; k++) {
-            for (int i = 0; i < seams[0].length; i++) {
-                if (imageMask[i][seams[k][i]] == true) {
-                    System.out.println("M[" + i + "][" + seams[k][i] + "]=" + M[i][seams[k][i]]);
-                }
-            }
-        }
         BufferedImage showSeamsImg = duplicateWorkingImage();
         for (int[] seam : seams) {
             for (int i = 0; i < seams[0].length; i++) {
