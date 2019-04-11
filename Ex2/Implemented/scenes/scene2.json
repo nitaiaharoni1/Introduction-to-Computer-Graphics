@@ -135,7 +135,7 @@
         },
         "reflectionIntensity": 0.3,
         "shininess": 10,
-        "isTransparent": false,
+        "isTransparent": true,
         "refractionIntensity": 0.0,
         "refractionIndex": 1.5
       }
