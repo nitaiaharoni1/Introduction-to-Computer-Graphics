@@ -155,7 +155,7 @@ public class Scenes {
     }
 
     public static Scene scene6() {
-        Shape sphereShape1 = new Sphere(new Point(0.8, 0.8, 0.8), 0.9);
+        Shape sphereShape1 = new Sphere(new Point(0.8, 0.8, 0.8), 0.7);
         Material sphereMat1 = Material.getRandomMaterial();
         Surface sphereSurface1 = new Surface(sphereShape1, sphereMat1);
 
@@ -175,7 +175,7 @@ public class Scenes {
                 .initIntensity(new Vec(0.7));
 
         return new Scene().initAmbient(new Vec(1.0))
-                .initCamera(new Point(0.0, 0.0, 0.0), new Vec(0.0, 0.0 , -1.0),
+                .initCamera(new Point(0.0, 0.0, 2.0), new Vec(0.0, 0.0 , -1.0),
                         new Vec(1.0, 1.0, 0.0), 3.0)
                 .addLightSource(dirLight).addSurface(sphereSurface1).addSurface(sphereSurface2)
                 .addSurface(sphereSurface3).addSurface(sphereSurface4).initName("scene6").initAntiAliasingFactor(1)
