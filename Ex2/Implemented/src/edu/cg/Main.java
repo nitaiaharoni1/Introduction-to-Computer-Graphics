@@ -17,7 +17,8 @@ public class Main {
 		File imagesOutputDir = new File("outputs");
 		if(!imagesOutputDir.exists() && !imagesOutputDir.mkdir())
 			throw new RuntimeException("Couldn't create the folder outputs...");
-		
+
+
 		MenuWindow mw = new MenuWindow();
 		mw.setVisible(true);
 	}
