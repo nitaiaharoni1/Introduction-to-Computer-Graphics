@@ -12,9 +12,9 @@ public class PinholeCamera {
 
     Point centerPoint;
     Vec rightVec;
-    int height; //Todo: might need to be double
-    int width; //Todo: might need to be double
-    double viewPlainWidth; //Todo: might be int
+    double height;
+    double width;
+    double viewPlainWidth;
     double pixelsHeight;
     double pixelsWidth;
     int middlePixelY;
