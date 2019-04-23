@@ -59,7 +59,7 @@ public class AxisAlignedBox extends Shape {
 
     @Override
     //Todo: Change
-    public Hit intersect(final Ray ray) {
+    public Hit intersect(Ray ray) {
         double tNear = -1.0E8;
         double tFar = 1.0E8;
         final double[] rayP = ray.source().asArray();

@@ -4,8 +4,7 @@ import edu.cg.algebra.Hit;
 import edu.cg.algebra.Ray;
 import edu.cg.algebra.Vec;
 
-public class Surface implements Intersectable
-{
+public class Surface implements Intersectable {
     private Shape shape;
     private Material material;
 
@@ -25,12 +24,9 @@ public class Surface implements Intersectable
     }
 
     @Override
-    public Hit intersect(final Ray ray) {
-        //Todo: Change
-        final Hit hit = this.shape.intersect(ray);
-        if (hit != null) {
-            hit.setSurface(this);
-        }
+    public Hit intersect(Ray ray) {
+        Hit hit = shape.intersect(ray);
+        if (hit != null) hit.setSurface(this);
         return hit;
     }
 
@@ -66,12 +62,10 @@ public class Surface implements Intersectable
         return material.isTransparent;
     }
 
-    //Todo: Change 1.0 to 1?
     public double n1(Hit hit) {
         return hit.isWithinTheSurface() ? material.refractionIndex : 1;
     }
 
-    //Todo: Change 1.0 to 1?
     public double n2(Hit hit) {
         return hit.isWithinTheSurface() ? 1 : material.refractionIndex;
     }
