@@ -60,13 +60,15 @@ public class Sphere extends Shape
         return new Hit(minT, normal).setIsWithin(isWithin);
     }
 
-    //Todo: Change
+    //Todo: I've already changed... still need to change the name of the function. i don't know what the function do
     private Vec normal(Point p) {
-        return p.sub(this.center).normalize();
+        Vec normal = p.sub(center).normalize();
+        return normal;
     }
 
-    //Todo: Change
-    public double substitute(Point p) {
-        return p.distSqr(this.center) - this.radius * this.radius;
+    //Todo: I've already changed... still need to change the name of the function. i don't know what the function do
+    private double substitute(Point p) {
+        double substitute = p.distSqr(center) - Math.pow(radius,2);
+        return substitute;
     }
 }

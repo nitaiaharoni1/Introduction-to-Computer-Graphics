@@ -155,14 +155,14 @@ public class Scenes {
     }
 
     public static Scene scene6() {
-        int pyramidHeight = 3, boxHeight=1,boxWidth=1,boxDepth=1;
+        int pyramidHeight = 4, boxHeight=1,boxWidth=1,boxDepth=1;
         Scene pyramidScence = new Scene();
         pyramidScence.initName("Scene6");
         pyramidScence.initAmbient(new Vec(0.2));
         pyramidScence.initRenderRefarctions(true).initRenderReflections(true).initMaxRecursionLevel(6);
         // Init camera position and setup
         Point cameraPosition = new Point(2*boxWidth*Math.pow(pyramidHeight+1,2),2*boxDepth*Math.pow(pyramidHeight+1,2),boxHeight*pyramidHeight+7);
-        Vec towardsVec = new Vec(-1.0, -1.0, -0.3);
+        Vec towardsVec = new Vec(-1.0, -1.0, -0.2);
         Vec upVec = new Vec(0.0, 0.0, 1.0);
         double distanceFromPlain = 0.25*cameraPosition.dist(new Point(0.0,0.0,0.0));
         pyramidScence.initCamera(cameraPosition,towardsVec, upVec, distanceFromPlain);
@@ -176,14 +176,13 @@ public class Scenes {
         pyramidScence.addLightSource(spotLight1);
         pyramidScence.addLightSource(spotLight2);
         pyramidScence.addLightSource(pointLight3);
-        for (int currentHeight = 0; currentHeight < pyramidHeight;currentHeight++) {
+        for (int currentHeight = 1; currentHeight < pyramidHeight+1;currentHeight++) {
             int numOfBoxes = (int)Math.pow(2,pyramidHeight-1) - 2*currentHeight;
-            int offsetX = currentHeight*boxWidth;
-            int offsetY = currentHeight*boxDepth;
+            int offsetX = currentHeight*boxWidth +2;
+            int offsetY = currentHeight*boxDepth+2;
             for (int i = 0; i <numOfBoxes;i++) {
                 for (int j = 0; j<numOfBoxes;j++) {
-                    Shape boxShape = new AxisAlignedBox(new Point(offsetX+i*boxWidth, offsetY+j*boxDepth, boxHeight*currentHeight),
-                            new Point(offsetX+(i+1)*boxWidth, offsetY+(j+1)*boxDepth, (currentHeight+1)*boxHeight));
+                    Shape boxShape = new Sphere(new Point(offsetX+i*boxWidth, offsetY+j*boxDepth, boxHeight*currentHeight), 0.5);
                     Material boxMat = Material.getRandomMaterial();
                     Surface boxSurface = new Surface(boxShape, boxMat);
                     pyramidScence.addSurface(boxSurface);
