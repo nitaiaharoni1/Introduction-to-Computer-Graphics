@@ -21,25 +21,19 @@ public class DirectionalLight extends Light {
     }
 
     @Override
-    public DirectionalLight initIntensity(Vec intensity) {
-        return (DirectionalLight)super.initIntensity(intensity);
+    public Ray rayToLight(Point p) {
+        Ray ray = new Ray(p, direction.neg());
+        return ray;
     }
 
-    //Todo: Change
-    @Override
-    public Ray rayToLight(Point fromPoint) {
-        return new Ray(fromPoint, this.direction.neg());
-    }
-
-    //Todo: Change
     @Override
     public boolean isOccludedBy(Surface surface, Ray rayToLight) {
-        return surface.intersect(rayToLight) != null;
+        Boolean isOcluded = (surface.intersect(rayToLight)!=null) ? true : false;
+        return isOcluded;
     }
 
-    //Todo: Change
     @Override
     public Vec intensity(Point hittingPoint, Ray rayToLight) {
-        return this.intensity;
+        return intensity;
     }
 }
