@@ -5,16 +5,20 @@ import edu.cg.algebra.Vec;
 import edu.cg.algebra.Point;
 
 public class PinholeCamera {
-    transient Point cameraPosition;
-    transient Vec towardsVec;
-    transient Vec upVec;
-    transient double distanceToPlain;
+    Point cameraPosition;
+    Vec towardsVec;
+    Vec upVec;
+    double distanceToPlain;
 
-    transient Point centerPoint;
-    transient Vec rightVec;
-    transient int height; //Todo: might need to be double
-    transient int width; //Todo: might need to be double
-    transient double viewPlainWidth; //Todo: might be int
+    Point centerPoint;
+    Vec rightVec;
+    int height; //Todo: might need to be double
+    int width; //Todo: might need to be double
+    double viewPlainWidth; //Todo: might be int
+    double pixelsHeight;
+    double pixelsWidth;
+    int middlePixelY;
+    int middlePixelX;
 
     /**
      * Initializes a pinhole camera model with default resolution 200X200 (RxXRy) and image width 2.
@@ -48,6 +52,10 @@ public class PinholeCamera {
         this.height = height;
         this.width = width;
         this.viewPlainWidth = viewPlainWidth;
+        this.pixelsHeight = viewPlainWidth / height;
+        this.pixelsWidth = viewPlainWidth / width;
+        this.middlePixelY = height / 2;
+        this.middlePixelX = width / 2;
     }
 
     /**
@@ -58,10 +66,8 @@ public class PinholeCamera {
      * @return the middle point of the pixel (x,y) in the model coordinates.
      */
     public Point transform(int x, int y) {
-        double pixelsHeight = viewPlainWidth / height; //Todo: might need to change back to pixelsAngleHeight=pixelsAngleWidth
-        double pixelsWidth = viewPlainWidth / width;
-        double dUp = -pixelsHeight * (y - height / 2);
-        double dRight = pixelsWidth * (x - width / 2);
+        double dUp = -this.pixelsHeight * (y - middlePixelY);
+        double dRight = this.pixelsWidth * (x - middlePixelX);
         Vec mUp = upVec.mult(dUp);
         Vec mRight = rightVec.mult(dRight);
         Point middlePoint = centerPoint.add(mRight).add(mUp);
