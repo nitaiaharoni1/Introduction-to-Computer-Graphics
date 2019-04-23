@@ -29,7 +29,35 @@ public class PointLight extends Light {
 
     @Override
     public PointLight initIntensity(Vec intensity) {
-        return (PointLight)super.initIntensity(intensity);
+        return (PointLight) super.initIntensity(intensity);
+    }
+
+    @Override
+    public Ray rayToLight(Point fromPoint) {
+        Ray ray = new Ray(fromPoint, position);
+        return ray;
+    }
+
+    @Override
+    public boolean isOccludedBy(Surface surface, Ray rayToLight) {
+        Boolean isOcluded = (surface.intersect(rayToLight) != null) ? true : false;
+        return isOcluded;
+
+        //Todo: check if needed to change
+//        Hit hit = surface.intersect(rayToLight);
+//        if (hit == null) {
+//            return false;
+//        }
+//        Point source = rayToLight.source();
+//        Point hittingPoint = rayToLight.getHittingPoint(hit);
+//        return source.distSqr(this.position) > source.distSqr(hittingPoint);
+    }
+
+    @Override
+    public Vec intensity(Point hittingPoint, Ray rayToLight) {
+        double distance = hittingPoint.dist(position);
+        double F_att = kq * Math.sqrt(distance) + kl * distance + kc;
+        return intensity.mult(1 / F_att);
     }
 
     public PointLight initPosition(Point position) {
@@ -42,31 +70,5 @@ public class PointLight extends Light {
         this.kl = kl;
         this.kc = kc;
         return this;
-    }
-
-    //Todo: Change
-    @Override
-    public Ray rayToLight(Point fromPoint) {
-        return new Ray(fromPoint, this.position);
-    }
-
-    //Todo: Change
-    @Override
-    public boolean isOccludedBy(Surface surface, Ray rayToLight) {
-        Hit hit = surface.intersect(rayToLight);
-        if (hit == null) {
-            return false;
-        }
-        Point source = rayToLight.source();
-        Point hittingPoint = rayToLight.getHittingPoint(hit);
-        return source.distSqr(this.position) > source.distSqr(hittingPoint);
-    }
-
-    //Todo: Change
-    @Override
-    public Vec intensity(Point hittingPoint, Ray rayToLight) {
-        double dist = hittingPoint.dist(this.position);
-        double decay = this.kc + (this.kl + this.kq * dist) * dist;
-        return this.intensity.mult(1.0 / decay);
     }
 }
