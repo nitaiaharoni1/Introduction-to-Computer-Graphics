@@ -5,17 +5,16 @@ import edu.cg.algebra.Vec;
 import edu.cg.algebra.Point;
 
 public class PinholeCamera {
-    //Todo: Change
-    Point cameraPosition;
-    Point centerPoint;
-    Vec towardsVec;
-    Vec upVec;
-    Vec rightVec;
-    double viewPlainWidth;
-    double distanceToPlain;
-    double resX;
-    double resY;
-    double pixelRatio;
+    transient Point cameraPosition;
+    transient Vec towardsVec;
+    transient Vec upVec;
+    transient double distanceToPlain;
+
+    transient Point centerPoint;
+    transient Vec rightVec;
+    transient double height;
+    transient double width;
+    transient double viewPlainWidth;
 
     /**
      * Initializes a pinhole camera model with default resolution 200X200 (RxXRy) and image width 2.
@@ -26,16 +25,15 @@ public class PinholeCamera {
      * @param distanceToPlain - The distance of the camera (position) to the center point of the image-plain.
      */
     public PinholeCamera(Point cameraPosition, Vec towardsVec, Vec upVec, double distanceToPlain) {
-        //Todo: Change, notice "this."
+        this.width = 200.0;
+        this.height = 200.0;
+        this.viewPlainWidth = 2.0;
         this.cameraPosition = cameraPosition;
         this.towardsVec = towardsVec.normalize();
-        this.rightVec = this.towardsVec.cross(upVec).normalize();
-        this.upVec = this.rightVec.cross(this.towardsVec).normalize();
+        this.upVec = upVec.normalize();
         this.distanceToPlain = distanceToPlain;
+        this.rightVec = towardsVec.cross(upVec).normalize();
         this.centerPoint = new Ray(cameraPosition, towardsVec).add(distanceToPlain);
-        this.resX = 200.0;
-        this.resY = 200.0;
-        this.viewPlainWidth = 2.0;
     }
 
     /**
@@ -46,10 +44,9 @@ public class PinholeCamera {
      * @param viewPlainWidth - the width of the image plain in world coordinates.
      */
     public void initResolution(int height, int width, double viewPlainWidth) {
-        //Todo: Change, notice "this."
+        this.height = height;
+        this.width = width;
         this.viewPlainWidth = viewPlainWidth;
-        this.resX = width;
-        this.resY = height;
     }
 
     /**
@@ -62,9 +59,9 @@ public class PinholeCamera {
     public Point transform(int x, int y) {
         //Todo: Change, notice "this."
         double pixelHeight;
-        double pixelWidth = pixelHeight = this.viewPlainWidth / this.resX;
-        double upDistance = (y - (int) (this.resY / 2.0)) * pixelHeight * -1.0;
-        double rightDistance = (x - (int) (this.resX / 2.0)) * pixelWidth;
+        double pixelWidth = pixelHeight = viewPlainWidth / width;
+        double upDistance = (y - (int) (height / 2.0)) * pixelHeight * -1.0;
+        double rightDistance = (x - (int) (width / 2.0)) * pixelWidth;
         Vec upMovement = this.upVec.mult(upDistance);
         Vec rightMovement = this.rightVec.mult(rightDistance);
         Point fovPoint = this.centerPoint.add(upMovement).add(rightMovement);
@@ -77,7 +74,7 @@ public class PinholeCamera {
      * @return a "new" point representing the camera position.
      */
     public Point getCameraPosition() {
-        //Todo: Change, notice "this."
-        return new Point(this.cameraPosition.x, this.cameraPosition.y, this.cameraPosition.z);
+        Point p = new Point(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        return p;
     }
 }
