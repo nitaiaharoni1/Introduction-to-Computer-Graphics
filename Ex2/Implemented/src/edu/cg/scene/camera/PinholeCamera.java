@@ -12,9 +12,9 @@ public class PinholeCamera {
 
     transient Point centerPoint;
     transient Vec rightVec;
-    transient double height;
-    transient double width;
-    transient double viewPlainWidth;
+    transient int height; //Todo: might need to be double
+    transient int width; //Todo: might need to be double
+    transient double viewPlainWidth; //Todo: might be int
 
     /**
      * Initializes a pinhole camera model with default resolution 200X200 (RxXRy) and image width 2.
@@ -25,15 +25,16 @@ public class PinholeCamera {
      * @param distanceToPlain - The distance of the camera (position) to the center point of the image-plain.
      */
     public PinholeCamera(Point cameraPosition, Vec towardsVec, Vec upVec, double distanceToPlain) {
-        this.width = 200.0;
-        this.height = 200.0;
-        this.viewPlainWidth = 2.0;
         this.cameraPosition = cameraPosition;
         this.towardsVec = towardsVec.normalize();
         this.upVec = upVec.normalize();
         this.distanceToPlain = distanceToPlain;
         this.rightVec = towardsVec.cross(upVec).normalize();
         this.centerPoint = new Ray(cameraPosition, towardsVec).add(distanceToPlain);
+
+        this.height = 200;
+        this.width = 200;
+        this.viewPlainWidth = 2.0;
     }
 
     /**
@@ -57,15 +58,14 @@ public class PinholeCamera {
      * @return the middle point of the pixel (x,y) in the model coordinates.
      */
     public Point transform(int x, int y) {
-        //Todo: Change, notice "this."
-        double pixelHeight;
-        double pixelWidth = pixelHeight = viewPlainWidth / width;
-        double upDistance = (y - (int) (height / 2.0)) * pixelHeight * -1.0;
-        double rightDistance = (x - (int) (width / 2.0)) * pixelWidth;
-        Vec upMovement = this.upVec.mult(upDistance);
-        Vec rightMovement = this.rightVec.mult(rightDistance);
-        Point fovPoint = this.centerPoint.add(upMovement).add(rightMovement);
-        return fovPoint;
+        double pixelsHeight = viewPlainWidth / height; //Todo: might need to change back to pixelsAngleHeight=pixelsAngleWidth
+        double pixelsWidth = viewPlainWidth / width;
+        double dUp = -pixelsHeight * (y - height / 2);
+        double dRight = pixelsWidth * (x - width / 2);
+        Vec mUp = upVec.mult(dUp);
+        Vec mRight = rightVec.mult(dRight);
+        Point middlePoint = centerPoint.add(mRight).add(mUp);
+        return middlePoint;
     }
 
     /**
