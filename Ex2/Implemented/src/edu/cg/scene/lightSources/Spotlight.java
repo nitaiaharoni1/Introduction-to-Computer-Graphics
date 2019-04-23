@@ -36,7 +36,7 @@ public class Spotlight extends PointLight {
 
     @Override
     public boolean isOccludedBy(Surface surface, Ray rayToLight) {
-        return super.isOccludedBy(surface,rayToLight);
+        return super.isOccludedBy(surface, rayToLight);
     }
 
     @Override
@@ -46,7 +46,8 @@ public class Spotlight extends PointLight {
         double distance = hittingPoint.dist(position);
         double cosG = V.dot(Vd);
         double F_att = kq * Math.sqrt(distance) + kl * distance + kc;
-        Vec Il = intensity.mult(cosG).mult(1 / F_att);
+        Vec Il = intensity.mult(cosG);
+        Il = Il.mult(1 / F_att);
         return Il;
     }
 }

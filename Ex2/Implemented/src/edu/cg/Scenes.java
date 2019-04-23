@@ -155,31 +155,47 @@ public class Scenes {
     }
 
     public static Scene scene6() {
-        Shape sphereShape1 = new Sphere(new Point(0.8, 0.8, 0.8), 0.7);
-        Material sphereMat1 = Material.getRandomMaterial();
-        Surface sphereSurface1 = new Surface(sphereShape1, sphereMat1);
+        int pyramidHeight = 3, boxHeight=1,boxWidth=1,boxDepth=1;
+        Scene pyramidScence = new Scene();
+        pyramidScence.initName("Scene6");
+        pyramidScence.initAmbient(new Vec(0.2));
+        pyramidScence.initRenderRefarctions(true).initRenderReflections(true).initMaxRecursionLevel(6);
+        // Init camera position and setup
+        Point cameraPosition = new Point(2*boxWidth*Math.pow(pyramidHeight+1,2),2*boxDepth*Math.pow(pyramidHeight+1,2),boxHeight*pyramidHeight+7);
+        Vec towardsVec = new Vec(-1.0, -1.0, -0.3);
+        Vec upVec = new Vec(0.0, 0.0, 1.0);
+        double distanceFromPlain = 0.25*cameraPosition.dist(new Point(0.0,0.0,0.0));
+        pyramidScence.initCamera(cameraPosition,towardsVec, upVec, distanceFromPlain);
+        // Add some light sources to the Scene
+        Light dirLight = new DirectionalLight().initDirection(new Vec(-0.5, -0.5, -1.0))
+                .initIntensity(new Vec(0.5));
+        Spotlight spotLight1 = new Spotlight().initPosition(new Point(12.0,4.0,6.0)).initDirection(new Vec(-0.6, -0.6, -0.8)).initIntensity(new Vec(0.5));
+        Spotlight spotLight2 = new Spotlight().initPosition(new Point(31,31,11)).initDirection(new Vec(-1.0, -1.0, -0.4)).initIntensity(new Vec(1));
+        PointLight pointLight3 = new PointLight().initPosition(new Point(-12.0,-20.0,6.0)).initIntensity(new Vec(0.4));
+        pyramidScence.addLightSource(dirLight);
+        pyramidScence.addLightSource(spotLight1);
+        pyramidScence.addLightSource(spotLight2);
+        pyramidScence.addLightSource(pointLight3);
+        for (int currentHeight = 0; currentHeight < pyramidHeight;currentHeight++) {
+            int numOfBoxes = (int)Math.pow(2,pyramidHeight-1) - 2*currentHeight;
+            int offsetX = currentHeight*boxWidth;
+            int offsetY = currentHeight*boxDepth;
+            for (int i = 0; i <numOfBoxes;i++) {
+                for (int j = 0; j<numOfBoxes;j++) {
+                    Shape boxShape = new AxisAlignedBox(new Point(offsetX+i*boxWidth, offsetY+j*boxDepth, boxHeight*currentHeight),
+                            new Point(offsetX+(i+1)*boxWidth, offsetY+(j+1)*boxDepth, (currentHeight+1)*boxHeight));
+                    Material boxMat = Material.getRandomMaterial();
+                    Surface boxSurface = new Surface(boxShape, boxMat);
+                    pyramidScence.addSurface(boxSurface);
+                }
+            }
 
-        Shape sphereShape2 = new Sphere(new Point(-0.5, 0.5, 0.5), 0.5);
-        Material sphereMat2 = Material.getRandomMaterial();
-        Surface sphereSurface2 = new Surface(sphereShape2, sphereMat2);
-
-        Shape sphereShape3 = new Sphere(new Point(0.5, -0.5, 0.5), 0.5);
-        Material sphereMat3 = Material.getRandomMaterial();
-        Surface sphereSurface3 = new Surface(sphereShape3, sphereMat3);
-
-        Shape sphereShape4 = new Sphere(new Point(-0.5, -0.5, 0.5), 0.5);
-        Material sphereMat4 = Material.getRandomMaterial();
-        Surface sphereSurface4 = new Surface(sphereShape4, sphereMat4);
-
-        Light dirLight = new DirectionalLight().initDirection(new Vec(0.0, 0.0, -1.0))
-                .initIntensity(new Vec(0.7));
-
-        return new Scene().initAmbient(new Vec(1.0))
-                .initCamera(new Point(0.0, 0.0, 2.0), new Vec(0.0, 0.0 , -1.0),
-                        new Vec(1.0, 1.0, 0.0), 3.0)
-                .addLightSource(dirLight).addSurface(sphereSurface1).addSurface(sphereSurface2)
-                .addSurface(sphereSurface3).addSurface(sphereSurface4).initName("scene6").initAntiAliasingFactor(1)
-                .initRenderRefarctions(true).initRenderReflections(true).initMaxRecursionLevel(6);
+        }
+        Plain scenePlain = new Plain(new Vec(0.0, 0.0, 1.0), new Point(0.0, 0.0, 0.0));
+        Material plainMat = Material.getGlassMaterial(false).initReflectionIntensity(0.4);
+        Surface plainSurface = new Surface(scenePlain, plainMat);
+        pyramidScence.addSurface(plainSurface);
+        return pyramidScence;
     }
 
 }
