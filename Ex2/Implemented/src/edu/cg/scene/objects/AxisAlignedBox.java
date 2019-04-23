@@ -1,9 +1,6 @@
 package edu.cg.scene.objects;
 
-import edu.cg.algebra.Hit;
-import edu.cg.algebra.Point;
-import edu.cg.algebra.Ray;
-import edu.cg.algebra.Vec;
+import edu.cg.algebra.*;
 
 public class AxisAlignedBox extends Shape {
     private Point minPoint;
@@ -70,7 +67,7 @@ public class AxisAlignedBox extends Shape {
         final double[] minP = this.minPoint.asArray();
         final double[] maxP = this.maxPoint.asArray();
         for (int i = 0; i < 3; ++i) {
-            if (Math.abs(rayD[i]) <= 1.0E-5) {
+            if (Math.abs(rayD[i]) <= Ops.epsilon) {
                 if (rayP[i] < minP[i] || rayP[i] > maxP[i]) {
                     return null;
                 }
@@ -92,14 +89,14 @@ public class AxisAlignedBox extends Shape {
                 if (t2 < tFar) {
                     tFar = t2;
                 }
-                if (tNear > tFar || tFar < 1.0E-5) {
+                if (tNear > tFar || tFar < Ops.epsilon) {
                     return null;
                 }
             }
         }
         double minT = tNear;
         boolean isWithin = false;
-        if (minT < 1.0E-5) {
+        if (minT < Ops.epsilon) {
             isWithin = true;
             minT = tFar;
         }
@@ -112,10 +109,10 @@ public class AxisAlignedBox extends Shape {
 
     //Todo: Change
     private static double findIntersectionParameter(final double a, final double b, final double c) {
-        if (Math.abs(a) < 1.0E-5 && Math.abs(b - c) > 1.0E-5) {
+        if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) > Ops.epsilon) {
             return 1.0E8;
         }
-        if (Math.abs(a) < 1.0E-5 && Math.abs(b - c) < 1.0E-5) {
+        if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) < Ops.epsilon) {
             return 0.0;
         }
         final double t = (c - b) / a;
@@ -124,22 +121,22 @@ public class AxisAlignedBox extends Shape {
 
     //Todo: Change
     private Vec normal(final Point p) {
-        if (Math.abs(p.z - this.minPoint.z) <= 1.0E-5) {
+        if (Math.abs(p.z - this.minPoint.z) <= Ops.epsilon) {
             return new Vec(0.0, 0.0, -1.0);
         }
-        if (Math.abs(p.z - this.maxPoint.z) <= 1.0E-5) {
+        if (Math.abs(p.z - this.maxPoint.z) <= Ops.epsilon) {
             return new Vec(0.0, 0.0, 1.0);
         }
-        if (Math.abs(p.y - this.minPoint.y) <= 1.0E-5) {
+        if (Math.abs(p.y - this.minPoint.y) <= Ops.epsilon) {
             return new Vec(0.0, -1.0, 0.0);
         }
-        if (Math.abs(p.y - this.maxPoint.y) <= 1.0E-5) {
+        if (Math.abs(p.y - this.maxPoint.y) <= Ops.epsilon) {
             return new Vec(0.0, 1.0, 0.0);
         }
-        if (Math.abs(p.x - this.minPoint.x) <= 1.0E-5) {
+        if (Math.abs(p.x - this.minPoint.x) <= Ops.epsilon) {
             return new Vec(-1.0, 0.0, 0.0);
         }
-        if (Math.abs(p.x - this.maxPoint.x) <= 1.0E-5) {
+        if (Math.abs(p.x - this.maxPoint.x) <= Ops.epsilon) {
             return new Vec(1.0, 0.0, 0.0);
         }
         return null;

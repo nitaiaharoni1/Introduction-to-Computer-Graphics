@@ -1,9 +1,6 @@
 package edu.cg.scene.objects;
 
-import edu.cg.algebra.Hit;
-import edu.cg.algebra.Ray;
-import edu.cg.algebra.Vec;
-import edu.cg.algebra.Point;
+import edu.cg.algebra.*;
 
 public class Sphere extends Shape
 {
@@ -46,13 +43,13 @@ public class Sphere extends Shape
         }
         double t1 = (-b - discriminant) / 2.0;
         double t2 = (-b + discriminant) / 2.0;
-        if (t2 < 1.0E-5) {
+        if (t2 < Ops.epsilon) {
             return null;
         }
         double minT = t1;
         Vec normal = this.normal(ray.add(t1));
         boolean isWithin = false;
-        if (t1 < 1.0E-5) {
+        if (t1 < Ops.epsilon) {
             minT = t2;
             normal = this.normal(ray.add(t2)).neg();
             isWithin = true;
