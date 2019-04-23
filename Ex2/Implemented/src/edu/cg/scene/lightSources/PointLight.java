@@ -1,8 +1,6 @@
 package edu.cg.scene.lightSources;
 
-import edu.cg.algebra.Point;
-import edu.cg.algebra.Ray;
-import edu.cg.algebra.Vec;
+import edu.cg.algebra.*;
 import edu.cg.scene.objects.Surface;
 
 public class PointLight extends Light {
@@ -39,17 +37,21 @@ public class PointLight extends Light {
 
     @Override
     public boolean isOccludedBy(Surface surface, Ray rayToLight) {
-        Boolean isOcluded = (surface.intersect(rayToLight) != null) ? true : false;
-        return isOcluded;
-
-        //Todo: check if needed to change
-//        Hit hit = surface.intersect(rayToLight);
-//        if (hit == null) {
-//            return false;
-//        }
-//        Point source = rayToLight.source();
-//        Point hittingPoint = rayToLight.getHittingPoint(hit);
-//        return source.distSqr(this.position) > source.distSqr(hittingPoint);
+        Hit hit = surface.intersect(rayToLight);
+        if (hit != null) {
+            Point hitP = rayToLight.getHittingPoint(hit);
+            Point p = rayToLight.source();
+            double dToLight = p.distSqr(position);
+            double dToHit = p.distSqr(hitP);
+            double delta = Math.abs(dToLight-dToHit);
+            if (delta > Ops.epsilon) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     @Override
