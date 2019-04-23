@@ -1,6 +1,5 @@
 package edu.cg.scene.lightSources;
 
-import edu.cg.algebra.Hit;
 import edu.cg.algebra.Point;
 import edu.cg.algebra.Ray;
 import edu.cg.algebra.Vec;
@@ -57,7 +56,8 @@ public class PointLight extends Light {
     public Vec intensity(Point hittingPoint, Ray rayToLight) {
         double distance = hittingPoint.dist(position);
         double F_att = kq * Math.sqrt(distance) + kl * distance + kc;
-        return intensity.mult(1 / F_att);
+        Vec Il = intensity.mult(1 / F_att);
+        return Il;
     }
 
     public PointLight initPosition(Point position) {

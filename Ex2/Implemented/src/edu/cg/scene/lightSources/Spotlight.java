@@ -36,21 +36,19 @@ public class Spotlight extends PointLight {
         return (Spotlight)super.initDecayFactors(q, l, c);
     }
 
-    //Todo: Change
     @Override
     public boolean isOccludedBy(Surface surface, Ray rayToLight) {
-        return rayToLight.direction().neg().dot(this.direction.normalize()) < 1.0E-5 || super.isOccludedBy(surface, rayToLight);
+        return super.isOccludedBy(surface, rayToLight);
     }
 
-    //Todo: Change
     @Override
     public Vec intensity(Point hittingPoint, Ray rayToLight) {
-        Vec D = this.direction.normalize().neg();
-        Vec L = rayToLight.direction();
-        double cosGamma = D.dot(L);
-        if (cosGamma < 1.0E-5) {
-            return new Vec(0.0);
-        }
-        return super.intensity(hittingPoint, rayToLight).mult(cosGamma);
+        Vec V = rayToLight.direction();
+        Vec Vd = direction.normalize().neg();
+        double distance = hittingPoint.dist(position);
+        double cosG = V.dot(Vd);
+        double F_att = kq * Math.sqrt(distance) + kl * distance + kc;
+        Vec Il = intensity.mult(cosG).mult(1 / F_att);
+        return Il;
     }
 }
