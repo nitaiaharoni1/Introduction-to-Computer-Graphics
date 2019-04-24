@@ -22,9 +22,9 @@ public class Scenes {
         Light dirLight = new DirectionalLight().initDirection(new Vec(0.0, 0.0, -1.0))
                 .initIntensity(new Vec(0.5));
         Light pointLight = new PointLight().initIntensity(new Vec(0.9)).
-                initPosition(new Point(2.5, 0.0, 1.0)).initDecayFactors(0.1, 0.05, 1.0);
+                positionInit(new Point(2.5, 0.0, 1.0)).decayFactors(0.1, 0.05, 1.0);
         Light spotLight = new Spotlight().initIntensity(new Vec(0.9)).
-                initPosition(new Point(-2.5, 0.0, 1.0)).initDecayFactors(0.1, 0.05, 1.0)
+                positionInit(new Point(-2.5, 0.0, 1.0)).decayFactors(0.1, 0.05, 1.0)
                 .initDirection(new Vec(-0.1,-0.1,-0.1));
 
         return new Scene().initAmbient(new Vec(0.0))
@@ -45,9 +45,9 @@ public class Scenes {
         Light dirLight = new DirectionalLight().initDirection(new Vec(-1.0, -1.0, -1.0))
                 .initIntensity(new Vec(0.9));
         Light pointLight1 = new PointLight().initIntensity(new Vec(0.7)).
-                initPosition(new Point(2, 2, 1.5));
+                positionInit(new Point(2, 2, 1.5));
         Light pointLight2 = new PointLight().initIntensity(new Vec(0.7)).
-                initPosition(new Point(2, 1, 0.5));
+                positionInit(new Point(2, 1, 0.5));
 
         return new Scene().initAmbient(new Vec(1.0))
                 .initCamera(new Point(4, 4, 1.5), new Vec(-1.0, -1.0, -0.3), new Vec(0, 0, 1), 3)
@@ -97,9 +97,9 @@ public class Scenes {
         // Add some light sources to the Scene
         Light dirLight = new DirectionalLight().initDirection(new Vec(-0.5, -0.5, -1.0))
                 .initIntensity(new Vec(0.5));
-        PointLight pointLight1 = new PointLight().initPosition(new Point(12.0,4.0,6.0)).initIntensity(new Vec(1.0));
-        PointLight pointLight2 = new PointLight().initPosition(new Point(4.0,12.0,6.0)).initIntensity(new Vec(1.0));
-        PointLight pointLight3 = new PointLight().initPosition(new Point(-12.0,-20.0,6.0)).initIntensity(new Vec(1.0));
+        PointLight pointLight1 = new PointLight().positionInit(new Point(12.0,4.0,6.0)).initIntensity(new Vec(1.0));
+        PointLight pointLight2 = new PointLight().positionInit(new Point(4.0,12.0,6.0)).initIntensity(new Vec(1.0));
+        PointLight pointLight3 = new PointLight().positionInit(new Point(-12.0,-20.0,6.0)).initIntensity(new Vec(1.0));
         pyramidScence.addLightSource(dirLight);
         pyramidScence.addLightSource(pointLight1);
         pyramidScence.addLightSource(pointLight2);
@@ -169,9 +169,9 @@ public class Scenes {
         // Add some light sources to the Scene
         Light dirLight = new DirectionalLight().initDirection(new Vec(-0.5, -0.5, -1.0))
                 .initIntensity(new Vec(0.5));
-        Spotlight spotLight1 = new Spotlight().initPosition(new Point(12.0,4.0,6.0)).initDirection(new Vec(-0.6, -0.6, -0.8)).initIntensity(new Vec(0.5));
-        Spotlight spotLight2 = new Spotlight().initPosition(new Point(31,31,11)).initDirection(new Vec(-1.0, -1.0, -0.4)).initIntensity(new Vec(1));
-        PointLight pointLight3 = new PointLight().initPosition(new Point(-12.0,-20.0,6.0)).initIntensity(new Vec(0.4));
+        Spotlight spotLight1 = new Spotlight().positionInit(new Point(12.0,4.0,6.0)).initDirection(new Vec(-0.6, -0.6, -0.8)).initIntensity(new Vec(0.5));
+        Spotlight spotLight2 = new Spotlight().positionInit(new Point(31,31,11)).initDirection(new Vec(-1.0, -1.0, -0.4)).initIntensity(new Vec(1));
+        PointLight pointLight3 = new PointLight().positionInit(new Point(-12.0,-20.0,6.0)).initIntensity(new Vec(0.4));
         pyramidScence.addLightSource(dirLight);
         pyramidScence.addLightSource(spotLight1);
         pyramidScence.addLightSource(spotLight2);

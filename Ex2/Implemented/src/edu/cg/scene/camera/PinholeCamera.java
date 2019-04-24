@@ -5,20 +5,27 @@ import edu.cg.algebra.Vec;
 import edu.cg.algebra.Point;
 
 public class PinholeCamera {
+    /**
+     * Parameters for Pinhole Camera Cons
+     */
     Point cameraPosition;
     Vec towardsVec;
     Vec upVec;
-    double distanceToPlain;
-
-    Point centerPoint;
     Vec rightVec;
+    double distanceToPlain;
+    Point centerPoint;
+
     double height;
     double width;
     double viewPlainWidth;
+
+    /**
+     * Parameters for initResolution
+     */
     double pixelsHeight;
     double pixelsWidth;
-    int middlePixelY;
-    int middlePixelX;
+    int midPixelY;
+    int midPixelX;
 
     /**
      * Initializes a pinhole camera model with default resolution 200X200 (RxXRy) and image width 2.
@@ -33,11 +40,12 @@ public class PinholeCamera {
         this.towardsVec = towardsVec.normalize();
         this.upVec = upVec.normalize();
         this.distanceToPlain = distanceToPlain;
+
         this.rightVec = towardsVec.cross(upVec).normalize();
         this.centerPoint = new Ray(cameraPosition, towardsVec).add(distanceToPlain);
 
-        this.height = 200;
-        this.width = 200;
+        this.height = 200.0;
+        this.width = 200.0;
         this.viewPlainWidth = 2.0;
     }
 
@@ -52,10 +60,12 @@ public class PinholeCamera {
         this.height = height;
         this.width = width;
         this.viewPlainWidth = viewPlainWidth;
-        this.pixelsHeight = viewPlainWidth / height;
+
         this.pixelsWidth = viewPlainWidth / width;
-        this.middlePixelY = height / 2;
-        this.middlePixelX = width / 2;
+        this.pixelsHeight = viewPlainWidth / height;
+
+        this.midPixelX = width / 2;
+        this.midPixelY = height / 2;
     }
 
     /**
@@ -66,12 +76,14 @@ public class PinholeCamera {
      * @return the middle point of the pixel (x,y) in the model coordinates.
      */
     public Point transform(int x, int y) {
-        double dRight = this.pixelsWidth * (x - middlePixelX);
-        double dUp = -this.pixelsHeight * (y - middlePixelY);
-        Vec mRight = rightVec.mult(dRight);
+        double dRight = (x - midPixelX) * this.pixelsWidth;
+        double dUp = (y - midPixelY) * -this.pixelsHeight;
+
         Vec mUp = upVec.mult(dUp);
-        Point middlePoint = centerPoint.add(mRight).add(mUp);
-        return middlePoint;
+        Vec mRight = rightVec.mult(dRight);
+
+        Point midPoint = centerPoint.add(mUp).add(mRight);
+        return midPoint;
     }
 
     /**
@@ -80,7 +92,7 @@ public class PinholeCamera {
      * @return a "new" point representing the camera position.
      */
     public Point getCameraPosition() {
-        Point p = new Point(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-        return p;
+        Point point = new Point(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        return point;
     }
 }

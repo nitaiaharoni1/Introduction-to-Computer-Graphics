@@ -35,42 +35,78 @@ public class PointLight extends Light {
         return ray;
     }
 
+    /**
+     * Original Function JavaDoc
+     * <p>
+     * Checks if the given surface occludes the light-source. The surface occludes the light source
+     * if the given ray first intersects the surface before reaching the light source.
+     *
+     * @param surface    -The given surface
+     * @param rayToLight - the ray to the light source
+     * @return true if the ray is occluded by the surface..
+     */
     @Override
     public boolean isOccludedBy(Surface surface, Ray rayToLight) {
-        Hit hit = surface.intersect(rayToLight);
-        if (hit != null) {
-            Point hitP = rayToLight.getHittingPoint(hit);
-            Point p = rayToLight.source();
-            double dToLight = p.distSqr(position);
-            double dToHit = p.distSqr(hitP);
-            double delta = Math.abs(dToLight-dToHit);
-            if (delta > Ops.epsilon) {
-                return true;
-            } else {
-                return false;
-            }
+        Hit rayHitting = surface.intersect(rayToLight);
+
+        if (rayHitting != null) {
+            Point hittingP = rayToLight.getHittingPoint(rayHitting);
+            Point point = rayToLight.source();
+
+            double distanceToLight = point.distSqr(position);
+            double distanceToHit = point.distSqr(hittingP);
+            double differenceAbs = Math.abs(distanceToLight - distanceToHit);
+
+            return (differenceAbs > Ops.epsilon);
+
         } else {
             return false;
         }
     }
 
+    /**
+     * Original Function JavaDoc
+     * <p>
+     * Returns the light intensity at the specified point.
+     *
+     * @param hittingPoint - The given point
+     * @param rayToLight   - A ray to the light source (this is relevant for point-light and spotlight)
+     * @return A vector representing the light intensity (the r,g and b channels).
+     */
     @Override
     public Vec intensity(Point hittingPoint, Ray rayToLight) {
         double distance = hittingPoint.dist(position);
-        double F_att = kq * Math.sqrt(distance) + kl * distance + kc;
-        Vec Il = intensity.mult(1 / F_att);
-        return Il;
+
+        double att = kq * Math.sqrt(distance) + kl * distance + kc;
+
+        Vec lightIntensityV = intensity.mult(1 / att);
+        return lightIntensityV;
     }
 
-    public PointLight initPosition(Point position) {
-        this.position = position;
-        return this;
-    }
 
-    public PointLight initDecayFactors(double kq, double kl, double kc) {
+    /**
+     * Set the decay factors as required
+     *
+     * @param kq
+     * @param kl
+     * @param kc
+     * @return this - the decayFactors PointLight
+     */
+    public PointLight decayFactors(double kq, double kl, double kc) {
         this.kq = kq;
         this.kl = kl;
         this.kc = kc;
+        return this;
+    }
+
+    /**
+     * Init position point
+     *
+     * @param position
+     * @return this - the position
+     */
+    public PointLight positionInit(Point position) {
+        this.position = position;
         return this;
     }
 }

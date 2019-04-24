@@ -20,8 +20,8 @@ public class Spotlight extends PointLight {
     }
 
     @Override
-    public Spotlight initPosition(Point position) {
-        return (Spotlight) super.initPosition(position);
+    public Spotlight positionInit(Point position) {
+        return (Spotlight) super.positionInit(position);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class Spotlight extends PointLight {
     }
 
     @Override
-    public Spotlight initDecayFactors(double q, double l, double c) {
-        return (Spotlight) super.initDecayFactors(q, l, c);
+    public Spotlight decayFactors(double q, double l, double c) {
+        return (Spotlight) super.decayFactors(q, l, c);
     }
 
     @Override
