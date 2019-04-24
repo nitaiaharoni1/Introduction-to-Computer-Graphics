@@ -1,8 +1,8 @@
 package edu.cg.scene;
 
 import edu.cg.Logger;
-import edu.cg.algebra.Point;
 import edu.cg.algebra.*;
+import edu.cg.algebra.Point;
 import edu.cg.scene.camera.PinholeCamera;
 import edu.cg.scene.lightSources.Light;
 import edu.cg.scene.objects.Surface;
