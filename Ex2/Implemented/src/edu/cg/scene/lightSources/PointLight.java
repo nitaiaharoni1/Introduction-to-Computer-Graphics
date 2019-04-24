@@ -92,7 +92,7 @@ public class PointLight extends Light {
      * @param kc
      * @return this - the decayFactors PointLight
      */
-    public PointLight decayFactors(double kq, double kl, double kc) {
+    public PointLight initDecayFactors(double kq, double kl, double kc) {
         this.kq = kq;
         this.kl = kl;
         this.kc = kc;
@@ -105,7 +105,7 @@ public class PointLight extends Light {
      * @param position
      * @return this - the position
      */
-    public PointLight positionInit(Point position) {
+    public PointLight initPosition(Point position) {
         this.position = position;
         return this;
     }
