@@ -1,13 +1,6 @@
 package edu.cg.scene;
 
-import edu.cg.Logger;
-import edu.cg.algebra.*;
-import edu.cg.algebra.Point;
-import edu.cg.scene.camera.PinholeCamera;
-import edu.cg.scene.lightSources.Light;
-import edu.cg.scene.objects.Surface;
-
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +8,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+import edu.cg.Logger;
+import edu.cg.algebra.*;
+import edu.cg.scene.camera.PinholeCamera;
+import edu.cg.scene.lightSources.Light;
+import edu.cg.scene.objects.Surface;
 
 public class Scene {
     private String name = "scene";
@@ -119,6 +118,8 @@ public class Scene {
 
     private void initSomeFields(int imgWidth, int imgHeight, Logger logger) {
         this.logger = logger;
+        //TODO: initialize your additional field here.
+        //      You can also change the method signature if needed.
     }
 
     public BufferedImage render(int imgWidth, int imgHeight, double viewPlainWidth, Logger logger)
