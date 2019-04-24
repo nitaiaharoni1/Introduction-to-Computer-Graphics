@@ -58,30 +58,30 @@ public class AxisAlignedBox extends Shape {
     }
 
     @Override
-    //Todo: Change - look into "Plain" file
     public Hit intersect(Ray ray) {
+
         double tNear = -1.0E8;
         double tFar = 1.0E8;
-        final double[] rayP = ray.source().asArray();
-        final double[] rayD = ray.direction().asArray();
-        final double[] minP = this.minPoint.asArray();
-        final double[] maxP = this.maxPoint.asArray();
+
+        final double[] rayPoint = ray.source().asArray();
+        final double[] rayDirection = ray.direction().asArray();
+
+        final double[] minPoint = this.minPoint.asArray();
+        final double[] maxPoint = this.maxPoint.asArray();
+
         for (int i = 0; i < 3; ++i) {
-            if (Math.abs(rayD[i]) <= Ops.epsilon) {
-                if (rayP[i] < minP[i] || rayP[i] > maxP[i]) {
+            if (Math.abs(rayDirection[i]) <= Ops.epsilon) {
+                if (rayPoint[i] > maxPoint[i] || rayPoint[i] < minPoint[i]) {
                     return null;
                 }
-            }
-            else {
-                double t1 = findIntersectionParameter(rayD[i], rayP[i], minP[i]);
-                double t2 = findIntersectionParameter(rayD[i], rayP[i], maxP[i]);
+            } else {
+                double t1 = getParameters(rayDirection[i], rayPoint[i], minPoint[i]);
+                double t2 = getParameters(rayDirection[i], rayPoint[i], maxPoint[i]);
+
                 if (t1 > t2) {
                     final double tmp = t1;
                     t1 = t2;
                     t2 = tmp;
-                }
-                if (Double.isNaN(t1) || Double.isNaN(t2)) {
-                    return null;
                 }
                 if (t1 > tNear) {
                     tNear = t1;
@@ -89,43 +89,36 @@ public class AxisAlignedBox extends Shape {
                 if (t2 < tFar) {
                     tFar = t2;
                 }
+                if (Double.isNaN(t1) || Double.isNaN(t2)) {
+                    return null;
+                }
                 if (tNear > tFar || tFar < Ops.epsilon) {
                     return null;
                 }
             }
         }
-        double minT = tNear;
-        boolean isWithin = false;
-        if (minT < Ops.epsilon) {
-            isWithin = true;
-            minT = tFar;
+
+        double minTNear = tNear;
+        boolean isInside = false;
+        if (minTNear < Ops.epsilon) {
+            isInside = true;
+            minTNear = tFar;
         }
-        Vec norm = this.normal(ray.add(minT));
-        if (isWithin) {
+
+        Vec norm = this.normalize(ray.add(minTNear));
+        if (isInside) {
             norm = norm.neg();
         }
-        return new Hit(minT, norm).setIsWithin(isWithin);
+        return new Hit(minTNear, norm).setIsWithin(isInside);
     }
 
-    //Todo: Change - look into "Plain" file
-    private static double findIntersectionParameter(final double a, final double b, final double c) {
-        if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) > Ops.epsilon) {
-            return 1.0E8;
-        }
-        if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) < Ops.epsilon) {
-            return 0.0;
-        }
-        final double t = (c - b) / a;
-        return t;
-    }
 
-    //Todo: Change - look into "Plain" file
-    private Vec normal(final Point p) {
+    private Vec normalize(final Point p) {
         if (Math.abs(p.z - this.minPoint.z) <= Ops.epsilon) {
             return new Vec(0.0, 0.0, -1.0);
         }
-        if (Math.abs(p.z - this.maxPoint.z) <= Ops.epsilon) {
-            return new Vec(0.0, 0.0, 1.0);
+        if (Math.abs(p.x - this.minPoint.x) <= Ops.epsilon) {
+            return new Vec(-1.0, 0.0, 0.0);
         }
         if (Math.abs(p.y - this.minPoint.y) <= Ops.epsilon) {
             return new Vec(0.0, -1.0, 0.0);
@@ -133,12 +126,27 @@ public class AxisAlignedBox extends Shape {
         if (Math.abs(p.y - this.maxPoint.y) <= Ops.epsilon) {
             return new Vec(0.0, 1.0, 0.0);
         }
-        if (Math.abs(p.x - this.minPoint.x) <= Ops.epsilon) {
-            return new Vec(-1.0, 0.0, 0.0);
+        if (Math.abs(p.z - this.maxPoint.z) <= Ops.epsilon) {
+            return new Vec(0.0, 0.0, 1.0);
         }
         if (Math.abs(p.x - this.maxPoint.x) <= Ops.epsilon) {
             return new Vec(1.0, 0.0, 0.0);
         }
+
+        // if all failed
         return null;
+    }
+
+    private static double getParameters(final double a, final double b, final double c) {
+        final double t = (c - b) / a;
+
+        if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) < Ops.epsilon) {
+            return 0.0;
+        }
+        if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) > Ops.epsilon) {
+            return 1.0E8;
+        }
+
+        return t;
     }
 }

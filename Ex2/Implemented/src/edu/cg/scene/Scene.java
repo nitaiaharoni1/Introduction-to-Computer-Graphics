@@ -195,89 +195,107 @@ public class Scene {
         });
     }
 
-    //Todo: Change according to lecture videos
     private Vec calcColor(Ray ray, int recusionLevel) {
         if (recusionLevel >= maxRecursionLevel) {
             return new Vec();
         } else {
-            Hit minHit = intersection(ray);
-            if (minHit == null) {
+            Hit minimalHit = intersection(ray);
+            if (minimalHit == null) {
                 return backgroundColor;
             }
-            Point hittingPoint = ray.getHittingPoint(minHit);
-            Surface surface = minHit.getSurface();
+
+            Point hittingPoint = ray.getHittingPoint(minimalHit);
+            Surface surface = minimalHit.getSurface();
             Vec color = surface.Ka().mult(ambient);
+
             for (Light light : lightSources) {
                 Ray rayToLight = light.rayToLight(hittingPoint);
                 if (!isOccluded(light, rayToLight)) {
-                    Vec tmpColor = diffuse(minHit, rayToLight);
-                    tmpColor = tmpColor.add(specular(minHit, rayToLight, ray));
+                    Vec tmpColor = setDiffussion(minimalHit, rayToLight);
+                    tmpColor = tmpColor.add(specular(minimalHit, rayToLight, ray));
                     Vec Il = light.intensity(hittingPoint, rayToLight);
                     color = color.add(tmpColor.mult(Il));
                 }
             }
-            if (renderReflections) {
-                Vec reflectionDirection = Ops.reflect(ray.direction(), minHit.getNormalToSurface());
-                Vec reflectionWeight = new Vec(surface.reflectionIntensity());
-                Vec reflectionColor = calcColor(new Ray(hittingPoint, reflectionDirection), recusionLevel + 1).mult(reflectionWeight);
-                color = color.add(reflectionColor);
-            }
+
             if (renderRefarctions) {
                 Vec refractionColor = new Vec();
                 if (surface.isTransparent()) {
-                    double n1 = surface.n1(minHit);
-                    double n2 = surface.n2(minHit);
-                    Vec refractionDirection = Ops.refract(ray.direction(), minHit.getNormalToSurface(), n1, n2);
+                    double n1 = surface.n1(minimalHit);
+                    double n2 = surface.n2(minimalHit);
+                    Vec refractionDirection = Ops.refract(ray.direction(), minimalHit.getNormalToSurface(), n1, n2);
                     Vec refractionWeight = new Vec(surface.refractionIntensity());
                     refractionColor = calcColor(new Ray(hittingPoint, refractionDirection), recusionLevel + 1).mult(refractionWeight);
                     color = color.add(refractionColor);
                 }
             }
+
+            if (renderReflections) {
+                Vec reflectionDirection = Ops.reflect(ray.direction(), minimalHit.getNormalToSurface());
+                Vec reflectionWeight = new Vec(surface.reflectionIntensity());
+                Vec reflectionColor = calcColor(new Ray(hittingPoint, reflectionDirection), recusionLevel + 1).mult(reflectionWeight);
+                color = color.add(reflectionColor);
+            }
+
             return color;
         }
     }
 
     //Todo: Change according to lecture videos
-    private Vec diffuse(Hit minHit, Ray rayToLight) {
+    private Vec setDiffussion(Hit minHit, Ray rayToLight) {
+
         Vec L = rayToLight.direction();
         Vec N = minHit.getNormalToSurface();
         Vec Kd = minHit.getSurface().Kd();
-        return Kd.mult(Math.max(N.dot(L), 0.0));
+
+        Vec toReturn = Kd.mult(Math.max(N.dot(L), 0.0));
+        return toReturn;
+
     }
 
-    //Todo: Change according to lecture videos
     private Vec specular(Hit minHit, Ray rayToLight, Ray rayFromViewer) {
+
         Vec L = rayToLight.direction();
         Vec N = minHit.getNormalToSurface();
         Vec R = Ops.reflect(L.neg(), N);
         Vec Ks = minHit.getSurface().Ks();
         Vec v = rayFromViewer.direction();
+
         int shininess = minHit.getSurface().shininess();
         double dot = R.dot(v.neg());
-        return (dot < 0.0) ? new Vec() : Ks.mult(Math.pow(dot, shininess));
+
+        if (dot < 0.0) {
+            return new Vec();
+        } else {
+            return Ks.mult(Math.pow(dot, shininess));
+        }
     }
 
-    //Todo: Change
     private boolean isOccluded(Light light, Ray rayToLight) {
+
         Boolean isOcluded = false;
+
         for (Surface surface : surfaces) {
             if (light.isOccludedBy(surface, rayToLight)) {
                 isOcluded = true;
                 break;
             }
         }
+
         return isOcluded;
     }
 
-    //Todo: Change
     private Hit intersection(Ray ray) {
-        Hit minHit = null;
+
+        Hit minimalHit = null;
+
         for (Surface surface : surfaces) {
             Hit newHit = surface.intersect(ray);
-            if (minHit == null || (newHit != null && newHit.compareTo(minHit) < 0)) {
-                minHit = newHit;
+            if (minimalHit == null || (newHit != null && newHit.compareTo(minimalHit) < 0)) {
+                minimalHit = newHit;
             }
         }
-        return minHit;
+
+        return minimalHit;
     }
 }
