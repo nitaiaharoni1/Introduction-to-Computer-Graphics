@@ -2,8 +2,7 @@ package edu.cg.scene.objects;
 
 import edu.cg.algebra.*;
 
-public class Sphere extends Shape
-{
+public class Sphere extends Shape {
     private Point center;
     private double radius;
 
@@ -33,42 +32,45 @@ public class Sphere extends Shape
     }
 
     @Override
-    //Todo: Change - look into "Plain" file
     public Hit intersect(Ray ray) {
         double b = ray.direction().mult(2.0).dot(ray.source().sub(this.center));
         double c = this.substitute(ray.source());
         double discriminant = Math.sqrt(b * b - 4.0 * c);
+
         if (Double.isNaN(discriminant)) {
             return null;
         }
+
         double t1 = (-b - discriminant) / 2.0;
         double t2 = (-b + discriminant) / 2.0;
+
         if (t2 < Ops.epsilon) {
             return null;
         }
+
         double minT = t1;
-        Vec normal = this.normal(ray.add(t1));
-        boolean isWithin = false;
-        if (t1 < Ops.epsilon) {
-            minT = t2;
-            normal = this.normal(ray.add(t2)).neg();
-            isWithin = true;
-        }
+        Vec normal = this.getNormal(ray.add(t1));
+        boolean isInside = false;
         if (minT > 1.0E8) {
             return null;
         }
-        return new Hit(minT, normal).setIsWithin(isWithin);
+
+        if (t1 < Ops.epsilon) {
+            minT = t2;
+            normal = this.getNormal(ray.add(t2)).neg();
+            isInside = true;
+        }
+
+        return new Hit(minT, normal).setIsWithin(isInside);
     }
 
-    //Todo: I've already changed... still need to change the name of the function. i don't know what the function do - look into "Plain" file
-    private Vec normal(Point p) {
+    private Vec getNormal(Point p) {
         Vec normal = p.sub(center).normalize();
         return normal;
     }
 
-    //Todo: I've already changed... still need to change the name of the function. i don't know what the function do - look into "Plain" file
     private double substitute(Point p) {
-        double substitute = p.distSqr(center) - Math.pow(radius,2);
+        double substitute = p.distSqr(center) - Math.pow(radius, 2);
         return substitute;
     }
 }

@@ -241,7 +241,6 @@ public class Scene {
         }
     }
 
-    //Todo: Change according to lecture videos
     private Vec setDiffussion(Hit minHit, Ray rayToLight) {
 
         Vec L = rayToLight.direction();
