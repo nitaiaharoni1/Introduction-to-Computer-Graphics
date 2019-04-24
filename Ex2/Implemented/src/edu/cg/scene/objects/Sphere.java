@@ -33,7 +33,7 @@ public class Sphere extends Shape
     }
 
     @Override
-    //Todo: Change
+    //Todo: Change - look into "Plain" file
     public Hit intersect(Ray ray) {
         double b = ray.direction().mult(2.0).dot(ray.source().sub(this.center));
         double c = this.substitute(ray.source());
@@ -60,13 +60,13 @@ public class Sphere extends Shape
         return new Hit(minT, normal).setIsWithin(isWithin);
     }
 
-    //Todo: I've already changed... still need to change the name of the function. i don't know what the function do
+    //Todo: I've already changed... still need to change the name of the function. i don't know what the function do - look into "Plain" file
     private Vec normal(Point p) {
         Vec normal = p.sub(center).normalize();
         return normal;
     }
 
-    //Todo: I've already changed... still need to change the name of the function. i don't know what the function do
+    //Todo: I've already changed... still need to change the name of the function. i don't know what the function do - look into "Plain" file
     private double substitute(Point p) {
         double substitute = p.distSqr(center) - Math.pow(radius,2);
         return substitute;

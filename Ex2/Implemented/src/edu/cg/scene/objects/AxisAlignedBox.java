@@ -58,7 +58,7 @@ public class AxisAlignedBox extends Shape {
     }
 
     @Override
-    //Todo: Change
+    //Todo: Change - look into "Plain" file
     public Hit intersect(Ray ray) {
         double tNear = -1.0E8;
         double tFar = 1.0E8;
@@ -107,7 +107,7 @@ public class AxisAlignedBox extends Shape {
         return new Hit(minT, norm).setIsWithin(isWithin);
     }
 
-    //Todo: Change
+    //Todo: Change - look into "Plain" file
     private static double findIntersectionParameter(final double a, final double b, final double c) {
         if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) > Ops.epsilon) {
             return 1.0E8;
@@ -119,7 +119,7 @@ public class AxisAlignedBox extends Shape {
         return t;
     }
 
-    //Todo: Change
+    //Todo: Change - look into "Plain" file
     private Vec normal(final Point p) {
         if (Math.abs(p.z - this.minPoint.z) <= Ops.epsilon) {
             return new Vec(0.0, 0.0, -1.0);
