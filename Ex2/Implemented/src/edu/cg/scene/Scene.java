@@ -166,17 +166,6 @@ public class Scene {
         return img;
     }
 
-    //Todo: Change - This is the original func:
-//    private Future<Color> calcColor(int x, int y) {
-//        return executor.submit(() -> {
-//            // TODO: You need to re-implement this method if you want to handle
-//            //       super-sampling. You're also free to change the given implementation as you like.
-//            Point centerPoint = camera.transform(x, y);
-//            Ray ray = new Ray(camera.getCameraPosition(), centerPoint);
-//            Vec color = calcColor(ray, 0);
-//            return color.toColor();
-//        });
-//    }
     private Future<Color> calcColor(int x, int y) {
         return executor.submit(() -> {
             Vec color = new Vec();

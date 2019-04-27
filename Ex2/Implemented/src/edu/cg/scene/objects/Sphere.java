@@ -35,22 +35,23 @@ public class Sphere extends Shape {
     public Hit intersect(Ray ray) {
         double b = ray.direction().mult(2.0).dot(ray.source().sub(this.center));
         double c = this.substitute(ray.source());
-        double discriminant = Math.sqrt(b * b - 4.0 * c);
+        double disc = Math.sqrt(b * b - 4.0 * c);
+        boolean isInside = false;
 
-        if (Double.isNaN(discriminant)) {
+        if (Double.isNaN(disc) == true) {
             return null;
         }
 
-        double t1 = (-b - discriminant) / 2.0;
-        double t2 = (-b + discriminant) / 2.0;
+        double t1 = (-b - disc) / 2.0;
+        double t2 = (-b + disc) / 2.0;
 
         if (t2 < Ops.epsilon) {
             return null;
         }
 
-        double minT = t1;
         Vec normal = this.getNormal(ray.add(t1));
-        boolean isInside = false;
+        double minT = t1;
+
         if (minT > 1.0E8) {
             return null;
         }
