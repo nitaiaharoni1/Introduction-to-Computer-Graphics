@@ -59,29 +59,29 @@ public class AxisAlignedBox extends Shape {
 
     @Override
     public Hit intersect(Ray ray) {
+        final Point rayPoint = ray.source();
+        final Vec rayDirection = ray.direction();
 
-        double tNear = -1.0E8;
-        double tFar = 1.0E8;
-
-        final double[] rayPoint = ray.source().asArray();
-        final double[] rayDirection = ray.direction().asArray();
+        final double[] rayPArr = rayPoint.asArray();
+        final double[] rayDArr = rayDirection.asArray();
 
         final double[] minPoint = this.minPoint.asArray();
         final double[] maxPoint = this.maxPoint.asArray();
 
-        for (int i = 0; i < 3; ++i) {
-            if (Math.abs(rayDirection[i]) <= Ops.epsilon) {
-                if (rayPoint[i] > maxPoint[i] || rayPoint[i] < minPoint[i]) {
-                    return null;
-                }
-            } else {
-                double t1 = getParameters(rayDirection[i], rayPoint[i], minPoint[i]);
-                double t2 = getParameters(rayDirection[i], rayPoint[i], maxPoint[i]);
+        double tNear = -1.0E8;
+        double tFar = 1.0E8;
+        boolean isInside = false;
+
+        for (int i = 0; i <= 2; ++i) {
+            boolean absVal = Math.abs(rayDArr[i]) > Ops.epsilon;
+            if (absVal == true) {
+                double t1 = getParameters(rayDArr[i], rayPArr[i], minPoint[i]);
+                double t2 = getParameters(rayDArr[i], rayPArr[i], maxPoint[i]);
+                final double tempParam = t1;
 
                 if (t1 > t2) {
-                    final double tmp = t1;
                     t1 = t2;
-                    t2 = tmp;
+                    t2 = tempParam;
                 }
                 if (t1 > tNear) {
                     tNear = t1;
@@ -89,17 +89,21 @@ public class AxisAlignedBox extends Shape {
                 if (t2 < tFar) {
                     tFar = t2;
                 }
-                if (Double.isNaN(t1) || Double.isNaN(t2)) {
+                if (Double.isNaN(t1) == true || Double.isNaN(t2) == true) {
                     return null;
                 }
                 if (tNear > tFar || tFar < Ops.epsilon) {
+                    return null;
+                }
+            } else {
+                if (rayPArr[i] > maxPoint[i] || rayPArr[i] < minPoint[i]) {
                     return null;
                 }
             }
         }
 
         double minTNear = tNear;
-        boolean isInside = false;
+
         if (minTNear < Ops.epsilon) {
             isInside = true;
             minTNear = tFar;
@@ -109,11 +113,22 @@ public class AxisAlignedBox extends Shape {
         if (isInside) {
             norm = norm.neg();
         }
-        return new Hit(minTNear, norm).setIsWithin(isInside);
+
+        Hit hitToReturn = new Hit(minTNear, norm).setIsWithin(isInside);
+        return hitToReturn;
     }
 
 
     private Vec normalize(final Point p) {
+//        double zVal = Math.abs(p.z - this.minPoint.z);
+//        double xVal = Math.abs(p.x - this.minPoint.x);
+//        double yVal = Math.abs(p.y - this.maxPoint.y);
+//        switch (zVal) {
+//            case (zVal <= Ops.epsilon):
+//
+//
+//        }
+
         if (Math.abs(p.z - this.minPoint.z) <= Ops.epsilon) {
             return new Vec(0.0, 0.0, -1.0);
         }
