@@ -2,6 +2,10 @@ package edu.cg.scene.objects;
 
 import edu.cg.algebra.*;
 
+
+/**
+ * Sphere Class which extends Shape and and defines a sphere shape
+ */
 public class Sphere extends Shape {
     private Point center;
     private double radius;
@@ -31,6 +35,11 @@ public class Sphere extends Shape {
         return this;
     }
 
+
+    /**
+     * @param ray the specified ray
+     * @return Hit object of the hit with the sphere
+     */
     @Override
     public Hit intersect(Ray ray) {
         boolean isInside = false;
