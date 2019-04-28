@@ -222,8 +222,8 @@ public class Scene {
             }
 
             if (renderReflections == true) {
-                Vec reflectionDirection = Ops.reflect(ray.direction(), minimalHit.getNormalToSurface());
                 Vec reflectionWeight = new Vec(surface.reflectionIntensity());
+                Vec reflectionDirection = Ops.reflect(ray.direction(), minimalHit.getNormalToSurface());
                 Vec reflectionColor = calcColor(new Ray(hitting, reflectionDirection), recursionLevel + 1).mult(reflectionWeight);
                 color = color.add(reflectionColor);
             }
@@ -248,19 +248,19 @@ public class Scene {
 
     private Vec specular(Hit minHit, Ray rayToLight, Ray rayFromViewer) {
 
-        Vec L = rayToLight.direction();
         Vec N = minHit.getNormalToSurface();
+        Vec L = rayToLight.direction();
         Vec R = Ops.reflect(L.neg(), N);
         Vec Ks = minHit.getSurface().Ks();
-        Vec v = rayFromViewer.direction();
+        Vec vect = rayFromViewer.direction();
 
         int shininess = minHit.getSurface().shininess();
-        double dot = R.dot(v.neg());
+        double dotProd = R.dot(vect.neg());
 
-        if (dot < 0.0) {
+        if (dotProd < 0.0) {
             return new Vec();
         } else {
-            return Ks.mult(Math.pow(dot, shininess));
+            return Ks.mult(Math.pow(dotProd, shininess));
         }
     }
 
@@ -284,7 +284,8 @@ public class Scene {
 
         for (Surface surface : surfaces) {
             Hit newHit = surface.intersect(ray);
-            if (minimalHit == null || (newHit != null && newHit.compareTo(minimalHit) < 0)) {
+            boolean updateMin = minimalHit == null || (newHit != null && newHit.compareTo(minimalHit) < 0);
+            if (updateMin) {
                 minimalHit = newHit;
             }
         }
