@@ -69,8 +69,8 @@ public class AxisAlignedBox extends Shape {
         final double[] maxPoint = this.maxPoint.asArray();
 
         boolean isInside = false;
-        double tNear = -1.0E8;
-        double tFar = 1.0E8;
+        double near = -1.0E8;
+        double far = 1.0E8;
 
         for (int i = 0; i <= 2; ++i) {
             boolean absVal = Math.abs(rayDArr[i]) > Ops.epsilon;
@@ -78,22 +78,23 @@ public class AxisAlignedBox extends Shape {
                 double t1 = getParameters(rayDArr[i], rayPArr[i], minPoint[i]);
                 double t2 = getParameters(rayDArr[i], rayPArr[i], maxPoint[i]);
                 final double tempParam = t1;
+                boolean areNan = (Double.isNaN(t1) == true || Double.isNaN(t2) == true);
 
+                if (areNan) {
+                    return null;
+                }
+                if (near > far || far < Ops.epsilon) {
+                    return null;
+                }
                 if (t1 > t2) {
                     t1 = t2;
                     t2 = tempParam;
                 }
-                if (t1 > tNear) {
-                    tNear = t1;
+                if (t1 > near) {
+                    near = t1;
                 }
-                if (t2 < tFar) {
-                    tFar = t2;
-                }
-                if (Double.isNaN(t1) == true || Double.isNaN(t2) == true) {
-                    return null;
-                }
-                if (tNear > tFar || tFar < Ops.epsilon) {
-                    return null;
+                if (t2 < far) {
+                    far = t2;
                 }
             } else {
                 boolean inRange = rayPArr[i] > maxPoint[i] || rayPArr[i] < minPoint[i];
@@ -103,45 +104,45 @@ public class AxisAlignedBox extends Shape {
             }
         }
 
-        double minTNear = tNear;
+        double minimalNear = near;
 
-        if (minTNear < Ops.epsilon) {
+        if (minimalNear < Ops.epsilon) {
             isInside = true;
-            minTNear = tFar;
+            minimalNear = far;
         }
 
-        Vec norm = this.normalize(ray.add(minTNear));
+        Vec norm = this.normalize(ray.add(minimalNear));
         if (isInside == true) {
             norm = norm.neg();
         }
 
-        Hit hitToReturn = new Hit(minTNear, norm).setIsWithin(isInside);
+        Hit hitToReturn = new Hit(minimalNear, norm).setIsWithin(isInside);
         return hitToReturn;
     }
 
 
-    private Vec normalize(final Point p) {
-        if (Math.abs(p.z - this.minPoint.z) <= Ops.epsilon) {
+    private Vec normalize(final Point point) {
+        if (Math.abs(point.z - this.minPoint.z) <= Ops.epsilon) {
             Vec toReturn = new Vec(0.0, 0.0, -1.0);
             return toReturn;
         }
-        if (Math.abs(p.x - this.minPoint.x) <= Ops.epsilon) {
+        if (Math.abs(point.x - this.minPoint.x) <= Ops.epsilon) {
             Vec toReturn = new Vec(-1.0, 0.0, 0.0);
             return toReturn;
         }
-        if (Math.abs(p.y - this.minPoint.y) <= Ops.epsilon) {
+        if (Math.abs(point.y - this.minPoint.y) <= Ops.epsilon) {
             Vec toReturn = new Vec(0.0, -1.0, 0.0);
             return toReturn;
         }
-        if (Math.abs(p.y - this.maxPoint.y) <= Ops.epsilon) {
+        if (Math.abs(point.y - this.maxPoint.y) <= Ops.epsilon) {
             Vec toReturn = new Vec(0.0, 1.0, 0.0);
             return toReturn;
         }
-        if (Math.abs(p.z - this.maxPoint.z) <= Ops.epsilon) {
+        if (Math.abs(point.z - this.maxPoint.z) <= Ops.epsilon) {
             Vec toReturn = new Vec(0.0, 0.0, 1.0);
             return toReturn;
         }
-        if (Math.abs(p.x - this.maxPoint.x) <= Ops.epsilon) {
+        if (Math.abs(point.x - this.maxPoint.x) <= Ops.epsilon) {
             Vec toReturn = new Vec(1.0, 0.0, 0.0);
             return toReturn;
         }
