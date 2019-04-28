@@ -37,17 +37,19 @@ public class Sphere extends Shape {
         double c = this.substitute(ray.source());
         double disc = Math.sqrt(b * b - 4.0 * c);
         boolean isInside = false;
-
-        if (Double.isNaN(disc) == true) {
-            return null;
-        }
+        boolean isNA = Double.isNaN(disc) == true;
 
         double t1 = (-b - disc) / 2.0;
         double t2 = (-b + disc) / 2.0;
 
+        if (isNA) {
+            return null;
+        }
+
         if (t2 < Ops.epsilon) {
             return null;
         }
+
 
         Vec normal = this.getNormal(ray.add(t1));
         double minT = t1;
