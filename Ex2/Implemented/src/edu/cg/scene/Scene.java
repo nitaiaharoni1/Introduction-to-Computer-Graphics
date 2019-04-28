@@ -296,9 +296,7 @@ public class Scene {
         Hit minHit = null;
         for (Surface surface : surfaces) {
             Hit newHit = surface.intersect(ray);
-            if (minHit == null || (newHit != null && newHit.compareTo(minHit) < 0)) {
-                minHit = newHit;
-            }
+            if (minHit == null || (newHit != null && newHit.compareTo(minHit) < 0)) minHit = newHit;
         }
         return minHit;
     }

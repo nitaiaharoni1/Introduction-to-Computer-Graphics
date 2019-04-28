@@ -1,14 +1,14 @@
 {
-  "name": "scene6",
+  "name": "scene7",
   "maxRecursionLevel": 6,
   "antiAliasingFactor": 1,
   "renderRefarctions": true,
   "renderReflections": true,
   "camera": {
     "cameraPosition": {
-      "x": 2.0,
-      "y": 2.0,
-      "z": 8.0
+      "x": 0.0,
+      "y": 4.0,
+      "z": 6.0
     },
     "centerPoint": {
       "x": 0.0,
@@ -42,16 +42,16 @@
     "z": 1.0
   },
   "backgroundColor": {
-    "x": 0.3,
-    "y": 0.5,
-    "z": 4.0
+    "x": 0.0,
+    "y": 0.2,
+    "z": 1.0
   },
   "lightSources": [
     {
       "CLASSNAME": "edu.cg.scene.lightSources.DirectionalLight",
       "DATA": {
         "direction": {
-          "x": 0.0,
+          "x": 2.0,
           "y": 0.0,
           "z": -1.0
         },
@@ -73,7 +73,7 @@
             "y": 0.8,
             "z": 0.8
           },
-          "radius": 1.8
+          "radius": 0.9
         }
       },
       "material": {
