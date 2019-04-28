@@ -9,13 +9,12 @@ import edu.cg.algebra.Hit;
 import edu.cg.algebra.Ray;
 import edu.cg.algebra.Point;
 
-public class AxisAlignedRectangle extends Shape
-{
+public class AxisAlignedRectangle extends Shape {
     private Point minPoint;
     private Point maxPoint;
     private String name;
     private static int CURR_IDX;
-    
+
     public AxisAlignedRectangle(final Point minPoint, final Point maxPoint) {
         this.name = "";
         this.minPoint = minPoint;
@@ -24,31 +23,31 @@ public class AxisAlignedRectangle extends Shape
         ++AxisAlignedRectangle.CURR_IDX;
         this.fixBoundryPoints();
     }
-    
+
     public AxisAlignedRectangle() {
         this.name = "";
         this.minPoint = new Point(-1.0, -1.0, -1.0);
         this.maxPoint = new Point(1.0, 1.0, 1.0);
     }
-    
+
     @Override
     public String toString() {
         final String endl = System.lineSeparator();
         return String.valueOf(this.name) + endl + "Min Point: " + this.minPoint + endl + "Max Point: " + this.maxPoint + endl;
     }
-    
+
     public AxisAlignedRectangle initMinPoint(final Point minPoint) {
         this.minPoint = minPoint;
         this.fixBoundryPoints();
         return this;
     }
-    
+
     public AxisAlignedRectangle initMaxPoint(final Point maxPoint) {
         this.maxPoint = maxPoint;
         this.fixBoundryPoints();
         return this;
     }
-    
+
     @Override
     public Hit intersect(final Ray ray) {
         double tNear = -1.0E8;
@@ -62,8 +61,7 @@ public class AxisAlignedRectangle extends Shape
                 if (rayP[i] < minP[i] || rayP[i] > maxP[i]) {
                     return null;
                 }
-            }
-            else {
+            } else {
                 double t1 = findIntersectionParameter(rayD[i], rayP[i], minP[i]);
                 double t2 = findIntersectionParameter(rayD[i], rayP[i], maxP[i]);
                 if (t1 > t2) {
@@ -97,7 +95,7 @@ public class AxisAlignedRectangle extends Shape
         }
         return new Hit(minT, norm).setIsWithin(isWithin);
     }
-    
+
     private static double findIntersectionParameter(final double a, final double b, final double c) {
         if (Math.abs(a) < 1.0E-5 && Math.abs(b - c) > 1.0E-5) {
             return 1.0E8;
@@ -108,7 +106,7 @@ public class AxisAlignedRectangle extends Shape
         final double t = (c - b) / a;
         return t;
     }
-    
+
     private Vec normal(final Point p) {
         if (Math.abs(p.z - this.minPoint.z) <= 1.0E-5) {
             return new Vec(0.0, 0.0, -1.0);
@@ -130,7 +128,7 @@ public class AxisAlignedRectangle extends Shape
         }
         return null;
     }
-    
+
     private void fixBoundryPoints() {
         final double min_x = Math.min(this.minPoint.x, this.maxPoint.x);
         final double max_x = Math.max(this.minPoint.x, this.maxPoint.x);
