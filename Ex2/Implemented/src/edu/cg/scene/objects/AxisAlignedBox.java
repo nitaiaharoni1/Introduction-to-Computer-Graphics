@@ -71,18 +71,21 @@ public class AxisAlignedBox extends Shape {
         boolean isInside = false;
 
         for (int i = 0; i <= 2; i++) {
+            if (Math.abs(rayDirectionArray[i]) < Ops.epsilon && (raySourceArray[i] > maxPointArray[i] || raySourceArray[i] < minPointArray[i]))
+                return null;
             if (Math.abs(rayDirectionArray[i]) > Ops.epsilon) {
                 double tMin = getT(raySourceArray[i], rayDirectionArray[i], minPointArray[i]);
                 double tMax = getT(raySourceArray[i], rayDirectionArray[i], maxPointArray[i]);
-                double tempParam = tMin;
                 if (tMin > tMax) {
+                    double temp = tMin;
                     tMin = tMax;
-                    tMax = tempParam;
+                    tMax = temp;
                 }
+                if (Double.isNaN(tMin) || Double.isNaN(tMax)) return null;
                 if (tMin > tClose) tClose = tMin;
                 if (tMax < tFar) tFar = tMax;
                 if (tClose > tFar || tFar < Ops.epsilon) return null;
-            } else if (raySourceArray[i] > maxPointArray[i] || raySourceArray[i] < minPointArray[i]) return null;
+            }
         }
         minTClose = tClose;
         if (minTClose < Ops.epsilon) {
@@ -90,8 +93,10 @@ public class AxisAlignedBox extends Shape {
             minTClose = tFar;
         }
         Vec norm = normal(ray.add(minTClose));
-        if (isInside) if (norm != null) norm = norm.neg();
-        return new Hit(minTClose, norm).setIsWithin(isInside);
+        if (norm == null) return null;
+        if (isInside) norm = norm.neg();
+        Hit hit = new Hit(minTClose, norm).setIsWithin(isInside);
+        return hit;
     }
 
 
