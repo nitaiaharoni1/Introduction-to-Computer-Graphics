@@ -23,8 +23,8 @@ public class AxisAlignedBox extends Shape {
      * Creates a default axis aligned box with a specified minPoint and maxPoint.
      */
     public AxisAlignedBox() {
-        minPoint = new Point(-1.0, -1.0, -1.0);
-        maxPoint = new Point(1.0, 1.0, 1.0);
+        minPoint = new Point(-1, -1, -1);
+        maxPoint = new Point(1, 1, 1);
     }
 
     /**
@@ -59,109 +59,64 @@ public class AxisAlignedBox extends Shape {
 
     @Override
     public Hit intersect(Ray ray) {
-        final Point rayPoint = ray.source();
-        final Vec rayDirection = ray.direction();
-
-        final double[] rayPArr = rayPoint.asArray();
-        final double[] rayDArr = rayDirection.asArray();
-
-        final double[] minPoint = this.minPoint.asArray();
-        final double[] maxPoint = this.maxPoint.asArray();
-
-        double tNear = -1.0E8;
-        double tFar = 1.0E8;
+        double minTClose;
+        Point raySource = ray.source();
+        Vec rayDirection = ray.direction();
+        double[] minPointArray = minPoint.asArray();
+        double[] maxPointArray = maxPoint.asArray();
+        double[] rayDirectionArray = rayDirection.asArray();
+        double[] raySourceArray = raySource.asArray();
+        double tClose = Integer.MIN_VALUE;
+        double tFar = Integer.MAX_VALUE;
         boolean isInside = false;
 
-        for (int i = 0; i <= 2; ++i) {
-            boolean absVal = Math.abs(rayDArr[i]) > Ops.epsilon;
-            if (absVal == true) {
-                double t1 = getParameters(rayDArr[i], rayPArr[i], minPoint[i]);
-                double t2 = getParameters(rayDArr[i], rayPArr[i], maxPoint[i]);
-                final double tempParam = t1;
-
-                if (t1 > t2) {
-                    t1 = t2;
-                    t2 = tempParam;
+        for (int i = 0; i <= 2; i++) {
+            if (Math.abs(rayDirectionArray[i]) > Ops.epsilon) {
+                double tMin = getT(raySourceArray[i], rayDirectionArray[i], minPointArray[i]);
+                double tMax = getT(raySourceArray[i], rayDirectionArray[i], maxPointArray[i]);
+                double tempParam = tMin;
+                if (tMin > tMax) {
+                    tMin = tMax;
+                    tMax = tempParam;
                 }
-                if (t1 > tNear) {
-                    tNear = t1;
-                }
-                if (t2 < tFar) {
-                    tFar = t2;
-                }
-                if (Double.isNaN(t1) == true || Double.isNaN(t2) == true) {
-                    return null;
-                }
-                if (tNear > tFar || tFar < Ops.epsilon) {
-                    return null;
-                }
-            } else {
-                if (rayPArr[i] > maxPoint[i] || rayPArr[i] < minPoint[i]) {
-                    return null;
-                }
-            }
+                if (tMin > tClose) tClose = tMin;
+                if (tMax < tFar) tFar = tMax;
+                if (tClose > tFar || tFar < Ops.epsilon) return null;
+            } else if (raySourceArray[i] > maxPointArray[i] || raySourceArray[i] < minPointArray[i]) return null;
         }
-
-        double minTNear = tNear;
-
-        if (minTNear < Ops.epsilon) {
+        minTClose = tClose;
+        if (minTClose < Ops.epsilon) {
             isInside = true;
-            minTNear = tFar;
+            minTClose = tFar;
         }
-
-        Vec norm = this.normalize(ray.add(minTNear));
-        if (isInside) {
-            norm = norm.neg();
-        }
-
-        Hit hitToReturn = new Hit(minTNear, norm).setIsWithin(isInside);
-        return hitToReturn;
+        Vec norm = normal(ray.add(minTClose));
+        if (isInside) if (norm != null) norm = norm.neg();
+        return new Hit(minTClose, norm).setIsWithin(isInside);
     }
 
 
-    private Vec normalize(final Point p) {
-//        double zVal = Math.abs(p.z - this.minPoint.z);
-//        double xVal = Math.abs(p.x - this.minPoint.x);
-//        double yVal = Math.abs(p.y - this.maxPoint.y);
-//        switch (zVal) {
-//            case (zVal <= Ops.epsilon):
-//
-//
-//        }
-
-        if (Math.abs(p.z - this.minPoint.z) <= Ops.epsilon) {
-            return new Vec(0.0, 0.0, -1.0);
-        }
-        if (Math.abs(p.x - this.minPoint.x) <= Ops.epsilon) {
-            return new Vec(-1.0, 0.0, 0.0);
-        }
-        if (Math.abs(p.y - this.minPoint.y) <= Ops.epsilon) {
-            return new Vec(0.0, -1.0, 0.0);
-        }
-        if (Math.abs(p.y - this.maxPoint.y) <= Ops.epsilon) {
-            return new Vec(0.0, 1.0, 0.0);
-        }
-        if (Math.abs(p.z - this.maxPoint.z) <= Ops.epsilon) {
-            return new Vec(0.0, 0.0, 1.0);
-        }
-        if (Math.abs(p.x - this.maxPoint.x) <= Ops.epsilon) {
-            return new Vec(1.0, 0.0, 0.0);
-        }
-
-        // if all failed
-        return null;
+    private static double getT(double raySource, double rayDirection, double minPoint) {
+        if (Math.abs(rayDirection) < Ops.epsilon && Math.abs(raySource - minPoint) > Ops.epsilon) return Integer.MAX_VALUE;
+        if (Math.abs(rayDirection) < Ops.epsilon && Math.abs(raySource - minPoint) < Ops.epsilon) return 0;
+        return (minPoint - raySource) / rayDirection;
     }
 
-    private static double getParameters(final double a, final double b, final double c) {
-        final double t = (c - b) / a;
+    private Vec normal(Point hitPoint) {
+        double xMinVal = Math.abs(hitPoint.x - minPoint.x);
+        double yMinVal = Math.abs(hitPoint.y - minPoint.y);
+        double zMinVal = Math.abs(hitPoint.z - minPoint.z);
 
-        if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) < Ops.epsilon) {
-            return 0.0;
-        }
-        if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) > Ops.epsilon) {
-            return 1.0E8;
-        }
+        double xMaxVal = Math.abs(hitPoint.x - maxPoint.x);
+        double yMaxVal = Math.abs(hitPoint.y - maxPoint.y);
+        double zMaxVal = Math.abs(hitPoint.z - maxPoint.z);
 
-        return t;
+        if (xMinVal < Ops.epsilon) return new Vec(-1, 0, 0);
+        else if (yMinVal < Ops.epsilon) return new Vec(0, -1, 0);
+        else if (zMinVal < Ops.epsilon) return new Vec(0, 0, -1);
+        else if (xMaxVal < Ops.epsilon) return new Vec(1, 0, 0);
+        else if (yMaxVal < Ops.epsilon) return new Vec(0, 1, 0);
+        else if (zMaxVal < Ops.epsilon) return new Vec(0, 0, 1);
+        else return null;
     }
+
 }

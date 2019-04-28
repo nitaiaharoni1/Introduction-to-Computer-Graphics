@@ -33,45 +33,23 @@ public class Sphere extends Shape {
 
     @Override
     public Hit intersect(Ray ray) {
-        double b = ray.direction().mult(2.0).dot(ray.source().sub(this.center));
-        double c = this.substitute(ray.source());
-        double disc = Math.sqrt(b * b - 4.0 * c);
         boolean isInside = false;
-
-        if (Double.isNaN(disc) == true) {
-            return null;
-        }
-
-        double t1 = (-b - disc) / 2.0;
-        double t2 = (-b + disc) / 2.0;
-
-        if (t2 < Ops.epsilon) {
-            return null;
-        }
-
-        Vec normal = this.getNormal(ray.add(t1));
+        double b = ray.direction().mult(2).dot(ray.source().sub(center));
+        double c = ray.source().distSqr(center) - Math.pow(radius, 2);
+        double disc = Math.sqrt(Math.pow(b, 2) - 4 * c);
+        if (!(disc >= 0)) return null;
+        double t1 = -(b + disc) / 2;
+        double t2 = (-b + disc) / 2;
+        Vec normal = ray.add(t1).sub(center).normalize();
         double minT = t1;
-
-        if (minT > 1.0E8) {
-            return null;
-        }
-
+        if (t2 < Ops.epsilon) return null;
         if (t1 < Ops.epsilon) {
             minT = t2;
-            normal = this.getNormal(ray.add(t2)).neg();
+            normal = ray.add(t2).sub(center).normalize().neg();
             isInside = true;
         }
-
+        if (minT > Integer.MAX_VALUE) return null;
         return new Hit(minT, normal).setIsWithin(isInside);
     }
 
-    private Vec getNormal(Point p) {
-        Vec normal = p.sub(center).normalize();
-        return normal;
-    }
-
-    private double substitute(Point p) {
-        double substitute = p.distSqr(center) - Math.pow(radius, 2);
-        return substitute;
-    }
 }
