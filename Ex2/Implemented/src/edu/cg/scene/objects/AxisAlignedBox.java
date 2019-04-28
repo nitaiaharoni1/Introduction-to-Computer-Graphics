@@ -68,9 +68,9 @@ public class AxisAlignedBox extends Shape {
         final double[] minPoint = this.minPoint.asArray();
         final double[] maxPoint = this.maxPoint.asArray();
 
+        boolean isInside = false;
         double tNear = -1.0E8;
         double tFar = 1.0E8;
-        boolean isInside = false;
 
         for (int i = 0; i <= 2; ++i) {
             boolean absVal = Math.abs(rayDArr[i]) > Ops.epsilon;
@@ -96,7 +96,8 @@ public class AxisAlignedBox extends Shape {
                     return null;
                 }
             } else {
-                if (rayPArr[i] > maxPoint[i] || rayPArr[i] < minPoint[i]) {
+                boolean inRange = rayPArr[i] > maxPoint[i] || rayPArr[i] < minPoint[i];
+                if (inRange) {
                     return null;
                 }
             }
@@ -110,7 +111,7 @@ public class AxisAlignedBox extends Shape {
         }
 
         Vec norm = this.normalize(ray.add(minTNear));
-        if (isInside) {
+        if (isInside == true) {
             norm = norm.neg();
         }
 
@@ -120,32 +121,29 @@ public class AxisAlignedBox extends Shape {
 
 
     private Vec normalize(final Point p) {
-//        double zVal = Math.abs(p.z - this.minPoint.z);
-//        double xVal = Math.abs(p.x - this.minPoint.x);
-//        double yVal = Math.abs(p.y - this.maxPoint.y);
-//        switch (zVal) {
-//            case (zVal <= Ops.epsilon):
-//
-//
-//        }
-
         if (Math.abs(p.z - this.minPoint.z) <= Ops.epsilon) {
-            return new Vec(0.0, 0.0, -1.0);
+            Vec toReturn = new Vec(0.0, 0.0, -1.0);
+            return toReturn;
         }
         if (Math.abs(p.x - this.minPoint.x) <= Ops.epsilon) {
-            return new Vec(-1.0, 0.0, 0.0);
+            Vec toReturn = new Vec(-1.0, 0.0, 0.0);
+            return toReturn;
         }
         if (Math.abs(p.y - this.minPoint.y) <= Ops.epsilon) {
-            return new Vec(0.0, -1.0, 0.0);
+            Vec toReturn = new Vec(0.0, -1.0, 0.0);
+            return toReturn;
         }
         if (Math.abs(p.y - this.maxPoint.y) <= Ops.epsilon) {
-            return new Vec(0.0, 1.0, 0.0);
+            Vec toReturn = new Vec(0.0, 1.0, 0.0);
+            return toReturn;
         }
         if (Math.abs(p.z - this.maxPoint.z) <= Ops.epsilon) {
-            return new Vec(0.0, 0.0, 1.0);
+            Vec toReturn = new Vec(0.0, 0.0, 1.0);
+            return toReturn;
         }
         if (Math.abs(p.x - this.maxPoint.x) <= Ops.epsilon) {
-            return new Vec(1.0, 0.0, 0.0);
+            Vec toReturn = new Vec(1.0, 0.0, 0.0);
+            return toReturn;
         }
 
         // if all failed
@@ -154,12 +152,15 @@ public class AxisAlignedBox extends Shape {
 
     private static double getParameters(final double a, final double b, final double c) {
         final double t = (c - b) / a;
+        double zero = 0.0;
+        double huge = 1.0E8;
+
 
         if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) < Ops.epsilon) {
-            return 0.0;
+            return zero;
         }
         if (Math.abs(a) < Ops.epsilon && Math.abs(b - c) > Ops.epsilon) {
-            return 1.0E8;
+            return huge;
         }
 
         return t;
