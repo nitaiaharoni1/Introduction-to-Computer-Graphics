@@ -241,24 +241,19 @@ public class Scenes {
     }
 
 
-    public static Scene scene8(){
+    public static Scene scene8() {
         Shape boxShape1 = new AxisAlignedBox(new Point(0, 0, 0), new Point(1, 1, 1));
-        // Shape boxShape1 = new Sphere(new Point(0,0,0),0.5);
+//         Shape boxShape1 = new Sphere(new Point(0,0,0),0.5);
         Material boxMat1 = new Material().initKa(new Vec(0.8, 0.05, 0.05)).initKd(new Vec(0.0))
                 .initKs(new Vec(0.9)).initShininess(10)
                 .initIsTransparent(false).initRefractionIntensity(0.0);
         Surface boxSurface1 = new Surface(boxShape1, boxMat1);
 
         Shape boxShape2 = new AxisAlignedBox(new Point(0, 0, 0), new Point(2, -1, -1));
-        // Shape boxShape1 = new Sphere(new Point(0,0,0),0.5);
         Material boxMat2 = new Material().getRandomMaterial();
         Surface boxSurface2 = new Surface(boxShape2, boxMat2);
 
         Shape boxShape3 = new AxisAlignedBox(new Point(0, 0, 0), new Point(-1, 2, -1));
-        // Shape boxShape1 = new Sphere(new Point(0,0,0),0.5);
-//        Material boxMat3 = new Material().initKa(new Vec(0.8, 0.05, 0.05)).initKd(new Vec(0.0))
-//                .initKs(new Vec(0.9)).initShininess(10)
-//                .initIsTransparent(false).initRefractionIntensity(0.0);
         Material boxMat3 = new Material().getRandomMaterial();
         Surface boxSurface3 = new Surface(boxShape3, boxMat3);
 
@@ -285,6 +280,111 @@ public class Scenes {
                 .addSurface(boxSurface3).initName("scene8").initAntiAliasingFactor(1)
                 .addSurface(sphereSurface1).initName("scene8").initAntiAliasingFactor(1)
                 .addSurface(sphereSurface2).initName("scene8").initAntiAliasingFactor(1)
+                .initRenderRefarctions(true).initRenderReflections(true).initMaxRecursionLevel(3);
+    }
+
+    public static Scene scene9() {
+        Shape boxShape1 = new AxisAlignedBox(new Point(0, 0, 0), new Point(-1, 1, 1));
+        // Shape boxShape1 = new Sphere(new Point(0,0,0),0.5);
+        Material boxMat1 = new Material().initKa(new Vec(0.8, 0.05, 0.05)).initKd(new Vec(0.0))
+                .initKs(new Vec(0.9)).initShininess(10)
+                .initIsTransparent(false).initRefractionIntensity(0.0);
+        Surface boxSurface1 = new Surface(boxShape1, boxMat1);
+
+        Shape boxShape2 = new AxisAlignedBox(new Point(0, 0, 0), new Point(1, 1, -1));
+        Material boxMat2 = new Material().getRandomMaterial();
+        Surface boxSurface2 = new Surface(boxShape2, boxMat2);
+
+        Shape boxShape3 = new AxisAlignedBox(new Point(0, 0, 0), new Point(1, -1, 1));
+        Material boxMat3 = new Material().getRandomMaterial();
+        Surface boxSurface3 = new Surface(boxShape3, boxMat3);
+
+        Shape boxShape4 = new AxisAlignedBox(new Point(0, 0, 0), new Point(1, -1, -1));
+        Material boxMat4 = new Material().getRandomMaterial();
+        Surface boxSurface4 = new Surface(boxShape4, boxMat4);
+
+        Shape boxShape5 = new AxisAlignedBox(new Point(0, 0, 0), new Point(-1, 1, -1));
+        Material boxMat5 = new Material().getRandomMaterial();
+        Surface boxSurface5 = new Surface(boxShape5, boxMat5);
+
+        Shape boxShape6 = new AxisAlignedBox(new Point(0, 0, 0), new Point(-1, -1, 1));
+        Material boxMat6 = new Material().getRandomMaterial();
+        Surface boxSurface6 = new Surface(boxShape6, boxMat6);
+
+        Shape boxShape7 = new AxisAlignedBox(new Point(0, 0, 0), new Point(-1, 1, -1));
+        Material boxMat7 = new Material().getRandomMaterial();
+        Surface boxSurface7 = new Surface(boxShape7, boxMat7);
+
+
+        Light dirLight = new DirectionalLight().initDirection(new Vec(-1.0, -1.0, -1.0))
+                .initIntensity(new Vec(0.9));
+        Light pointLight1 = new PointLight().initIntensity(new Vec(0.7)).
+                initPosition(new Point(2, 2, 1.5));
+        Light pointLight2 = new PointLight().initIntensity(new Vec(0.9)).
+                initPosition(new Point(2, 1, 0.5));
+
+        return new Scene().initAmbient(new Vec(0.0))
+                .initCamera(new Point(4, 4, 1.5), new Vec(-1.0, -1.0, -0.3), new Vec(0, 0, 1), 3)
+                .addLightSource(dirLight).addLightSource(pointLight1).addLightSource(pointLight2)
+                .addSurface(boxSurface1).initName("scene9").initAntiAliasingFactor(1)
+                .addSurface(boxSurface2).initName("scene9").initAntiAliasingFactor(1)
+                .addSurface(boxSurface3).initName("scene9").initAntiAliasingFactor(1)
+                .addSurface(boxSurface4).initName("scene9").initAntiAliasingFactor(1)
+                .addSurface(boxSurface5).initName("scene9").initAntiAliasingFactor(1)
+                .addSurface(boxSurface6).initName("scene9").initAntiAliasingFactor(1)
+                .addSurface(boxSurface7).initName("scene9").initAntiAliasingFactor(1)
+                .initRenderRefarctions(true).initRenderReflections(true).initMaxRecursionLevel(3);
+    }
+
+    public static Scene scene10() {
+        Shape boxShape1 = new Sphere(new Point(0, 0, 0), 0.5);
+        Material boxMat1 = new Material().initKa(new Vec(0.8, 0.05, 0.05)).initKd(new Vec(0.0))
+                .initKs(new Vec(0.9)).initShininess(10)
+                .initIsTransparent(false).initRefractionIntensity(0.0);
+        Surface boxSurface1 = new Surface(boxShape1, boxMat1);
+
+        Shape boxShape2 = new Sphere(new Point(0, 1, 0), 0.5);
+        Material boxMat2 = new Material().getRandomMaterial();
+        Surface boxSurface2 = new Surface(boxShape2, boxMat2);
+
+        Shape boxShape3 = new Sphere(new Point(0, 0, 1), 0.5);
+        Material boxMat3 = new Material().getRandomMaterial();
+        Surface boxSurface3 = new Surface(boxShape3, boxMat3);
+
+        Shape boxShape4 = new Sphere(new Point(0, 1, 1), 0.5);
+        Material boxMat4 = new Material().getRandomMaterial();
+        Surface boxSurface4 = new Surface(boxShape4, boxMat4);
+
+        Shape boxShape5 = new Sphere(new Point(0, -1, 0), 0.5);
+        Material boxMat5 = new Material().getRandomMaterial();
+        Surface boxSurface5 = new Surface(boxShape5, boxMat5);
+
+        Shape boxShape6 = new Sphere(new Point(0, 0, -1), 0.5);
+        Material boxMat6 = new Material().getRandomMaterial();
+        Surface boxSurface6 = new Surface(boxShape6, boxMat6);
+
+        Shape boxShape7 = new Sphere(new Point(0, -1, -1), 0.5);
+        Material boxMat7 = new Material().getRandomMaterial();
+        Surface boxSurface7 = new Surface(boxShape7, boxMat7);
+
+
+        Light dirLight = new DirectionalLight().initDirection(new Vec(-1.0, -1.0, -1.0))
+                .initIntensity(new Vec(0.9));
+        Light pointLight1 = new PointLight().initIntensity(new Vec(0.7)).
+                initPosition(new Point(2, 2, 1.5));
+        Light pointLight2 = new PointLight().initIntensity(new Vec(0.9)).
+                initPosition(new Point(2, 1, 0.5));
+
+        return new Scene().initAmbient(new Vec(0.0))
+                .initCamera(new Point(4, 4, 1.5), new Vec(-1.0, -1.0, -0.3), new Vec(0, 0, 1), 3)
+                .addLightSource(dirLight).addLightSource(pointLight1).addLightSource(pointLight2)
+                .addSurface(boxSurface1).initName("scene10").initAntiAliasingFactor(1)
+                .addSurface(boxSurface2).initName("scene10").initAntiAliasingFactor(1)
+                .addSurface(boxSurface3).initName("scene10").initAntiAliasingFactor(1)
+                .addSurface(boxSurface4).initName("scene10").initAntiAliasingFactor(1)
+                .addSurface(boxSurface5).initName("scene10").initAntiAliasingFactor(1)
+                .addSurface(boxSurface6).initName("scene10").initAntiAliasingFactor(1)
+                .addSurface(boxSurface7).initName("scene10").initAntiAliasingFactor(1)
                 .initRenderRefarctions(true).initRenderReflections(true).initMaxRecursionLevel(3);
     }
 }
