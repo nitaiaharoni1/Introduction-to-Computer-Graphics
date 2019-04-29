@@ -165,18 +165,7 @@ public class Scene {
         return img;
     }
 
-    //Todo: Change
-    //Todo: Original func
-//    private Future<Color> calcColor(int x, int y) {
-//        return executor.submit(() -> {
-//            // TODO: You need to re-implement this method if you want to handle
-//            //       super-sampling. You're also free to change the given implementation as you like.
-//            Point centerPoint = camera.transform(x, y);
-//            Ray ray = new Ray(camera.getCameraPosition(), centerPoint);
-//            Vec color = calcColor(ray, 0);
-//            return color.toColor();
-//        });
-//    }
+
     private Future<Color> calcColor(int x, int y) {
         Point[] leftUp = new Point[1];
         Point[] rightDown = new Point[1];
@@ -188,17 +177,21 @@ public class Scene {
         Point[] pointOnScreenPlain = new Point[1];
         Ray[] ray = new Ray[1];
         return executor.submit(() -> {
-            leftUp[0] = camera.transform(x, y);
-            rightDown[0] = camera.transform(x + 1, y + 1);
-            color[0] = new Vec();
-            for (i[0] = 0; i[0] < antiAliasingFactor; ++i[0]) {
-                for (j[0] = 0; j[0] < antiAliasingFactor; ++j[0]) {
-                    calcRay(leftUp[0], rightDown[0], i, j, leftUpWeight, rightDownWeight, pointOnScreenPlain, ray);
-                    color[0] = color[0].add(calcColor(ray[0], 0));
-                }
-            }
-            return color[0].mult(1.0 / (antiAliasingFactor * antiAliasingFactor)).toColor();
+            return getColor(x, y, leftUp, rightDown, color, i, j, leftUpWeight, rightDownWeight, pointOnScreenPlain, ray);
         });
+    }
+
+    private Color getColor(int x, int y, Point[] leftUp, Point[] rightDown, Vec[] color, int[] i, int[] j, Point[] leftUpWeight, Point[] rightDownWeight, Point[] pointOnScreenPlain, Ray[] ray) {
+        leftUp[0] = camera.transform(x, y);
+        rightDown[0] = camera.transform(x + 1, y + 1);
+        color[0] = new Vec();
+        for (i[0] = 0; i[0] < antiAliasingFactor; ++i[0]) {
+            for (j[0] = 0; j[0] < antiAliasingFactor; ++j[0]) {
+                calcRay(leftUp[0], rightDown[0], i, j, leftUpWeight, rightDownWeight, pointOnScreenPlain, ray);
+                color[0] = color[0].add(calcColor(ray[0], 0));
+            }
+        }
+        return color[0].mult(1.0 / (antiAliasingFactor * antiAliasingFactor)).toColor();
     }
 
     private void calcRay(Point point, Point point1, int[] i, int[] j, Point[] leftUpWeight, Point[] rightDownWeight, Point[] pointOnScreenPlain, Ray[] ray) {
@@ -209,39 +202,49 @@ public class Scene {
     }
 
     //Todo: Change
-    private Vec calcColor(Ray ray, int recusionLevel) {
-        if (recusionLevel >= maxRecursionLevel) return new Vec();
+    private Vec calcColor(Ray ray, int recursionLevel) {
+        if (recursionLevel >= maxRecursionLevel) return new Vec();
         Hit minHit = intersection(ray);
         if (minHit == null) return backgroundColor;
         Point hittingPoint = ray.getHittingPoint(minHit);
         Surface surface = minHit.getSurface();
 
+        return getVec(ray, recursionLevel, minHit, hittingPoint, surface);
+    }
+
+    private Vec getVec(Ray ray, int recursionLevel, Hit minHit, Point hittingPoint, Surface surface) {
         Vec color = calcMaterialColor(ray, minHit, hittingPoint, surface);
-        color = calcReflectionColor(ray, recusionLevel, minHit, hittingPoint, surface, color);
-        color = calcRefractionColor(ray, recusionLevel, minHit, hittingPoint, surface, color);
+        color = calcReflectionColor(ray, recursionLevel, minHit, hittingPoint, surface, color);
+        color = calcRefractionColor(ray, recursionLevel, minHit, hittingPoint, surface, color);
         return color;
     }
 
-    private Vec calcRefractionColor(Ray ray, int recusionLevel, Hit minHit, Point hittingPoint, Surface surface, Vec color) {
+    private Vec calcRefractionColor(Ray ray, int recursionLevel, Hit minHit, Point hittingPoint, Surface surface, Vec color) {
         if (renderRefarctions) {
             Vec refractionColor;
             if (surface.isTransparent()) {
-                double n1 = surface.n1(minHit);
-                double n2 = surface.n2(minHit);
-                Vec refractionDirection = Ops.refract(ray.direction(), minHit.getNormalToSurface(), n1, n2);
-                Vec refractionWeight = new Vec(surface.refractionIntensity());
-                refractionColor = calcColor(new Ray(hittingPoint, refractionDirection), recusionLevel + 1).mult(refractionWeight);
-                color = color.add(refractionColor);
+                color = getVec(ray, recursionLevel, minHit, hittingPoint, surface, color);
             }
         }
         return color;
     }
 
-    private Vec calcReflectionColor(Ray ray, int recusionLevel, Hit minHit, Point hittingPoint, Surface surface, Vec color) {
+    private Vec getVec(Ray ray, int recursionLevel, Hit minHit, Point hittingPoint, Surface surface, Vec color) {
+        Vec refractionColor;
+        double n1 = surface.n1(minHit);
+        double n2 = surface.n2(minHit);
+        Vec refractionDirection = Ops.refract(ray.direction(), minHit.getNormalToSurface(), n1, n2);
+        Vec refractionWeight = new Vec(surface.refractionIntensity());
+        refractionColor = calcColor(new Ray(hittingPoint, refractionDirection), recursionLevel + 1).mult(refractionWeight);
+        color = color.add(refractionColor);
+        return color;
+    }
+
+    private Vec calcReflectionColor(Ray ray, int recursionLevel, Hit minHit, Point hittingPoint, Surface surface, Vec color) {
         if (renderReflections) {
             Vec reflectionDirection = Ops.reflect(ray.direction(), minHit.getNormalToSurface());
             Vec reflectionWeight = new Vec(surface.reflectionIntensity());
-            Vec reflectionColor = calcColor(new Ray(hittingPoint, reflectionDirection), recusionLevel + 1).mult(reflectionWeight);
+            Vec reflectionColor = calcColor(new Ray(hittingPoint, reflectionDirection), recursionLevel + 1).mult(reflectionWeight);
             color = color.add(reflectionColor);
         }
         return color;
@@ -269,19 +272,28 @@ public class Scene {
         return Kd.mult(Math.max(N.dot(L), 0.0));
     }
 
-    //Todo: Change
     private Vec specular(Hit minHit, Ray rayToLight, Ray rayFromViewer) {
         Vec L = rayToLight.direction();
         Vec N = minHit.getNormalToSurface();
         Vec R = Ops.reflect(L.neg(), N);
         Vec Ks = minHit.getSurface().Ks();
         Vec v = rayFromViewer.direction();
-        int shininess = minHit.getSurface().shininess();
-        double dot = R.dot(v.neg());
-        return (dot < 0.0) ? new Vec() : Ks.mult(Math.pow(dot, shininess));
+        return getSpec(minHit, R, Ks, v);
     }
 
-    //Todo: Change
+    private Vec getSpec(Hit minHit, Vec r, Vec ks, Vec v) {
+        int shininess = minHit.getSurface().shininess();
+        double dot = r.dot(v.neg());
+        return (dot < 0.0) ? new Vec() : ks.mult(Math.pow(dot, shininess));
+    }
+
+
+    private Hit intersection(Ray ray) {
+        Hit minHit = null;
+        minHit = getHit(ray, minHit);
+        return minHit;
+    }
+
     private boolean isOccluded(Light light, Ray rayToLight) {
         for (Surface surface : surfaces) {
             if (light.isOccludedBy(surface, rayToLight)) {
@@ -291,9 +303,7 @@ public class Scene {
         return false;
     }
 
-    //Todo: Change
-    private Hit intersection(Ray ray) {
-        Hit minHit = null;
+    private Hit getHit(Ray ray, Hit minHit) {
         for (Surface surface : surfaces) {
             Hit newHit = surface.intersect(ray);
             if (minHit == null || (newHit != null && newHit.compareTo(minHit) < 0)) minHit = newHit;
