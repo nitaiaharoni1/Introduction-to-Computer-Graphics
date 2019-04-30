@@ -150,6 +150,18 @@ public class Scene {
         return img;
     }
 
+
+    /**
+     * Calculating the weighted average pixel's color
+     * after casting antiAliasingFactor^2 rays through the x,y pixel.
+     * Iterating all the sub pixels of a pixel depends by the antiAliasingFactor.
+     * Each iteration calculating the ray for each sub pixel.
+     * At the end, calculating the weighted average color.
+     *
+     * @param x
+     * @param y
+     * @return pixel's color
+     */
     private Future<Color> calcColor(int x, int y) {
         return executor.submit(() -> {
             Point centerPoint = camera.transform(x, y);
