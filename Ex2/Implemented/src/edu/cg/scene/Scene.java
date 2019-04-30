@@ -169,9 +169,9 @@ public class Scene {
             Vec pixelColor = new Vec();
             for (double i = 0; i < antiAliasingFactor; i++) {
                 for (double j = 0; j < antiAliasingFactor; j++) {
+                    Point centerPointPull = new Point((antiAliasingFactor - j) / antiAliasingFactor, (antiAliasingFactor - i) / antiAliasingFactor, 1);
                     Point nextPointPull = new Point(j / antiAliasingFactor, i / antiAliasingFactor, 0);
-                    Point centerPointPull = new Point(antiAliasingFactor - j / antiAliasingFactor, antiAliasingFactor - i / antiAliasingFactor, 1);
-                    Point subPixel = Ops.add( nextPoint.mult(nextPointPull),centerPoint.mult(centerPointPull));
+                    Point subPixel = Ops.add(nextPoint.mult(nextPointPull), centerPoint.mult(centerPointPull));
                     Ray ray = new Ray(camera.getCameraPosition(), subPixel);
                     pixelColor = pixelColor.add(calcColor(ray, 0));
                 }
