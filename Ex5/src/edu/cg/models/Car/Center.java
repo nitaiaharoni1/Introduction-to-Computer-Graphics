@@ -1,9 +1,9 @@
 package edu.cg.models.Car;
 
-import com.jogamp.opengl.GL2;
-
 import edu.cg.models.IRenderable;
 import edu.cg.models.SkewedBox;
+
+import javax.media.opengl.GL2;
 
 public class Center implements IRenderable {
     // TODO: The following elements are used to build the center of the body.
@@ -21,32 +21,39 @@ public class Center implements IRenderable {
     public void render(GL2 gl) {
         // TODO: Exactly the same
         // TODO: Render the center of the car.
+
         gl.glPushMatrix();
         Materials.SetBlackMetalMaterial(gl);
         bodyBase.render(gl);
+
         Materials.SetRedMetalMaterial(gl);
-        gl.glTranslated(0.1015625, Specification.B_BASE_HEIGHT, 0);
+        gl.glTranslated(0.1015625, 0.013125000000000001, 0.0);
         frontBox.render(gl);
+
         gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslated(-0.1015625, Specification.B_BASE_HEIGHT, 0);
-        gl.glRotated(180, 0, 1, 0);
+        gl.glTranslated(-0.1015625, 0.013125000000000001, 0.0);
+        gl.glRotated(180.0, 0.0, 1.0, 0.0);
         frontBox.render(gl);
+
         gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslated(0, Specification.B_BASE_HEIGHT, 0.125);
-        gl.glRotated(90, 0, 1, 0);
+        gl.glTranslated(0.0, 0.013125000000000001, 0.125);
+        gl.glRotated(90.0, 0.0, 1.0, 0.0);
         sideBox.render(gl);
+
         gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslated(0, Specification.B_BASE_HEIGHT, -0.125);
-        gl.glRotated(-90, 0, 1, 0);
+        gl.glTranslated(0.0, 0.013125000000000001, -0.125);
+        gl.glRotated(-90.0, 0.0, 1.0, 0.0);
         sideBox.render(gl);
+
         gl.glPopMatrix();
         Materials.SetBlackMetalMaterial(gl);
         gl.glPushMatrix();
-        gl.glTranslated(-0.03125, Specification.B_BASE_HEIGHT, 0);
-        backBox.render(gl);
+        gl.glTranslated(-0.03125, 0.013125000000000001, 0.0);
+        backSeatBox.render(gl);
+
         gl.glPopMatrix();
     }
 

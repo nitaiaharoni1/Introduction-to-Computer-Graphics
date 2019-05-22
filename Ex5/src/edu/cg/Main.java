@@ -1,30 +1,15 @@
 package edu.cg;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.awt.Point;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JFrame;
-
-import com.jogamp.opengl.*;
-import com.jogamp.opengl.awt.*;
-
-import edu.cg.models.*;
-import edu.cg.models.Car.Back;
-import edu.cg.models.Car.Center;
-import edu.cg.models.Car.Front;
-import edu.cg.models.Car.PairOfWheels;
-import edu.cg.models.Car.Spolier;
 import edu.cg.models.Car.F1Car;
+import edu.cg.models.IRenderable;
+import edu.cg.models.SkewedBox;
+
+import javax.media.opengl.GLCapabilities;
+import javax.media.opengl.GLProfile;
+import javax.media.opengl.awt.GLJPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 
 public class Main {
@@ -32,7 +17,7 @@ public class Main {
     // TODO: Incrementally add new models to the models array.
     //       When the program is started, the first model in the array is rendered.
     //       Later, pressing 'm' on the keyboard will render the next model in the array.
-    static IRenderable[] models = {new Empty()};
+    static IRenderable[] models = {new F1Car(), new SkewedBox()};
     static Point prevMouse;
     static int currentModel;
     static Frame frame;
@@ -40,7 +25,8 @@ public class Main {
     /**
      * Create frame, canvas and viewer, and load the first model.
      *
-     * @param args No arguments
+     * @param args
+     *            No arguments
      */
     public static void main(String[] args) {
         frame = new JFrame();
@@ -75,7 +61,7 @@ public class Main {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                switch (e.getKeyChar()) {
+                switch(e.getKeyChar()) {
 
                     // Toggle wireframe mode
                     case 'p':
@@ -164,7 +150,7 @@ public class Main {
     private static IRenderable nextModel() {
         IRenderable model = models[currentModel++];
         frame.setTitle("Exercise 5 - " + model.toString());
-        currentModel = currentModel % models.length;
+        currentModel = currentModel%models.length;
 
         return model;
     }

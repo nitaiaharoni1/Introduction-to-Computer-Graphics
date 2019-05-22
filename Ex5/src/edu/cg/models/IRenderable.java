@@ -1,6 +1,6 @@
 package edu.cg.models;
 
-import com.jogamp.opengl.GL2;
+import javax.media.opengl.GL2;
 
 /**
  * A renderable model

@@ -1,6 +1,6 @@
 package edu.cg.models;
 
-import com.jogamp.opengl.*;
+import javax.media.opengl.GL2;
 
 /**
  * A simple axes dummy

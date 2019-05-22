@@ -1,15 +1,13 @@
 package edu.cg;
 
-import java.awt.Component;
-import java.awt.Point;
-
-import com.jogamp.opengl.*;
-import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.FPSAnimator;
-
 import edu.cg.algebra.Vec;
 import edu.cg.models.IRenderable;
+
+import javax.media.opengl.GL2;
+import javax.media.opengl.GLAutoDrawable;
+import javax.media.opengl.GLEventListener;
+import java.awt.*;
 
 /**
  * An OpenGL model viewer
@@ -73,6 +71,7 @@ public class Viewer implements GLEventListener {
         gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
     }
 
+
     private void setupCamera(GL2 gl) {
         // TODO: You should set up the camera by defining the view transformation.
         // (Step 1) Calculate rotation matrix:
@@ -107,18 +106,30 @@ public class Viewer implements GLEventListener {
             Vec axis = from.cross(to).normalize();
             if (axis.isFinite()) {
                 double angle = 57.29577951308232 * Math.acos(from.dot(to));
-                angle = (Double.isFinite(angle) ? angle : 0);
+                angle = (Double.isFinite(angle) ? angle : 0.0);
                 gl.glRotated(angle, (double) axis.x, (double) axis.y, (double) axis.z);
             }
         }
         gl.glMultMatrixd(rotationMatrix, 0);
         gl.glGetDoublev(2982, rotationMatrix, 0);
         gl.glLoadIdentity();
-        gl.glTranslated(0, 0, -1.2);
-        gl.glTranslated(0, 0, -zoom);
+        gl.glTranslated(0.0, 0.0, -1.2);
+        gl.glTranslated(0.0, 0.0, -zoom);
         gl.glMultMatrixd(rotationMatrix, 0);
         mouseFrom = null;
         mouseTo = null;
+    }
+
+    private Vec mousePointToVec(Point pt) {
+        //Todo: exactly the same
+        double x = 2 * pt.x / canvasWidth - 1.0;
+        double y = 1.0 - 2 * pt.y / canvasHeight;
+        double z2 = 2.0 - x * x - y * y;
+        if (z2 < 0.0) {
+            z2 = 0.0;
+        }
+        double z3 = Math.sqrt(z2);
+        return new Vec(x, y, z3).normalize();
     }
 
     private void setupLights(GL2 gl) {
@@ -163,7 +174,7 @@ public class Viewer implements GLEventListener {
         GL2 gl = drawable.getGL().getGL2();
         canvasWidth = width;
         canvasHeight = height;
-        gl.glMatrixMode(5889);
+        gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         gl.glFrustum(-0.1, 0.1, -0.1 * height / width, 0.1 * height / width, 0.1, 1000);
     }
@@ -181,7 +192,6 @@ public class Viewer implements GLEventListener {
         // The following lines store the rotation for use when next displaying the
         // model.
         // After you redraw the model, you should set these variables back to null.
-
         if (null == mouseFrom)
             mouseFrom = from;
         mouseTo = to;

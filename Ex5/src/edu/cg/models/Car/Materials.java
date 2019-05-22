@@ -1,6 +1,6 @@
 package edu.cg.models.Car;
 
-import com.jogamp.opengl.GL2;
+import javax.media.opengl.GL2;
 
 public class Materials {
     // TODO: Use this class to update the color of the vertexes when drawing.

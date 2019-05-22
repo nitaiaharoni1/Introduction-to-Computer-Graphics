@@ -1,6 +1,6 @@
 package edu.cg.models;
 
-import com.jogamp.opengl.GL2;
+import javax.media.opengl.GL2;
 
 public class SkewedBox implements IRenderable {
     private double length, height1, height2, depth1, depth2;
@@ -28,49 +28,57 @@ public class SkewedBox implements IRenderable {
         //Todo: Exactlly the same
         // TODO : Render the skewed-box using.
         //        Use the fields: length, height1, height2, depth1, depth2
+
         gl.glNormal3d(1, 0, 0);
-        gl.glBegin(7);
+        gl.glBegin(GL2.GL_QUADS);
         gl.glVertex3d(length / 2, 0, depth2 / 2);
         gl.glVertex3d(length / 2, 0, -depth2 / 2);
         gl.glVertex3d(length / 2, height2, -depth2 / 2);
         gl.glVertex3d(length / 2, height2, depth2 / 2);
         gl.glEnd();
-        gl.glNormal3d(-1, 0, 0);
-        gl.glBegin(7);
-        gl.glVertex3d(-length / 2, 0, -depth1 / 2);
-        gl.glVertex3d(-length / 2, 0, depth1 / 2);
-        gl.glVertex3d(-length / 2, height1, depth1 / 2);
-        gl.glVertex3d(-length / 2, height1, -depth1 / 2);
-        gl.glEnd();
+
         gl.glNormal3d(0, 1, 0);
-        gl.glBegin(7);
+        gl.glBegin(GL2.GL_QUADS);
         gl.glVertex3d(-length / 2, height1, depth1 / 2);
         gl.glVertex3d(length / 2, height2, depth2 / 2);
         gl.glVertex3d(length / 2, height2, -depth2 / 2);
         gl.glVertex3d(-length / 2, height1, -depth1 / 2);
         gl.glEnd();
-        gl.glNormal3d(0, -1, 0);
-        gl.glBegin(7);
-        gl.glVertex3d(-length / 2, 0, depth1 / 2);
-        gl.glVertex3d(-length / 2, 0, -depth1 / 2);
-        gl.glVertex3d(length / 2, 0, -depth2 / 2);
-        gl.glVertex3d(length / 2, 0, depth2 / 2);
-        gl.glEnd();
+
         gl.glNormal3d(0, 0, 1);
-        gl.glBegin(7);
+        gl.glBegin(GL2.GL_QUADS);
         gl.glVertex3d(-length / 2, height1, depth1 / 2);
         gl.glVertex3d(-length / 2, 0, depth1 / 2);
         gl.glVertex3d(length / 2, 0, depth2 / 2);
         gl.glVertex3d(length / 2, height2, depth2 / 2);
         gl.glEnd();
+
+        gl.glNormal3d(-1, 0, 0);
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glVertex3d(-length / 2, 0, -depth1 / 2);
+        gl.glVertex3d(-length / 2, 0, depth1 / 2);
+        gl.glVertex3d(-length / 2, height1, depth1 / 2);
+        gl.glVertex3d(-length / 2, height1, -depth1 / 2);
+        gl.glEnd();
+
+
+        gl.glNormal3d(0, -1, 0);
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glVertex3d(-length / 2, 0, depth1 / 2);
+        gl.glVertex3d(-length / 2, 0, -depth1 / 2);
+        gl.glVertex3d(length / 2, 0, -depth2 / 2);
+        gl.glVertex3d(length / 2, 0, depth2 / 2);
+        gl.glEnd();
+
         gl.glNormal3d(0, 0, -1);
-        gl.glBegin(7);
+        gl.glBegin(GL2.GL_QUADS);
         gl.glVertex3d(-length / 2, 0, -depth1 / 2);
         gl.glVertex3d(-length / 2, height1, -depth1 / 2);
         gl.glVertex3d(length / 2, height2, -depth2 / 2);
         gl.glVertex3d(length / 2, 0, -depth2 / 2);
         gl.glEnd();
     }
+
 
     @Override
     public void init(GL2 gl) {
