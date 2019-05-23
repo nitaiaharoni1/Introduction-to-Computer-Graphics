@@ -10,7 +10,8 @@ public class Wheel implements IRenderable {
 
     @Override
     public void render(GL2 gl) {
-        // TODO: Render the wheel.
+        // TODO: Exactly the same
+        // Render the wheel.
         // The wheel should be in the center relative to its local coordinate system.
         GLU glu = new GLU();
         GLUquadric quad = glu.gluNewQuadric();
@@ -34,7 +35,7 @@ public class Wheel implements IRenderable {
 
     @Override
     public void init(GL2 gl) {
-        // TODO Auto-generated method stub
+        //Auto-generated method stub
 
     }
 

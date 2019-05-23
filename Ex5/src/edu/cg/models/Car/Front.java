@@ -6,7 +6,7 @@ import edu.cg.models.SkewedBox;
 import javax.media.opengl.GL2;
 
 public class Front implements IRenderable {
-    // TODO: The front of the car is build from the following elements:
+    //The front of the car is build from the following elements:
     private SkewedBox hoodBox1 = new SkewedBox(Specification.F_HOOD_LENGTH_1, Specification.F_HOOD_HEIGHT_1, Specification.F_HOOD_HEIGHT_2, Specification.F_HOOD_DEPTH_1, Specification.F_HOOD_DEPTH_2);
     private SkewedBox hoodBox2 = new SkewedBox(Specification.F_HOOD_LENGTH_2, Specification.F_HOOD_HEIGHT_2, Specification.F_BUMPER_HEIGHT_1, Specification.F_HOOD_DEPTH_2, Specification.F_HOOD_DEPTH_3);
     private SkewedBox bumperBox = new SkewedBox(Specification.F_BUMPER_LENGTH, Specification.F_BUMPER_HEIGHT_1, Specification.F_BUMPER_HEIGHT_2, Specification.F_BUMPER_DEPTH, Specification.F_BUMPER_DEPTH);
@@ -17,7 +17,7 @@ public class Front implements IRenderable {
     @Override
     public void render(GL2 gl) {
         // TODO: Exactly the same
-        // TODO: Render the front of the car.
+        //Render the front of the car.
         gl.glPushMatrix();
         gl.glTranslated(-0.14375, 0, 0.0);
         gl.glPushMatrix();
@@ -45,7 +45,7 @@ public class Front implements IRenderable {
 
     @Override
     public void init(GL2 gl) {
-        // TODO Auto-generated method stub
+        //Auto-generated method stub
 
     }
 

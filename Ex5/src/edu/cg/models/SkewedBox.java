@@ -23,7 +23,7 @@ public class SkewedBox implements IRenderable {
 
     @Override
     public void render(GL2 gl) {
-        // TODO : Render the skewed-box using.
+        //TODO: Render the skewed-box using.
         //        Use the fields: length, height1, height2, depth1, depth2
 
         //Back Rectangle

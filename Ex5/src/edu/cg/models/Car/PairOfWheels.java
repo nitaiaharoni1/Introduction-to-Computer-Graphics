@@ -7,13 +7,13 @@ import javax.media.opengl.glu.GLU;
 import javax.media.opengl.glu.GLUquadric;
 
 public class PairOfWheels implements IRenderable {
-    // TODO: Use the wheel field to render the two wheels.
+    //Use the wheel field to render the two wheels.
     private Wheel wheel = new Wheel();
 
     @Override
     public void render(GL2 gl) {
         // TODO: Exactly the same
-        // TODO: Render the pair of wheels.
+        // Render the pair of wheels.
         gl.glPushMatrix();
         gl.glTranslated(0, 0, -0.1);
 
@@ -35,7 +35,7 @@ public class PairOfWheels implements IRenderable {
 
     @Override
     public void init(GL2 gl) {
-        // TODO Auto-generated method stub
+        //Auto-generated method stub
 
     }
 

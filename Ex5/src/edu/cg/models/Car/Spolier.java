@@ -8,7 +8,7 @@ import javax.media.opengl.glu.GLU;
 import javax.media.opengl.glu.GLUquadric;
 
 public class Spolier implements IRenderable {
-    // TODO: The spoiler is already implemented. You should understand how it is rendered.
+    //The spoiler is already implemented. You should understand how it is rendered.
     private static final SkewedBox spoilerBase = new SkewedBox(Specification.S_LENGTH, Specification.S_BASE_HEIGHT, Specification.S_BASE_HEIGHT, Specification.S_BASE_DEPTH, Specification.S_BASE_DEPTH);
     private static final SkewedBox spoilerWings = new SkewedBox(Specification.S_LENGTH, Specification.S_WINGS_HEIGHT, 4.0 * Specification.S_BASE_HEIGHT, Specification.S_WINGS_DEPTH, Specification.S_WINGS_DEPTH);
 
@@ -48,7 +48,7 @@ public class Spolier implements IRenderable {
 
     @Override
     public void init(GL2 gl) {
-        // TODO Auto-generated method stub
+        //Auto-generated method stub
 
     }
 

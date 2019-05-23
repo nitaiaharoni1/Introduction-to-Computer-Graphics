@@ -12,7 +12,7 @@ public class F1Car implements IRenderable {
     @Override
     public void render(GL2 gl) {
         // TODO: Exactly the same
-        // TODO: Render the whole car.
+        //Render the whole car.
         //       Here You should only render the three parts: back, center and front.
         new Center().render(gl);
         gl.glPushMatrix();

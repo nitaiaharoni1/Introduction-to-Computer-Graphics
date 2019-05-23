@@ -14,7 +14,7 @@ import java.awt.event.*;
 
 public class Main {
 
-    // TODO: Incrementally add new models to the models array.
+    // Incrementally add new models to the models array.
     //       When the program is started, the first model in the array is rendered.
     //       Later, pressing 'm' on the keyboard will render the next model in the array.
     static IRenderable[] models = {new F1Car(), new SkewedBox()};

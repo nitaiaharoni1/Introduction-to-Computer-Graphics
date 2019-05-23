@@ -34,7 +34,7 @@ public class Viewer implements GLEventListener {
 
     @Override
     public void display(GLAutoDrawable drawable) {
-        // TODO: This method is already implemented. But you should understand it very
+        //This method is already implemented. But you should understand it very
         // will.
         // When this method is invoked, the model is basically render. Follow the
         // different calls
@@ -73,7 +73,10 @@ public class Viewer implements GLEventListener {
 
 
     private void setupCamera(GL2 gl) {
-        // TODO: You should set up the camera by defining the view transformation.
+        //TODO: Exactly the same
+
+        // You should set up the camera by defining the view transformation.
+        //
         // (Step 1) Calculate rotation matrix:
         // Remember - You should use the field rotationMatrix to get the current
         // rotation,
@@ -98,7 +101,6 @@ public class Viewer implements GLEventListener {
         //
         // We should have already changed the point of view, now set these to null
         // so we don't change it again on the next redraw.
-        //Todo: exactly the same
         gl.glLoadIdentity();
         if (mouseFrom != null && mouseTo != null) {
             Vec from = mousePointToVec(mouseFrom);
@@ -121,7 +123,7 @@ public class Viewer implements GLEventListener {
     }
 
     private Vec mousePointToVec(Point pt) {
-        //Todo: exactly the same
+        //TODO: Exactly the same
         double x = 2 * pt.x / canvasWidth - 1.0;
         double y = 1.0 - 2 * pt.y / canvasHeight;
         double z2 = 2.0 - x * x - y * y;
@@ -169,8 +171,8 @@ public class Viewer implements GLEventListener {
 
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-        // TODO: Perform the perspective projection here as we learned in class.
-        //Todo: Exactly the same
+        //Perform the perspective projection here as we learned in class.
+        //TODO: Exactly the same
         GL2 gl = drawable.getGL().getGL2();
         canvasWidth = width;
         canvasHeight = height;

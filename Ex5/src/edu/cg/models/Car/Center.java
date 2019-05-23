@@ -6,7 +6,7 @@ import edu.cg.models.SkewedBox;
 import javax.media.opengl.GL2;
 
 public class Center implements IRenderable {
-    // TODO: The following elements are used to build the center of the body.
+    // The following elements are used to build the center of the body.
     // bodyBase is the black base of the center.
     private SkewedBox bodyBase = new SkewedBox(Specification.C_BASE_LENGTH, Specification.C_BASE_HEIGHT, Specification.C_BASE_HEIGHT, Specification.C_BASE_DEPTH, Specification.C_BASE_DEPTH);
     // backSeatBox is the back seat of the center.
@@ -20,7 +20,7 @@ public class Center implements IRenderable {
     @Override
     public void render(GL2 gl) {
         // TODO: Exactly the same
-        // TODO: Render the center of the car.
+        //Render the center of the car.
 
         gl.glPushMatrix();
         Materials.SetBlackMetalMaterial(gl);

@@ -6,3 +6,4 @@ Bundle-SymbolicName: gson
 Bundle-Version: 2.8.2
 Created-By: 9.0.4 (Oracle Corporation)
 Tool: Bnd-3.1.0.201512181341
+Import-Package: javax.swing

@@ -6,7 +6,7 @@ import edu.cg.models.SkewedBox;
 import javax.media.opengl.GL2;
 
 public class Back implements IRenderable {
-    // TODO: This method is implemented.
+    //This method is implemented.
     //       Look at the implementation and understand it.
     private SkewedBox baseBox = new SkewedBox(Specification.B_BASE_LENGTH, Specification.B_BASE_HEIGHT, Specification.B_BASE_HEIGHT, Specification.B_BASE_DEPTH, Specification.B_BASE_DEPTH);
     private SkewedBox backBox = new SkewedBox(Specification.B_LENGTH, Specification.B_HEIGHT_1, Specification.B_HEIGHT_2, Specification.B_DEPTH_1, Specification.B_DEPTH_2);
@@ -38,7 +38,7 @@ public class Back implements IRenderable {
 
     @Override
     public void init(GL2 gl) {
-        // TODO Auto-generated method stub
+        // Auto-generated method stub
 
     }
 
