@@ -73,27 +73,21 @@ public class Viewer implements GLEventListener {
 
 
     private void setupCamera(GL2 gl) {
-        //TODO: Exactly the same
-
         // You should set up the camera by defining the view transformation.
         //
         // (Step 1) Calculate rotation matrix:
         // Remember - You should use the field rotationMatrix to get the current
-        // rotation,
-        // and multiply it with the new rotation. At the end of this method,
+        // rotation, and multiply it with the new rotation. At the end of this method,
         // you should update the field rotationMatrix to the new rotation matrix - so
-        // that
-        // the rotation will be stored.
+        // that the rotation will be stored.
 
         // (Step 2) Define the zoom transformation. In this exercise, the zoom is
-        // performed by translating
-        // the whole scene (moving it away/closer to the camera). Use the field 'zoom'
-        // as the number
-        // number of units that you should translate your scene by.
+        // performed by translating the whole scene (moving it away/closer to the camera). Use the field 'zoom'
+        // as the number of units that you should translate your scene by.
 
         // (Step 3) Combine the zoom and rotation transformation and define the final
         // view transformation.
-
+        //
         // Note: You should reset the ModelView matrix to the identity between the
         // steps.
         // This way you can perform matrix multiplication using OpenGL (See the
@@ -101,37 +95,42 @@ public class Viewer implements GLEventListener {
         //
         // We should have already changed the point of view, now set these to null
         // so we don't change it again on the next redraw.
+
         gl.glLoadIdentity();
-        if (mouseFrom != null && mouseTo != null) {
-            Vec from = mousePointToVec(mouseFrom);
-            Vec to = mousePointToVec(mouseTo);
-            Vec axis = from.cross(to).normalize();
-            if (axis.isFinite()) {
-                double angle = 57.29577951308232 * Math.acos(from.dot(to));
-                angle = (Double.isFinite(angle) ? angle : 0.0);
-                gl.glRotated(angle, (double) axis.x, (double) axis.y, (double) axis.z);
-            }
-        }
-        gl.glMultMatrixd(rotationMatrix, 0);
-        gl.glGetDoublev(2982, rotationMatrix, 0);
-        gl.glLoadIdentity();
-        gl.glTranslated(0.0, 0.0, -1.2);
-        gl.glTranslated(0.0, 0.0, -zoom);
-        gl.glMultMatrixd(rotationMatrix, 0);
+        RnTransformation(gl);
+        RsTransformation(gl);
+        zoomTransformation(gl);
         mouseFrom = null;
         mouseTo = null;
     }
 
-    private Vec mousePointToVec(Point pt) {
-        //TODO: Exactly the same
-        double x = 2 * pt.x / canvasWidth - 1.0;
-        double y = 1.0 - 2 * pt.y / canvasHeight;
-        double z2 = 2.0 - x * x - y * y;
-        if (z2 < 0.0) {
-            z2 = 0.0;
+    private void RsTransformation(GL2 gl) {
+        gl.glMultMatrixd(rotationMatrix, 0);
+        gl.glGetDoublev(GL2.GL_MODELVIEW0_MATRIX_EXT, rotationMatrix, 0);
+    }
+
+    private void RnTransformation(GL2 gl) {
+        if (mouseFrom != null && mouseTo != null) {
+            Vec vFrom = pointToVec(mouseFrom);
+            Vec vTo = pointToVec(mouseTo);
+            double deg = (180 / Math.PI) * Math.acos(vFrom.dot(vTo));
+            Vec axis = vFrom.cross(vTo).normalize();
+            gl.glRotated(deg, axis.x, axis.y, axis.z);
         }
-        double z3 = Math.sqrt(z2);
-        return new Vec(x, y, z3).normalize();
+    }
+
+    private void zoomTransformation(GL2 gl) {
+        gl.glLoadIdentity();
+        gl.glTranslated(0, 0, -zoom - 1.5);
+        gl.glMultMatrixd(rotationMatrix, 0);
+    }
+
+    private Vec pointToVec(Point p) {
+        double x = ((2 * p.getX()) / canvasWidth) - 1;
+        double y = 1 - ((2 * p.getY()) / canvasHeight);
+        double z = Math.sqrt(2 - Math.pow(x, 2) - Math.pow(y, 2));
+        z = !Double.isNaN(z) ? z : 0;
+        return new Vec(x, y, z).normalize();
     }
 
     private void setupLights(GL2 gl) {
@@ -178,7 +177,7 @@ public class Viewer implements GLEventListener {
         canvasHeight = height;
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
-        gl.glFrustum(-0.1, 0.1, -0.1 * height / width, 0.1 * height / width, 0.1, 1000);
+        gl.glFrustum(-0.1, 0.1, (-0.1 * canvasHeight) / canvasWidth, (0.1 * canvasHeight) / canvasWidth, 0.1, 1000);
     }
 
     /**
