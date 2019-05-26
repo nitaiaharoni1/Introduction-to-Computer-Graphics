@@ -113,9 +113,11 @@ public class Viewer implements GLEventListener {
         if (mouseFrom != null && mouseTo != null) {
             Vec vFrom = pointToVec(mouseFrom);
             Vec vTo = pointToVec(mouseTo);
-            double deg = (180 / Math.PI) * Math.acos(vFrom.dot(vTo));
             Vec axis = vFrom.cross(vTo).normalize();
-            gl.glRotated(deg, axis.x, axis.y, axis.z);
+            if (!axis.isFinite()) return;
+            double deg = (180 / Math.PI) * Math.acos(vFrom.dot(vTo));
+            gl.glRotated(deg, axis.x, axis.y,  axis.z);
+
         }
     }
 
@@ -177,7 +179,7 @@ public class Viewer implements GLEventListener {
         canvasHeight = height;
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
-        gl.glFrustum(-0.1, 0.1, (-0.1 * canvasHeight) / canvasWidth, (0.1 * canvasHeight) / canvasWidth, 0.1, 1000);
+        gl.glFrustum(-0.1, 0.1, (-0.1 * height) / canvasWidth, (0.1 * height) / canvasWidth, 0.1, 1000);
     }
 
     /**
