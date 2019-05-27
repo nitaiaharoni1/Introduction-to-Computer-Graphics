@@ -27,31 +27,31 @@ public class Center implements IRenderable {
         bodyBase.render(gl);
 
         Materials.SetRedMetalMaterial(gl);
-        gl.glTranslated(0.1015625, Specification.C_BASE_HEIGHT, 0.0);
+        gl.glTranslated(Specification.C_BASE_LENGTH, Specification.C_BASE_HEIGHT, 0);
         frontBox.render(gl);
 
         gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslated(-0.1015625, Specification.C_BASE_HEIGHT, 0.0);
-        gl.glRotated(180.0, 0.0, 1.0, 0.0);
+        gl.glTranslated(-Specification.C_BASE_LENGTH, Specification.C_BASE_HEIGHT, 0);
+        gl.glRotated(180, 0, 1, 0);
         frontBox.render(gl);
 
         gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslated(0.0, Specification.C_BASE_HEIGHT, Specification.S_RODS_SIZE);
-        gl.glRotated(90.0, 0.0, 1.0, 0.0);
+        gl.glTranslated(0, Specification.C_BASE_HEIGHT, Specification.S_RODS_SIZE);
+        gl.glRotated(90, 0, 1, 0);
         sideBox.render(gl);
 
         gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslated(0.0, Specification.C_BASE_HEIGHT, -Specification.S_RODS_SIZE);
-        gl.glRotated(-90.0, 0.0, 1.0, 0.0);
+        gl.glTranslated(0, Specification.C_BASE_HEIGHT, -Specification.S_RODS_SIZE);
+        gl.glRotated(-90, 0, 1, 0);
         sideBox.render(gl);
 
         gl.glPopMatrix();
         Materials.SetBlackMetalMaterial(gl);
         gl.glPushMatrix();
-        gl.glTranslated(-0.03125, Specification.C_BASE_HEIGHT, 0.0);
+        gl.glTranslated(-0.03125, Specification.C_BASE_HEIGHT, 0);
         backSeatBox.render(gl);
 
         gl.glPopMatrix();

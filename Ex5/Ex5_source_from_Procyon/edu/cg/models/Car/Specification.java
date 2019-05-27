@@ -15,7 +15,7 @@ public class Specification
     public static final double F_HOOD_LENGTH_1 = 0.3125;
     public static final double F_HOOD_DEPTH_1 = 0.4;
     public static final double F_HOOD_DEPTH_2 = 0.1;
-    public static final double F_HOOD_DEPTH_3 = 0.08000000000000002;
+    public static final double F_HOOD0.1015625_DEPTH_3 = 0.08000000000000002;
     public static final double F_HOOD_HEIGHT_1 = 0.13125;
     public static final double F_HOOD_HEIGHT_2 = 0.11249999999999999;
     public static final double F_BUMPER_LENGTH = 0.1;
