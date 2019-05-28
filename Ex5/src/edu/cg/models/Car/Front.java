@@ -25,26 +25,26 @@ public class Front implements IRenderable {
         Materials.SetRedMetalMaterial(gl);
         hoodBox1.render(gl);
 
-        gl.glTranslated(0.25, 0.0, 0.0);
+        gl.glTranslated(0.25, 0, 0);
         hoodBox2.render(gl);
 
         Materials.SetDarkRedMetalMaterial(gl);
-        gl.glTranslated(0.14375, 0.0, 0.0);
+        gl.glTranslated(0.14375, 0, 0);
         bumperBox.render(gl);
         Materials.SetRedMetalMaterial(gl);
 
         gl.glPushMatrix();
-        gl.glTranslated(0.0, 0.0, 0.17);
+        gl.glTranslated(0, 0, 0.17);
         bumperWingsBox.render(gl);
         gl.glPopMatrix();
 
-        gl.glTranslated(0.0, 0.0, -0.17);
+        gl.glTranslated(0, 0, -0.17);
         bumperWingsBox.render(gl);
 
         gl.glPopMatrix();
 
         gl.glPushMatrix();
-        gl.glTranslated(0.25, 0.0375, 0.0);
+        gl.glTranslated(0.25, 0.0375, 0);
         wheels.render(gl);
         gl.glPopMatrix();
 
