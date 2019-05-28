@@ -16,6 +16,7 @@ public class Front implements IRenderable {
 
     @Override
     public void render(GL2 gl) {
+        // TODO: change
         //Render the front of the car.
         gl.glPushMatrix();
         gl.glTranslated((Specification.F_FRONT_LENGTH)/2-Specification.S_ROD_RADIUS, 0, 0);

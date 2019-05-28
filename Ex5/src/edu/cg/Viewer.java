@@ -178,7 +178,7 @@ public class Viewer implements GLEventListener {
         canvasHeight = height;
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
-        //TODO: CAHNGE!
+        //TODO: change?
         gl.glFrustum(-0.1, 0.1, (-0.1 * canvasHeight) / canvasWidth, (0.1 * canvasHeight) / canvasWidth, 0.1, 1000);
     }
 

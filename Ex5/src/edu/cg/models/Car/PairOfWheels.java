@@ -12,7 +12,6 @@ public class PairOfWheels implements IRenderable {
 
     @Override
     public void render(GL2 gl) {
-        // TODO: Exactly the same
         // Render the pair of wheels.
         Materials.SetDarkGreyMetalMaterial(gl);
 
@@ -21,18 +20,18 @@ public class PairOfWheels implements IRenderable {
 
         GLU glu = new GLU();
         GLUquadric quad = glu.gluNewQuadric();
-        glu.gluCylinder(quad, Specification.PAIR_OF_WHEELS_ROD_RADIUS, Specification.PAIR_OF_WHEELS_ROD_RADIUS, Specification.PAIR_OF_WHEELS_ROD_DEPTH*2, 20, 1);
+        glu.gluCylinder(quad, Specification.PAIR_OF_WHEELS_ROD_RADIUS, Specification.PAIR_OF_WHEELS_ROD_RADIUS, 2*Specification.PAIR_OF_WHEELS_ROD_DEPTH, 20, 1);
 
         gl.glPopMatrix();
 
         gl.glPushMatrix();
-        gl.glTranslated(0, 0, -Specification.PAIR_OF_WHEELS_ROD_DEPTH + Specification.TIRE_RADIUS/4);
+        gl.glTranslated(0, 0, -Specification.PAIR_OF_WHEELS_ROD_DEPTH + Specification.TIRE_RADIUS / 4);
         wheel.render(gl);
         gl.glPopMatrix();
 
         gl.glPushMatrix();
         gl.glRotated(180, 1, 1, 0);
-        gl.glTranslated(0, 0, -Specification.PAIR_OF_WHEELS_ROD_DEPTH + Specification.TIRE_RADIUS/4);
+        gl.glTranslated(0, 0, -Specification.PAIR_OF_WHEELS_ROD_DEPTH + Specification.TIRE_RADIUS / 4);
         wheel.render(gl);
         gl.glPopMatrix();
 
