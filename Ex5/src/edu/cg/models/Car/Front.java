@@ -16,38 +16,36 @@ public class Front implements IRenderable {
 
     @Override
     public void render(GL2 gl) {
-        // TODO: change
         //Render the front of the car.
-        gl.glPushMatrix();
-        gl.glTranslated((Specification.F_FRONT_LENGTH)/2-Specification.S_ROD_RADIUS, 0, 0);
-
-        gl.glPushMatrix();
         Materials.SetRedMetalMaterial(gl);
+        gl.glPushMatrix();
+        gl.glTranslated((Specification.F_FRONT_LENGTH) / 2 - Specification.S_ROD_RADIUS, 0, 0);
+
         hoodBox1.render(gl);
 
-        gl.glTranslated(0.25, 0, 0);
+        gl.glTranslated(Specification.C_BASE_LENGTH, 0, 0);
         hoodBox2.render(gl);
 
+        gl.glTranslated(Specification.F_HOOD_LENGTH_1 / 2 - Specification.S_ROD_RADIUS, 0, 0);
+
+        gl.glPushMatrix();
+        gl.glTranslated(0, 0, Specification.F_BUMPER_DEPTH / 2);
+        bumperWingsBox.render(gl);
+        gl.glPopMatrix();
+
+        gl.glPushMatrix();
+        gl.glTranslated(0, 0, -Specification.F_BUMPER_DEPTH / 2);
+        bumperWingsBox.render(gl);
+        gl.glPopMatrix();
+
         Materials.SetDarkRedMetalMaterial(gl);
-        gl.glTranslated(0.14375, 0, 0);
         bumperBox.render(gl);
-        Materials.SetRedMetalMaterial(gl);
-
-        gl.glPushMatrix();
-        gl.glTranslated(0, 0, 0.17);
-        bumperWingsBox.render(gl);
-        gl.glPopMatrix();
-
-        gl.glTranslated(0, 0, -0.17);
-        bumperWingsBox.render(gl);
 
         gl.glPopMatrix();
 
         gl.glPushMatrix();
-        gl.glTranslated(0.25, 0.0375, 0);
+        gl.glTranslated((Specification.F_FRONT_LENGTH) / 2 - Specification.S_ROD_RADIUS + Specification.C_BASE_LENGTH, Specification.F_HOOD_HEIGHT_2 / 2, 0);
         wheels.render(gl);
-        gl.glPopMatrix();
-
         gl.glPopMatrix();
 
         gl.glPopMatrix();
