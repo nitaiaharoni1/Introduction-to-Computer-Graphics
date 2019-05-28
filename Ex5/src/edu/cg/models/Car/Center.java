@@ -19,7 +19,6 @@ public class Center implements IRenderable {
 
     @Override
     public void render(GL2 gl) {
-        // TODO: Exactly the same
         //Render the center of the car.
         Materials.SetBlackMetalMaterial(gl);
         gl.glPushMatrix();
