@@ -2,3 +2,5 @@
 package-lock.json
 .idea/
 *.iml
+META-INF/
+output/
