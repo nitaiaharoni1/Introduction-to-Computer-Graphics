@@ -21,38 +21,42 @@ public class Center implements IRenderable {
     public void render(GL2 gl) {
         // TODO: Exactly the same
         //Render the center of the car.
+        Materials.SetBlackMetalMaterial(gl);
+        gl.glPushMatrix();
+        bodyBase.render(gl);
+        gl.glPopMatrix();
 
         gl.glPushMatrix();
-        Materials.SetBlackMetalMaterial(gl);
-        bodyBase.render(gl);
+        gl.glTranslated(0, Specification.C_BASE_HEIGHT, 0);
+
+        gl.glPushMatrix();
+        gl.glRotated(180, 0, 1, 0);
+        backSeatBox.render(gl);
+        gl.glPopMatrix();
 
         Materials.SetRedMetalMaterial(gl);
-        gl.glTranslated(Specification.C_BASE_LENGTH, Specification.C_BASE_HEIGHT, 0);
-        frontBox.render(gl);
-
-        gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslated(-Specification.C_BASE_LENGTH, Specification.C_BASE_HEIGHT, 0);
+        gl.glTranslated(Specification.C_SIDE_LENGTH - Specification.C_FRONT_LENGTH, 0, 0);
+        frontBox.render(gl);
+        gl.glPopMatrix();
+
+        gl.glPushMatrix();
+        gl.glTranslated(-Specification.C_SIDE_LENGTH + Specification.C_FRONT_LENGTH, 0, 0);
         gl.glRotated(180, 0, 1, 0);
         frontBox.render(gl);
-
         gl.glPopMatrix();
-        gl.glPushMatrix();
-        gl.glTranslated(0, Specification.C_BASE_HEIGHT, Specification.S_RODS_SIZE);
-        gl.glRotated(90, 0, 1, 0);
-        sideBox.render(gl);
 
-        gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslated(0, Specification.C_BASE_HEIGHT, -Specification.S_RODS_SIZE);
+        gl.glTranslated(0, 0, -Specification.S_RODS_SIZE);
         gl.glRotated(-90, 0, 1, 0);
         sideBox.render(gl);
-
         gl.glPopMatrix();
-        Materials.SetBlackMetalMaterial(gl);
+
         gl.glPushMatrix();
-        gl.glTranslated(-0.03125, Specification.C_BASE_HEIGHT, 0);
-        backSeatBox.render(gl);
+        gl.glTranslated(0, 0, Specification.S_RODS_SIZE);
+        gl.glRotated(90, 0, 1, 0);
+        sideBox.render(gl);
+        gl.glPopMatrix();
 
         gl.glPopMatrix();
     }
