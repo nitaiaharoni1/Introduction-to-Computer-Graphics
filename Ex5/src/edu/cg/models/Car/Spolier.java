@@ -1,11 +1,11 @@
 package edu.cg.models.Car;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
+
 import edu.cg.models.IRenderable;
 import edu.cg.models.SkewedBox;
-
-import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
-import javax.media.opengl.glu.GLUquadric;
 
 public class Spolier implements IRenderable {
     //The spoiler is already implemented. You should understand how it is rendered.

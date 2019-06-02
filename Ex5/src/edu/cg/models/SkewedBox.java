@@ -1,6 +1,6 @@
 package edu.cg.models;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 public class SkewedBox implements IRenderable {
     private double length, height1, height2, depth1, depth2;

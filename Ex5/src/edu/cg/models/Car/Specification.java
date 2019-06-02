@@ -1,6 +1,5 @@
 package edu.cg.models.Car;
 
-
 public class Specification {
     // WheelS specification:
     public static final double TIRE_DEPTH = 0.1;

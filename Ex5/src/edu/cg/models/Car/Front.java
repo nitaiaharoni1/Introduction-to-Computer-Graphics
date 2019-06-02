@@ -1,9 +1,9 @@
 package edu.cg.models.Car;
 
+import com.jogamp.opengl.GL2;
+
 import edu.cg.models.IRenderable;
 import edu.cg.models.SkewedBox;
-
-import javax.media.opengl.GL2;
 
 public class Front implements IRenderable {
     //The front of the car is build from the following elements:

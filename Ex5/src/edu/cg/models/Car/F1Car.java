@@ -1,8 +1,8 @@
 package edu.cg.models.Car;
 
-import edu.cg.models.IRenderable;
+import com.jogamp.opengl.*;
 
-import javax.media.opengl.GL2;
+import edu.cg.models.IRenderable;
 
 /**
  * A F1 Racing Car.

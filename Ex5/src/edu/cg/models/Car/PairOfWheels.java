@@ -1,10 +1,10 @@
 package edu.cg.models.Car;
 
-import edu.cg.models.IRenderable;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
-import javax.media.opengl.glu.GLUquadric;
+import edu.cg.models.IRenderable;
 
 public class PairOfWheels implements IRenderable {
     //Use the wheel field to render the two wheels.

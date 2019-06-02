@@ -1,12 +1,12 @@
 package edu.cg;
 
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.awt.GLJPanel;
 import edu.cg.models.Car.F1Car;
 import edu.cg.models.IRenderable;
 import edu.cg.models.SkewedBox;
 
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLJPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

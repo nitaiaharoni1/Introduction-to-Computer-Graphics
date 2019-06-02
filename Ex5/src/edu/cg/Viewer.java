@@ -1,14 +1,13 @@
 package edu.cg;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.util.FPSAnimator;
 import edu.cg.algebra.Vec;
 import edu.cg.models.IRenderable;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLEventListener;
 import java.awt.*;
-
 /**
  * An OpenGL model viewer
  */
