@@ -1,9 +1,16 @@
 package edu.cg.models;
 
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureIO;
+
+import java.io.File;
+import java.io.IOException;
 
 public class SkewedBox implements IRenderable {
     private double length, height1, height2, depth1, depth2;
+    private Texture texBox;
+
 
     public SkewedBox() {
         length = .1;
@@ -11,6 +18,7 @@ public class SkewedBox implements IRenderable {
         height2 = .1;
         depth1 = .2;
         depth2 = .1;
+        texBox = null;
     }
 
     public SkewedBox(double length, double h1, double h2, double d1, double d2) {
@@ -19,12 +27,20 @@ public class SkewedBox implements IRenderable {
         this.height2 = h2;
         this.depth1 = d1;
         this.depth2 = d2;
+        texBox = null;
     }
 
     @Override
     public void render(GL2 gl) {
         //Render the skewed-box using.
         //        Use the fields: length, height1, height2, depth1, depth2
+
+//        gl.glEnable(3553);
+//        texBox.bind(gl);
+//        gl.glTexEnvi(8960, 8704, 8448);
+//        gl.glTexParameteri(3553, 10241, 9987);
+//        gl.glTexParameteri(3553, 10240, 9729);
+//        gl.glTexParameteri(3553, 33083, 1);
 
         //Back Rectangle
         gl.glNormal3d(-1, 0, 0);
@@ -84,11 +100,16 @@ public class SkewedBox implements IRenderable {
 
     @Override
     public void init(GL2 gl) {
+        try {
+            texBox = TextureIO.newTexture(new File("Textures/WoodBoxTexture.jpg"), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void destroy(GL2 gl) {
-
+        texBox.destroy(gl);
     }
 
     @Override
