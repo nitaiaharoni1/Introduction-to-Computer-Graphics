@@ -4,21 +4,21 @@
 
 package jogamp.opengl.util.av;
 
+import com.jogamp.common.nio.Buffers;
+import com.jogamp.common.os.Platform;
+import com.jogamp.common.util.IOUtil;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLException;
+import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.av.GLMediaPlayer;
 import com.jogamp.opengl.util.texture.Texture;
-import com.jogamp.opengl.GLException;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.net.URLConnection;
-import java.nio.Buffer;
-import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.util.texture.TextureIO;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.common.util.IOUtil;
-import com.jogamp.opengl.util.texture.TextureSequence;
-import com.jogamp.opengl.GL;
-import com.jogamp.common.os.Platform;
 import com.jogamp.opengl.util.texture.TextureData;
+import com.jogamp.opengl.util.texture.TextureIO;
+import com.jogamp.opengl.util.texture.TextureSequence;
+
+import java.io.IOException;
+import java.net.URLConnection;
+import java.nio.ByteBuffer;
 
 public class NullGLMediaPlayer extends GLMediaPlayerImpl
 {

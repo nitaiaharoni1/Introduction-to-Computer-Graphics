@@ -4,16 +4,17 @@
 
 package jogamp.opengl;
 
-import java.security.AccessController;
 import com.jogamp.common.JogampRuntimeException;
+import com.jogamp.common.util.PropertyAccess;
 import com.jogamp.common.util.ReflectionUtil;
 import com.jogamp.nativewindow.NativeWindowFactory;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.common.util.PropertyAccess;
-import java.security.PrivilegedAction;
-import java.lang.reflect.InvocationTargetException;
 import com.jogamp.opengl.GLException;
+import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.Threading;
+
+import java.lang.reflect.InvocationTargetException;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 public class ThreadingImpl
 {

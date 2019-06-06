@@ -4,28 +4,22 @@
 
 package jogamp.opengl.windows.wgl.awt;
 
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import com.jogamp.nativewindow.awt.AWTGraphicsConfiguration;
 import com.jogamp.common.util.ArrayHashSet;
-import jogamp.nativewindow.jawt.windows.Win32SunJDKReflection;
-import jogamp.opengl.windows.wgl.WindowsWGLDrawableFactory;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.opengl.GLException;
-import jogamp.opengl.windows.wgl.WindowsWGLGraphicsConfiguration;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.nativewindow.DefaultGraphicsScreen;
+import com.jogamp.nativewindow.*;
+import com.jogamp.nativewindow.awt.AWTGraphicsConfiguration;
+import com.jogamp.nativewindow.awt.AWTGraphicsDevice;
+import com.jogamp.nativewindow.awt.AWTGraphicsScreen;
 import com.jogamp.nativewindow.windows.WindowsGraphicsDevice;
 import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.nativewindow.awt.AWTGraphicsScreen;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.nativewindow.CapabilitiesChooser;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.nativewindow.GraphicsConfigurationFactory;
 import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.nativewindow.awt.AWTGraphicsDevice;
+import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.opengl.GLException;
+import jogamp.nativewindow.jawt.windows.Win32SunJDKReflection;
 import jogamp.opengl.GLGraphicsConfigurationFactory;
+import jogamp.opengl.windows.wgl.WindowsWGLDrawableFactory;
+import jogamp.opengl.windows.wgl.WindowsWGLGraphicsConfiguration;
+
+import java.awt.*;
 
 public class WindowsAWTWGLGraphicsConfigurationFactory extends GLGraphicsConfigurationFactory
 {

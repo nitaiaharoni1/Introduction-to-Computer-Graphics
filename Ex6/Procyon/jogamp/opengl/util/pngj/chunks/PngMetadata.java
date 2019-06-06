@@ -4,11 +4,11 @@
 
 package jogamp.opengl.util.pngj.chunks;
 
-import java.util.Iterator;
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.List;
 import jogamp.opengl.util.pngj.PngjException;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class PngMetadata
 {

@@ -4,20 +4,17 @@
 
 package jogamp.opengl.util.pngj.chunks;
 
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.IOException;
-import jogamp.opengl.util.pngj.PngjException;
-import java.io.OutputStream;
-import java.util.zip.DeflaterOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.util.zip.InflaterInputStream;
-import java.io.ByteArrayInputStream;
 import jogamp.opengl.util.pngj.PngHelperInternal;
+import jogamp.opengl.util.pngj.PngjException;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
 import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
 
 public class ChunkHelper
 {

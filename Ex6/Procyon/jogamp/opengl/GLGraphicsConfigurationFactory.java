@@ -4,12 +4,13 @@
 
 package jogamp.opengl;
 
-import com.jogamp.opengl.DefaultGLCapabilitiesChooser;
-import com.jogamp.nativewindow.NativeWindowException;
-import java.util.List;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
 import com.jogamp.nativewindow.CapabilitiesChooser;
+import com.jogamp.nativewindow.CapabilitiesImmutable;
 import com.jogamp.nativewindow.GraphicsConfigurationFactory;
+import com.jogamp.nativewindow.NativeWindowException;
+import com.jogamp.opengl.DefaultGLCapabilitiesChooser;
+
+import java.util.List;
 
 public abstract class GLGraphicsConfigurationFactory extends GraphicsConfigurationFactory
 {

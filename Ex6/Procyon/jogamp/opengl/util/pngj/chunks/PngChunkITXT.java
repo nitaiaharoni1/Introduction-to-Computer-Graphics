@@ -4,11 +4,12 @@
 
 package jogamp.opengl.util.pngj.chunks;
 
-import jogamp.opengl.util.pngj.PngHelperInternal;
-import java.io.IOException;
-import java.io.ByteArrayOutputStream;
-import jogamp.opengl.util.pngj.PngjException;
 import jogamp.opengl.util.pngj.ImageInfo;
+import jogamp.opengl.util.pngj.PngHelperInternal;
+import jogamp.opengl.util.pngj.PngjException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class PngChunkITXT extends PngChunkTextVar
 {

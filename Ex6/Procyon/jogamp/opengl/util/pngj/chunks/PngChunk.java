@@ -4,11 +4,12 @@
 
 package jogamp.opengl.util.pngj.chunks;
 
-import java.util.HashMap;
-import java.io.OutputStream;
-import jogamp.opengl.util.pngj.PngjExceptionInternal;
-import java.util.Map;
 import jogamp.opengl.util.pngj.ImageInfo;
+import jogamp.opengl.util.pngj.PngjExceptionInternal;
+
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class PngChunk
 {

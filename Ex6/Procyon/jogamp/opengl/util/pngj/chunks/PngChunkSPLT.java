@@ -4,12 +4,12 @@
 
 package jogamp.opengl.util.pngj.chunks;
 
-import java.io.IOException;
-import jogamp.opengl.util.pngj.PngjException;
-import java.io.OutputStream;
-import jogamp.opengl.util.pngj.PngHelperInternal;
-import java.io.ByteArrayOutputStream;
 import jogamp.opengl.util.pngj.ImageInfo;
+import jogamp.opengl.util.pngj.PngHelperInternal;
+import jogamp.opengl.util.pngj.PngjException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class PngChunkSPLT extends PngChunkMultiple
 {

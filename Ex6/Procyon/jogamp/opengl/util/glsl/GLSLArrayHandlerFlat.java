@@ -4,11 +4,10 @@
 
 package jogamp.opengl.util.glsl;
 
-import com.jogamp.opengl.GL2ES2;
-import com.jogamp.opengl.GLArrayData;
-import com.jogamp.opengl.util.glsl.ShaderState;
 import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.util.GLArrayDataWrapper;
+import com.jogamp.opengl.util.glsl.ShaderState;
 import jogamp.opengl.util.GLArrayHandlerFlat;
 
 public class GLSLArrayHandlerFlat implements GLArrayHandlerFlat

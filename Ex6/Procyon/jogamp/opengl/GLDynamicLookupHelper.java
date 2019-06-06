@@ -4,7 +4,6 @@
 
 package jogamp.opengl;
 
-import com.jogamp.common.os.DynamicLibraryBundleInfo;
 import com.jogamp.common.os.DynamicLibraryBundle;
 
 public class GLDynamicLookupHelper extends DynamicLibraryBundle

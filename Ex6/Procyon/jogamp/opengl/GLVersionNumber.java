@@ -5,8 +5,9 @@
 package jogamp.opengl;
 
 import com.jogamp.common.util.VersionNumber;
-import java.util.regex.Pattern;
 import com.jogamp.common.util.VersionNumberString;
+
+import java.util.regex.Pattern;
 
 public class GLVersionNumber extends VersionNumberString
 {

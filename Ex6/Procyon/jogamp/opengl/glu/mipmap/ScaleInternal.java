@@ -6,9 +6,10 @@ package jogamp.opengl.glu.mipmap;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
+
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 
 public class ScaleInternal

@@ -4,14 +4,15 @@
 
 package jogamp.opengl.x11.glx;
 
-import java.nio.IntBuffer;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GLException;
 import com.jogamp.nativewindow.MutableSurface;
-import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.opengl.GLContext;
 import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.opengl.GLException;
+import jogamp.opengl.GLDrawableImpl;
+
+import java.nio.IntBuffer;
 
 public class X11PbufferGLXDrawable extends X11GLXDrawable
 {

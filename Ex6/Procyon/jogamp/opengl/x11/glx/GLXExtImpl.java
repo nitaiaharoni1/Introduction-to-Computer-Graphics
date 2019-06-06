@@ -4,13 +4,14 @@
 
 package jogamp.opengl.x11.glx;
 
-import java.nio.LongBuffer;
-import com.jogamp.common.nio.PointerBuffer;
-import java.nio.ByteBuffer;
-import java.nio.Buffer;
 import com.jogamp.common.nio.Buffers;
-import java.nio.IntBuffer;
+import com.jogamp.common.nio.PointerBuffer;
 import com.jogamp.opengl.GLException;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import java.nio.LongBuffer;
 
 public class GLXExtImpl implements GLXExt
 {

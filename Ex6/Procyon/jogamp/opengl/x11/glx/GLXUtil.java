@@ -4,12 +4,13 @@
 
 package jogamp.opengl.x11.glx;
 
-import jogamp.opengl.Debug;
-import com.jogamp.opengl.GLException;
 import com.jogamp.common.nio.Buffers;
-import java.nio.IntBuffer;
-import com.jogamp.nativewindow.x11.X11GraphicsDevice;
 import com.jogamp.common.util.VersionNumber;
+import com.jogamp.nativewindow.x11.X11GraphicsDevice;
+import com.jogamp.opengl.GLException;
+import jogamp.opengl.Debug;
+
+import java.nio.IntBuffer;
 
 public class GLXUtil
 {

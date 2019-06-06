@@ -4,14 +4,14 @@
 
 package jogamp.opengl.util.glsl;
 
-import java.nio.Buffer;
-import com.jogamp.opengl.GLArrayData;
-import com.jogamp.opengl.GL2ES2;
-import com.jogamp.opengl.util.glsl.ShaderState;
 import com.jogamp.opengl.GL;
-import jogamp.opengl.util.GLArrayHandlerFlat;
+import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.util.GLArrayDataEditable;
+import com.jogamp.opengl.util.glsl.ShaderState;
+import jogamp.opengl.util.GLArrayHandlerFlat;
 import jogamp.opengl.util.GLVBOArrayHandler;
+
+import java.nio.Buffer;
 
 public class GLSLArrayHandler extends GLVBOArrayHandler
 {

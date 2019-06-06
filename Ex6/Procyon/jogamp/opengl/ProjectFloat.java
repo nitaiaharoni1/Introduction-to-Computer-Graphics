@@ -4,11 +4,12 @@
 
 package jogamp.opengl;
 
-import java.nio.IntBuffer;
-import java.nio.FloatBuffer;
 import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.math.FloatUtil;
 import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
+import com.jogamp.opengl.math.FloatUtil;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 public class ProjectFloat
 {

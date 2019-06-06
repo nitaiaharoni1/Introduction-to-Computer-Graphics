@@ -5,15 +5,14 @@
 package jogamp.opengl.macosx.cgl;
 
 import com.jogamp.common.nio.PointerBuffer;
+import com.jogamp.nativewindow.DefaultGraphicsConfiguration;
+import com.jogamp.nativewindow.MutableSurface;
+import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.GLDrawableFactory;
 import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.util.GLBuffers;
-import com.jogamp.nativewindow.DefaultGraphicsConfiguration;
-import java.lang.ref.WeakReference;
-import com.jogamp.nativewindow.MutableSurface;
 import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLDrawableFactory;
 
 public class MacOSXPbufferCGLDrawable extends MacOSXCGLDrawable
 {

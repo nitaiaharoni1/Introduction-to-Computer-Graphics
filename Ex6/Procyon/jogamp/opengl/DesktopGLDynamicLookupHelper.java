@@ -4,10 +4,10 @@
 
 package jogamp.opengl;
 
-import java.util.List;
 import com.jogamp.common.os.DynamicLibraryBundle;
-import java.util.ArrayList;
 import com.jogamp.common.os.NativeLibrary;
+
+import java.util.ArrayList;
 
 public class DesktopGLDynamicLookupHelper extends GLDynamicLookupHelper
 {

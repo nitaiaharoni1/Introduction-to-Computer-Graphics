@@ -4,32 +4,25 @@
 
 package jogamp.opengl.x11.glx;
 
-import jogamp.nativewindow.x11.X11Lib;
-import jogamp.nativewindow.x11.XRenderDirectFormat;
-import jogamp.nativewindow.x11.XVisualInfo;
-import com.jogamp.opengl.GLCapabilities;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import java.util.ArrayList;
-import java.util.List;
-import com.jogamp.common.nio.PointerBuffer;
-import jogamp.nativewindow.x11.XRenderPictFormat;
 import com.jogamp.common.nio.Buffers;
-import java.nio.IntBuffer;
-import com.jogamp.opengl.DefaultGLCapabilitiesChooser;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.common.nio.PointerBuffer;
+import com.jogamp.nativewindow.CapabilitiesImmutable;
 import com.jogamp.nativewindow.DefaultGraphicsConfiguration;
-import com.jogamp.nativewindow.x11.X11GraphicsDevice;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLException;
-import com.jogamp.nativewindow.CapabilitiesChooser;
 import com.jogamp.nativewindow.GraphicsConfigurationFactory;
 import com.jogamp.nativewindow.VisualIDHolder;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.nativewindow.x11.X11GraphicsScreen;
-import com.jogamp.opengl.GLCapabilitiesChooser;
 import com.jogamp.nativewindow.x11.X11GraphicsConfiguration;
+import com.jogamp.nativewindow.x11.X11GraphicsDevice;
+import com.jogamp.nativewindow.x11.X11GraphicsScreen;
+import com.jogamp.opengl.*;
+import jogamp.nativewindow.x11.X11Lib;
+import jogamp.nativewindow.x11.XRenderDirectFormat;
+import jogamp.nativewindow.x11.XRenderPictFormat;
+import jogamp.nativewindow.x11.XVisualInfo;
+import jogamp.opengl.GLGraphicsConfigurationUtil;
+
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class X11GLXGraphicsConfiguration extends X11GraphicsConfiguration implements Cloneable
 {

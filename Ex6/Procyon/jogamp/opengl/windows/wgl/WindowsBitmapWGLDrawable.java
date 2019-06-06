@@ -4,21 +4,16 @@
 
 package jogamp.opengl.windows.wgl;
 
-import com.jogamp.nativewindow.MutableSurface;
-import jogamp.nativewindow.windows.GDI;
 import com.jogamp.common.nio.PointerBuffer;
-import jogamp.nativewindow.windows.BITMAPINFOHEADER;
-import jogamp.nativewindow.windows.BITMAPINFO;
-import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.opengl.GLContext;
 import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLProfile;
+import com.jogamp.nativewindow.MutableSurface;
 import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.opengl.*;
+import jogamp.nativewindow.windows.BITMAPINFO;
+import jogamp.nativewindow.windows.BITMAPINFOHEADER;
+import jogamp.nativewindow.windows.GDI;
+import jogamp.opengl.GLDrawableImpl;
+import jogamp.opengl.GLGraphicsConfigurationUtil;
 
 public class WindowsBitmapWGLDrawable extends WindowsWGLDrawable
 {

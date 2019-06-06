@@ -4,34 +4,21 @@
 
 package jogamp.opengl.util.stereo;
 
-import java.io.ObjectInputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.nio.ShortBuffer;
-import java.nio.FloatBuffer;
-import java.nio.Buffer;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GLArrayData;
-import com.jogamp.opengl.util.GLArrayDataServer;
-import com.jogamp.nativewindow.util.Dimension;
 import com.jogamp.common.os.Platform;
-import com.jogamp.opengl.GL2ES2;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.util.glsl.ShaderCode;
-import com.jogamp.opengl.JoglVersion;
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.util.stereo.StereoDevice;
-import com.jogamp.nativewindow.util.RectangleImmutable;
-import com.jogamp.opengl.util.stereo.EyeParameter;
-import jogamp.common.os.PlatformPropsImpl;
-import java.util.Arrays;
-import com.jogamp.opengl.util.stereo.StereoUtil;
-import com.jogamp.opengl.util.glsl.ShaderProgram;
-import com.jogamp.opengl.GLUniformData;
+import com.jogamp.nativewindow.util.Dimension;
 import com.jogamp.nativewindow.util.DimensionImmutable;
-import com.jogamp.opengl.util.stereo.ViewerPose;
-import com.jogamp.opengl.util.stereo.StereoDeviceRenderer;
+import com.jogamp.nativewindow.util.RectangleImmutable;
+import com.jogamp.opengl.*;
+import com.jogamp.opengl.util.GLArrayDataServer;
+import com.jogamp.opengl.util.glsl.ShaderCode;
+import com.jogamp.opengl.util.glsl.ShaderProgram;
+import com.jogamp.opengl.util.stereo.*;
+import jogamp.common.os.PlatformPropsImpl;
+
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+import java.util.Arrays;
 
 public class GenericStereoDeviceRenderer implements StereoDeviceRenderer
 {

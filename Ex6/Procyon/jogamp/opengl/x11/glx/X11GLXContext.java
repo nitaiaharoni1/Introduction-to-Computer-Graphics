@@ -4,27 +4,27 @@
 
 package jogamp.opengl.x11.glx;
 
-import java.util.HashMap;
+import com.jogamp.common.ExceptionUtils;
+import com.jogamp.common.nio.Buffers;
+import com.jogamp.common.util.VersionNumber;
+import com.jogamp.gluegen.runtime.ProcAddressTable;
+import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
+import com.jogamp.nativewindow.AbstractGraphicsDevice;
 import com.jogamp.nativewindow.NativeSurface;
 import com.jogamp.nativewindow.x11.X11GraphicsDevice;
-import com.jogamp.gluegen.runtime.FunctionAddressResolver;
-import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.GLCapabilitiesImmutable;
-import java.nio.IntBuffer;
-import jogamp.opengl.GLDynamicLookupHelper;
-import com.jogamp.common.ExceptionUtils;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.GLException;
+import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.x11.X11Lib;
 import jogamp.nativewindow.x11.X11Util;
-import com.jogamp.common.nio.Buffers;
-import com.jogamp.gluegen.runtime.ProcAddressTable;
-import com.jogamp.opengl.GLContext;
-import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.common.util.VersionNumber;
-import java.util.Map;
 import jogamp.opengl.GLContextImpl;
+import jogamp.opengl.GLDrawableImpl;
+import jogamp.opengl.GLDynamicLookupHelper;
+
+import java.nio.IntBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class X11GLXContext extends GLContextImpl
 {

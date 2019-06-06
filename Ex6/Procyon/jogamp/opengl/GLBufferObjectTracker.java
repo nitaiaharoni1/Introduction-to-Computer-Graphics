@@ -4,16 +4,17 @@
 
 package jogamp.opengl;
 
-import com.jogamp.common.util.PropertyAccess;
-import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GLBufferStorage;
-import java.nio.ByteBuffer;
 import com.jogamp.common.ExceptionUtils;
-import java.nio.IntBuffer;
-import com.jogamp.opengl.GLException;
-import java.nio.Buffer;
-import com.jogamp.opengl.GL;
+import com.jogamp.common.nio.Buffers;
 import com.jogamp.common.util.IntObjectHashMap;
+import com.jogamp.common.util.PropertyAccess;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLBufferStorage;
+import com.jogamp.opengl.GLException;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 public class GLBufferObjectTracker
 {

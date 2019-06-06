@@ -4,27 +4,27 @@
 
 package jogamp.opengl.util.av.impl;
 
-import com.jogamp.common.os.Platform;
-import com.jogamp.common.util.VersionNumber;
-import java.nio.ByteBuffer;
-import com.jogamp.opengl.util.texture.Texture;
-import com.jogamp.opengl.util.av.GLMediaPlayer;
-import jogamp.opengl.util.av.AudioSampleFormat;
-import com.jogamp.opengl.util.texture.TextureSequence;
-import java.security.AccessController;
-import com.jogamp.gluegen.runtime.ProcAddressTable;
-import java.security.PrivilegedAction;
-import jogamp.opengl.GLContextImpl;
-import java.io.IOException;
-import jogamp.common.os.PlatformPropsImpl;
-import com.jogamp.opengl.util.av.AudioSinkFactory;
 import com.jogamp.common.util.IOUtil;
+import com.jogamp.common.util.VersionNumber;
+import com.jogamp.gluegen.runtime.ProcAddressTable;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.util.av.AudioSink;
 import com.jogamp.opengl.util.GLPixelStorageModes;
-import jogamp.opengl.util.av.VideoPixelFormat;
+import com.jogamp.opengl.util.av.AudioSink;
+import com.jogamp.opengl.util.av.AudioSinkFactory;
+import com.jogamp.opengl.util.av.GLMediaPlayer;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureSequence;
+import jogamp.common.os.PlatformPropsImpl;
+import jogamp.opengl.GLContextImpl;
+import jogamp.opengl.util.av.AudioSampleFormat;
 import jogamp.opengl.util.av.GLMediaPlayerImpl;
+import jogamp.opengl.util.av.VideoPixelFormat;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 public class FFMPEGMediaPlayer extends GLMediaPlayerImpl
 {

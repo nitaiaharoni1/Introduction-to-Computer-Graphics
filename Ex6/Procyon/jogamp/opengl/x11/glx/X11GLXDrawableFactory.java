@@ -5,44 +5,23 @@
 package jogamp.opengl.x11.glx;
 
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLRendererQuirks;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import jogamp.opengl.GLContextImpl;
 import com.jogamp.common.nio.Buffers;
+import com.jogamp.common.util.VersionNumber;
+import com.jogamp.nativewindow.*;
+import com.jogamp.nativewindow.x11.X11GraphicsDevice;
+import com.jogamp.nativewindow.x11.X11GraphicsScreen;
+import com.jogamp.opengl.*;
+import jogamp.nativewindow.WrappedSurface;
+import jogamp.nativewindow.x11.X11DummyUpstreamSurfaceHook;
+import jogamp.nativewindow.x11.X11Lib;
+import jogamp.nativewindow.x11.X11Util;
+import jogamp.opengl.*;
+
 import java.nio.Buffer;
 import java.nio.ShortBuffer;
-import com.jogamp.opengl.GLDrawable;
-import jogamp.nativewindow.x11.X11Lib;
-import com.jogamp.nativewindow.GenericUpstreamSurfacelessHook;
-import jogamp.nativewindow.x11.X11DummyUpstreamSurfaceHook;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import jogamp.nativewindow.WrappedSurface;
-import com.jogamp.opengl.GLException;
-import com.jogamp.nativewindow.x11.X11GraphicsScreen;
-import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.nativewindow.UpstreamSurfaceHook;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLDrawableFactory;
-import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import java.util.List;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import jogamp.opengl.GLDynamicLookupHelper;
-import jogamp.nativewindow.x11.X11Util;
 import java.security.AccessController;
-import com.jogamp.common.os.DynamicLookupHelper;
-import jogamp.opengl.DesktopGLDynamicLibraryBundleInfo;
 import java.security.PrivilegedAction;
-import jogamp.opengl.SharedResourceRunner;
-import com.jogamp.nativewindow.x11.X11GraphicsDevice;
-import jogamp.opengl.DesktopGLDynamicLookupHelper;
-import com.jogamp.common.util.VersionNumber;
-import jogamp.opengl.GLDrawableFactoryImpl;
+import java.util.List;
 
 public class X11GLXDrawableFactory extends GLDrawableFactoryImpl
 {

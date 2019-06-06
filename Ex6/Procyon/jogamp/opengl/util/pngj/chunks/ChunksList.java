@@ -4,12 +4,11 @@
 
 package jogamp.opengl.util.pngj.chunks;
 
-import jogamp.opengl.util.pngj.PngjException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.HashMap;
-import java.util.ArrayList;
 import jogamp.opengl.util.pngj.ImageInfo;
+import jogamp.opengl.util.pngj.PngjException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ChunksList

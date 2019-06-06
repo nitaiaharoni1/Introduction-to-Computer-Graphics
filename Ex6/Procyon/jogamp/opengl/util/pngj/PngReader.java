@@ -4,23 +4,15 @@
 
 package jogamp.opengl.util.pngj;
 
+import jogamp.opengl.util.pngj.chunks.*;
+
 import java.io.IOException;
-import jogamp.opengl.util.pngj.chunks.ChunkRaw;
-import jogamp.opengl.util.pngj.chunks.PngChunkSkipped;
-import java.util.Collection;
-import jogamp.opengl.util.pngj.chunks.PngChunk;
-import jogamp.opengl.util.pngj.chunks.PngChunkIDAT;
-import jogamp.opengl.util.pngj.chunks.PngChunkIHDR;
-import jogamp.opengl.util.pngj.chunks.ChunkHelper;
-import java.util.Arrays;
-import java.util.zip.CRC32;
-import java.util.zip.InflaterInputStream;
 import java.io.InputStream;
-import java.util.zip.Inflater;
-import jogamp.opengl.util.pngj.chunks.ChunksList;
-import jogamp.opengl.util.pngj.chunks.PngMetadata;
+import java.util.Arrays;
 import java.util.HashSet;
-import jogamp.opengl.util.pngj.chunks.ChunkLoadBehaviour;
+import java.util.zip.CRC32;
+import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
 
 public class PngReader
 {

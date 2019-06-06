@@ -4,10 +4,11 @@
 
 package jogamp.opengl.macosx.cgl;
 
-import java.nio.FloatBuffer;
-import com.jogamp.opengl.GLException;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.common.nio.PointerBuffer;
+import com.jogamp.opengl.GLException;
+
+import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 public class CGL

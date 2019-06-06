@@ -6,11 +6,12 @@ package jogamp.opengl.windows.wgl;
 
 import com.jogamp.nativewindow.NativeWindowException;
 import com.jogamp.nativewindow.VisualIDHolder;
+import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLException;
-import java.nio.IntBuffer;
 import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.windows.PIXELFORMATDESCRIPTOR;
-import com.jogamp.opengl.GLCapabilities;
+
+import java.nio.IntBuffer;
 
 public class WGLGLCapabilities extends GLCapabilities
 {

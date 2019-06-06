@@ -4,22 +4,11 @@
 
 package jogamp.opengl.util.stereo;
 
-import com.jogamp.opengl.util.stereo.generic.GenericStereoDeviceFactory;
-import com.jogamp.nativewindow.util.Rectangle;
-import com.jogamp.nativewindow.util.Dimension;
-import com.jogamp.nativewindow.util.RectangleImmutable;
-import com.jogamp.opengl.util.stereo.EyeParameter;
-import com.jogamp.opengl.util.stereo.StereoDeviceRenderer;
-import com.jogamp.opengl.util.stereo.LocationSensorParameter;
-import com.jogamp.nativewindow.util.DimensionImmutable;
-import com.jogamp.nativewindow.util.PointImmutable;
-import com.jogamp.opengl.util.stereo.StereoUtil;
-import com.jogamp.opengl.util.stereo.StereoDeviceConfig;
+import com.jogamp.nativewindow.util.*;
 import com.jogamp.opengl.math.FovHVHalves;
-import com.jogamp.nativewindow.util.Point;
-import com.jogamp.opengl.util.stereo.StereoDeviceFactory;
+import com.jogamp.opengl.util.stereo.*;
 import com.jogamp.opengl.util.stereo.generic.GenericStereoDeviceConfig;
-import com.jogamp.opengl.util.stereo.StereoDevice;
+import com.jogamp.opengl.util.stereo.generic.GenericStereoDeviceFactory;
 
 public class GenericStereoDevice implements StereoDevice
 {

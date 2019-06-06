@@ -5,9 +5,9 @@
 package jogamp.opengl.windows.wgl;
 
 import com.jogamp.common.util.PropertyAccess;
-import jogamp.opengl.Debug;
 import jogamp.nativewindow.windows.GDI;
 import jogamp.nativewindow.windows.PIXELFORMATDESCRIPTOR;
+import jogamp.opengl.Debug;
 
 public class WGLUtil
 {

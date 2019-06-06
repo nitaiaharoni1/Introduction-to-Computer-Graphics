@@ -4,25 +4,25 @@
 
 package jogamp.opengl.windows.wgl;
 
-import java.util.HashMap;
-import java.nio.IntBuffer;
-import com.jogamp.nativewindow.NativeSurface;
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.gluegen.runtime.FunctionAddressResolver;
-import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import com.jogamp.opengl.GLException;
-import jogamp.opengl.GLDynamicLookupHelper;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.gluegen.runtime.ProcAddressTable;
-import jogamp.nativewindow.windows.GDI;
+import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
+import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
+import com.jogamp.nativewindow.AbstractGraphicsDevice;
+import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.opengl.GLCapabilitiesImmutable;
 import com.jogamp.opengl.GLContext;
-import jogamp.opengl.GLDrawableImpl;
-import java.util.Map;
+import com.jogamp.opengl.GLException;
+import com.jogamp.opengl.GLProfile;
+import jogamp.nativewindow.windows.GDI;
 import jogamp.opengl.GLContextImpl;
+import jogamp.opengl.GLDrawableImpl;
+import jogamp.opengl.GLDynamicLookupHelper;
+
+import java.nio.IntBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WindowsWGLContext extends GLContextImpl
 {

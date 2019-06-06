@@ -4,11 +4,11 @@
 
 package jogamp.opengl.windows.wgl;
 
-import com.jogamp.gluegen.runtime.FunctionAddressResolver;
 import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
-import java.nio.ByteBuffer;
-import jogamp.nativewindow.windows.PIXELFORMATDESCRIPTOR;
 import com.jogamp.opengl.GLException;
+import jogamp.nativewindow.windows.PIXELFORMATDESCRIPTOR;
+
+import java.nio.ByteBuffer;
 
 public class WGL
 {

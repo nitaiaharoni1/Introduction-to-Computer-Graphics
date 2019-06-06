@@ -4,16 +4,16 @@
 
 package jogamp.opengl.util.glsl;
 
-import com.jogamp.opengl.GLArrayData;
-import com.jogamp.opengl.GL;
-import java.nio.FloatBuffer;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.util.glsl.ShaderCode;
 import com.jogamp.opengl.GL2ES2;
-import com.jogamp.opengl.util.GLArrayDataServer;
+import com.jogamp.opengl.GLArrayData;
+import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.GLUniformData;
+import com.jogamp.opengl.util.GLArrayDataServer;
 import com.jogamp.opengl.util.PMVMatrix;
+import com.jogamp.opengl.util.glsl.ShaderCode;
 import com.jogamp.opengl.util.glsl.ShaderProgram;
+
+import java.nio.FloatBuffer;
 
 public class GLSLTextureRaster
 {

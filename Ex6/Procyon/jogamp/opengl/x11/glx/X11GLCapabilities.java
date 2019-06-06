@@ -6,10 +6,10 @@ package jogamp.opengl.x11.glx;
 
 import com.jogamp.nativewindow.NativeWindowException;
 import com.jogamp.nativewindow.VisualIDHolder;
+import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.x11.XVisualInfo;
-import com.jogamp.opengl.GLCapabilities;
 
 public class X11GLCapabilities extends GLCapabilities
 {

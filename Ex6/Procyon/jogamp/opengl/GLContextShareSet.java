@@ -4,13 +4,10 @@
 
 package jogamp.opengl;
 
-import java.util.IdentityHashMap;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
-import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.GLContext;
-import java.util.Map;
+import com.jogamp.opengl.GLException;
+
+import java.util.*;
 
 public class GLContextShareSet
 {

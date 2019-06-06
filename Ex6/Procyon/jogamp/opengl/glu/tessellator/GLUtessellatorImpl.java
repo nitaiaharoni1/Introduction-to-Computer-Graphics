@@ -4,9 +4,9 @@
 
 package jogamp.opengl.glu.tessellator;
 
-import com.jogamp.opengl.glu.GLUtessellatorCallbackAdapter;
-import com.jogamp.opengl.glu.GLUtessellatorCallback;
 import com.jogamp.opengl.glu.GLUtessellator;
+import com.jogamp.opengl.glu.GLUtessellatorCallback;
+import com.jogamp.opengl.glu.GLUtessellatorCallbackAdapter;
 
 public class GLUtessellatorImpl implements GLUtessellator
 {

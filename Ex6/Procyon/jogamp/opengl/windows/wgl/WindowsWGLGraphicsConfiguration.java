@@ -4,30 +4,19 @@
 
 package jogamp.opengl.windows.wgl;
 
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLRendererQuirks;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import java.util.ArrayList;
-import java.util.List;
-import java.nio.FloatBuffer;
 import com.jogamp.common.ExceptionUtils;
 import com.jogamp.common.nio.Buffers;
-import java.nio.IntBuffer;
-import jogamp.nativewindow.windows.PIXELFORMATDESCRIPTOR;
-import jogamp.nativewindow.windows.GDIUtil;
+import com.jogamp.nativewindow.*;
+import com.jogamp.opengl.*;
 import jogamp.nativewindow.windows.GDI;
-import com.jogamp.nativewindow.DefaultGraphicsConfiguration;
-import com.jogamp.nativewindow.CapabilitiesChooser;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.nativewindow.MutableGraphicsConfiguration;
+import jogamp.nativewindow.windows.GDIUtil;
+import jogamp.nativewindow.windows.PIXELFORMATDESCRIPTOR;
+import jogamp.opengl.GLGraphicsConfigurationUtil;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WindowsWGLGraphicsConfiguration extends MutableGraphicsConfiguration implements Cloneable
 {

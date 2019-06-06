@@ -4,9 +4,10 @@
 
 package jogamp.opengl;
 
-import java.util.concurrent.TimeUnit;
-import java.io.PrintStream;
 import com.jogamp.opengl.FPSCounter;
+
+import java.io.PrintStream;
+import java.util.concurrent.TimeUnit;
 
 public class FPSCounterImpl implements FPSCounter
 {

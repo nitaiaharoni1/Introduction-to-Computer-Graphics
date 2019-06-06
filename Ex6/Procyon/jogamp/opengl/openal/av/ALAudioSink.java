@@ -4,25 +4,21 @@
 
 package jogamp.opengl.openal.av;
 
-import com.jogamp.openal.ALFactory;
+import com.jogamp.common.ExceptionUtils;
+import com.jogamp.common.util.LFRingbuffer;
 import com.jogamp.common.util.PropertyAccess;
+import com.jogamp.common.util.Ringbuffer;
+import com.jogamp.common.util.locks.LockFactory;
+import com.jogamp.common.util.locks.RecursiveLock;
+import com.jogamp.openal.*;
+import com.jogamp.openal.util.ALHelpers;
+import com.jogamp.opengl.util.av.AudioSink;
 import jogamp.opengl.Debug;
+
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import com.jogamp.common.util.LFRingbuffer;
-import com.jogamp.openal.util.ALHelpers;
-import com.jogamp.common.ExceptionUtils;
 import java.nio.IntBuffer;
-import com.jogamp.common.util.locks.LockFactory;
-import com.jogamp.common.util.Ringbuffer;
-import com.jogamp.common.util.locks.RecursiveLock;
-import com.jogamp.openal.ALCcontext;
-import com.jogamp.openal.ALCdevice;
-import com.jogamp.openal.ALExt;
-import com.jogamp.openal.AL;
-import com.jogamp.openal.ALC;
-import com.jogamp.opengl.util.av.AudioSink;
+import java.util.Arrays;
 
 public class ALAudioSink implements AudioSink
 {

@@ -4,8 +4,8 @@
 
 package jogamp.opengl.util;
 
-import com.jogamp.opengl.util.GLArrayDataWrapper;
 import com.jogamp.opengl.GL;
+import com.jogamp.opengl.util.GLArrayDataWrapper;
 
 public interface GLArrayHandlerFlat
 {

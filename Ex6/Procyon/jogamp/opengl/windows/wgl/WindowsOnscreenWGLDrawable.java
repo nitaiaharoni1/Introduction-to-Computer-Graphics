@@ -4,9 +4,8 @@
 
 package jogamp.opengl.windows.wgl;
 
-import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.opengl.GLContext;
 import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLDrawableFactory;
 
 public class WindowsOnscreenWGLDrawable extends WindowsWGLDrawable

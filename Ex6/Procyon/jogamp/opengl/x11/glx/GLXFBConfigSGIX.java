@@ -4,11 +4,12 @@
 
 package jogamp.opengl.x11.glx;
 
-import jogamp.common.os.MachineDataInfoRuntime;
-import java.nio.ByteBuffer;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.common.os.MachineDataInfo;
 import com.jogamp.common.nio.StructAccessor;
+import com.jogamp.common.os.MachineDataInfo;
+import jogamp.common.os.MachineDataInfoRuntime;
+
+import java.nio.ByteBuffer;
 
 public class GLXFBConfigSGIX
 {

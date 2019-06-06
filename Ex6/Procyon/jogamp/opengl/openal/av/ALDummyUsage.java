@@ -4,8 +4,8 @@
 
 package jogamp.opengl.openal.av;
 
-import com.jogamp.openal.JoalVersion;
 import com.jogamp.openal.AL;
+import com.jogamp.openal.JoalVersion;
 
 public class ALDummyUsage
 {

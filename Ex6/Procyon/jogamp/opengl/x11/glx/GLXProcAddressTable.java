@@ -5,12 +5,13 @@
 package jogamp.opengl.x11.glx;
 
 import com.jogamp.common.util.SecurityUtil;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-import java.lang.reflect.Field;
-import com.jogamp.gluegen.runtime.opengl.GLNameResolver;
 import com.jogamp.gluegen.runtime.FunctionAddressResolver;
 import com.jogamp.gluegen.runtime.ProcAddressTable;
+import com.jogamp.gluegen.runtime.opengl.GLNameResolver;
+
+import java.lang.reflect.Field;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 public final class GLXProcAddressTable extends ProcAddressTable
 {

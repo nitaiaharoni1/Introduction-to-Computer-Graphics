@@ -4,43 +4,27 @@
 
 package jogamp.opengl;
 
-import com.jogamp.opengl.GLDebugMessage;
-import java.nio.IntBuffer;
-import com.jogamp.gluegen.runtime.opengl.GLNameResolver;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.nativewindow.egl.EGLGraphicsDevice;
-import jogamp.nativewindow.x11.X11Util;
-import com.jogamp.nativewindow.NativeWindowFactory;
-import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
-import java.security.AccessController;
-import com.jogamp.common.os.DynamicLookupHelper;
-import java.security.PrivilegedAction;
-import java.lang.reflect.Method;
-import com.jogamp.common.util.ReflectionUtil;
-import com.jogamp.common.util.VersionNumberString;
-import jogamp.common.os.PlatformPropsImpl;
-import com.jogamp.common.os.Platform;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.IdentityHashMap;
-import com.jogamp.common.util.VersionNumber;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLDebugListener;
-import com.jogamp.opengl.GLPipelineFactory;
-import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.opengl.GLRendererQuirks;
-import com.jogamp.opengl.GL2ES3;
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLDrawable;
-import java.util.HashMap;
-import com.jogamp.opengl.GL;
+import com.jogamp.common.os.Platform;
+import com.jogamp.common.util.ReflectionUtil;
+import com.jogamp.common.util.VersionNumber;
+import com.jogamp.common.util.VersionNumberString;
 import com.jogamp.gluegen.runtime.ProcAddressTable;
-import com.jogamp.opengl.GLContext;
+import com.jogamp.gluegen.runtime.opengl.GLNameResolver;
+import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
+import com.jogamp.nativewindow.*;
+import com.jogamp.nativewindow.egl.EGLGraphicsDevice;
+import com.jogamp.opengl.*;
+import jogamp.common.os.PlatformPropsImpl;
+import jogamp.nativewindow.x11.X11Util;
+
+import java.lang.reflect.Method;
+import java.nio.IntBuffer;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 public abstract class GLContextImpl extends GLContext
 {

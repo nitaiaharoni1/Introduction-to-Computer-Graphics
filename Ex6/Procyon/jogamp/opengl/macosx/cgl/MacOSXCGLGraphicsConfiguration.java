@@ -4,19 +4,19 @@
 
 package jogamp.opengl.macosx.cgl;
 
-import com.jogamp.common.nio.PointerBuffer;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLProfile;
 import com.jogamp.common.nio.Buffers;
-import java.util.ArrayList;
-import com.jogamp.opengl.GLException;
-import java.util.List;
+import com.jogamp.common.nio.PointerBuffer;
 import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
 import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import java.nio.IntBuffer;
 import com.jogamp.nativewindow.MutableGraphicsConfiguration;
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLCapabilitiesImmutable;
+import com.jogamp.opengl.GLException;
+import com.jogamp.opengl.GLProfile;
+
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MacOSXCGLGraphicsConfiguration extends MutableGraphicsConfiguration implements Cloneable
 {

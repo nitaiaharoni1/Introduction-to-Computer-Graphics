@@ -4,17 +4,13 @@
 
 package jogamp.opengl.macosx.cgl;
 
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.nativewindow.CapabilitiesChooser;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.nativewindow.GraphicsConfigurationFactory;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
+import com.jogamp.nativewindow.*;
 import com.jogamp.nativewindow.macosx.MacOSXGraphicsDevice;
+import com.jogamp.opengl.GLCapabilitiesChooser;
+import com.jogamp.opengl.GLCapabilitiesImmutable;
+import com.jogamp.opengl.GLDrawableFactory;
 import jogamp.opengl.GLGraphicsConfigurationFactory;
+import jogamp.opengl.GLGraphicsConfigurationUtil;
 
 public class MacOSXCGLGraphicsConfigurationFactory extends GLGraphicsConfigurationFactory
 {

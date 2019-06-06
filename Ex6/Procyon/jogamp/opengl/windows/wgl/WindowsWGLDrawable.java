@@ -5,11 +5,11 @@
 package jogamp.opengl.windows.wgl;
 
 import com.jogamp.common.util.PropertyAccess;
-import jogamp.opengl.Debug;
-import com.jogamp.opengl.GLException;
-import jogamp.nativewindow.windows.GDI;
 import com.jogamp.nativewindow.NativeSurface;
 import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.opengl.GLException;
+import jogamp.nativewindow.windows.GDI;
+import jogamp.opengl.Debug;
 import jogamp.opengl.GLDrawableImpl;
 
 public abstract class WindowsWGLDrawable extends GLDrawableImpl

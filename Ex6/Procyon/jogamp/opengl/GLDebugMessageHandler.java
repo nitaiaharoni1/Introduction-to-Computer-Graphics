@@ -5,17 +5,17 @@
 package jogamp.opengl;
 
 import com.jogamp.common.ExceptionUtils;
+import com.jogamp.common.os.Platform;
+import com.jogamp.gluegen.runtime.ProcAddressTable;
 import com.jogamp.nativewindow.NativeWindowException;
-import com.jogamp.opengl.GLContext;
-import java.util.ArrayList;
+import com.jogamp.opengl.GLDebugListener;
 import com.jogamp.opengl.GLDebugMessage;
 import com.jogamp.opengl.GLException;
-import com.jogamp.common.os.Platform;
 import jogamp.common.os.PlatformPropsImpl;
+
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import com.jogamp.gluegen.runtime.ProcAddressTable;
-import com.jogamp.opengl.GLDebugListener;
+import java.util.ArrayList;
 
 public class GLDebugMessageHandler
 {

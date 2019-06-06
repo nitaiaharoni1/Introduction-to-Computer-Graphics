@@ -4,10 +4,10 @@
 
 package jogamp.opengl;
 
+import com.jogamp.common.util.IntIntHashMap;
 import com.jogamp.common.util.PropertyAccess;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GLException;
-import com.jogamp.common.util.IntIntHashMap;
 
 public class GLBufferStateTracker
 {

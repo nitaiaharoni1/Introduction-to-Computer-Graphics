@@ -4,24 +4,18 @@
 
 package jogamp.opengl.macosx.cgl.awt;
 
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
+import com.jogamp.nativewindow.*;
 import com.jogamp.nativewindow.awt.AWTGraphicsConfiguration;
-import com.jogamp.opengl.GLException;
-import jogamp.opengl.macosx.cgl.MacOSXCGLGraphicsConfiguration;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.nativewindow.DefaultGraphicsScreen;
+import com.jogamp.nativewindow.awt.AWTGraphicsDevice;
+import com.jogamp.nativewindow.awt.AWTGraphicsScreen;
 import com.jogamp.nativewindow.macosx.MacOSXGraphicsDevice;
 import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.nativewindow.awt.AWTGraphicsScreen;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.nativewindow.CapabilitiesChooser;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.nativewindow.GraphicsConfigurationFactory;
 import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.nativewindow.awt.AWTGraphicsDevice;
+import com.jogamp.opengl.GLException;
 import jogamp.opengl.GLGraphicsConfigurationFactory;
+import jogamp.opengl.macosx.cgl.MacOSXCGLGraphicsConfiguration;
+
+import java.awt.*;
 
 public class MacOSXAWTCGLGraphicsConfigurationFactory extends GLGraphicsConfigurationFactory
 {

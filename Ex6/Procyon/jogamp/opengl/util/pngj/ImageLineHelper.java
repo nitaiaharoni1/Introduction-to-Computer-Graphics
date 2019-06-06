@@ -4,8 +4,8 @@
 
 package jogamp.opengl.util.pngj;
 
-import jogamp.opengl.util.pngj.chunks.PngChunkTRNS;
 import jogamp.opengl.util.pngj.chunks.PngChunkPLTE;
+import jogamp.opengl.util.pngj.chunks.PngChunkTRNS;
 
 public class ImageLineHelper
 {

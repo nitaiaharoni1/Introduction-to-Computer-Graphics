@@ -4,25 +4,11 @@
 
 package jogamp.opengl;
 
-import com.jogamp.nativewindow.UpstreamSurfaceHook;
-import com.jogamp.nativewindow.NativeWindowException;
-import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.common.util.PropertyAccess;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.nativewindow.MutableGraphicsConfiguration;
-import com.jogamp.opengl.GLDrawable;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLException;
-import com.jogamp.common.util.VersionUtil;
-import com.jogamp.opengl.JoglVersion;
-import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.FBObject;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.opengl.GLFBODrawable;
+import com.jogamp.common.util.PropertyAccess;
+import com.jogamp.common.util.VersionUtil;
+import com.jogamp.nativewindow.*;
+import com.jogamp.opengl.*;
 
 public class GLFBODrawableImpl extends GLDrawableImpl implements GLFBODrawable
 {

@@ -4,8 +4,8 @@
 
 package jogamp.opengl.glu.mipmap;
 
-import java.nio.IntBuffer;
 import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 public class ExtractSInt implements ExtractPrimitive
 {

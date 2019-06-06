@@ -4,27 +4,19 @@
 
 package jogamp.opengl;
 
-import com.jogamp.common.util.PropertyAccess;
-import java.util.List;
-import com.jogamp.common.util.InterruptedRuntimeException;
-import com.jogamp.opengl.GLRunnable;
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GLFBODrawable;
-import com.jogamp.nativewindow.UpstreamSurfaceHook;
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.nativewindow.NativeWindowException;
+import com.jogamp.common.util.InterruptedRuntimeException;
+import com.jogamp.common.util.PropertyAccess;
 import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.nativewindow.NativeWindowException;
 import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.opengl.GLDrawable;
-import com.jogamp.opengl.GLException;
+import com.jogamp.nativewindow.UpstreamSurfaceHook;
+import com.jogamp.opengl.*;
+
 import java.lang.ref.WeakReference;
-import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLAnimatorControl;
-import java.util.HashSet;
-import com.jogamp.opengl.GLEventListener;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class GLDrawableHelper
 {

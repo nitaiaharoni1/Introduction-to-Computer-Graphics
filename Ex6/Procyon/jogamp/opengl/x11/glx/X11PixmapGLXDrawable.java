@@ -5,14 +5,14 @@
 package jogamp.opengl.x11.glx;
 
 import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import jogamp.nativewindow.x11.XVisualInfo;
 import com.jogamp.nativewindow.MutableSurface;
+import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.GLDrawableFactory;
 import com.jogamp.opengl.GLException;
 import jogamp.nativewindow.x11.X11Lib;
+import jogamp.nativewindow.x11.XVisualInfo;
 import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLDrawableFactory;
 
 public class X11PixmapGLXDrawable extends X11GLXDrawable
 {

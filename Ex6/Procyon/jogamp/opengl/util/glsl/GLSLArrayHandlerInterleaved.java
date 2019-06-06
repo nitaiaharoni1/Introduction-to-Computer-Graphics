@@ -5,11 +5,12 @@
 package jogamp.opengl.util.glsl;
 
 import com.jogamp.opengl.GL;
-import java.util.ArrayList;
 import com.jogamp.opengl.util.GLArrayDataEditable;
 import jogamp.opengl.util.GLArrayHandlerFlat;
-import java.util.List;
 import jogamp.opengl.util.GLVBOArrayHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GLSLArrayHandlerInterleaved extends GLVBOArrayHandler
 {

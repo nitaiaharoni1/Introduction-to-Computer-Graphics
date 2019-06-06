@@ -5,46 +5,23 @@
 package jogamp.opengl.windows.wgl;
 
 import com.jogamp.common.nio.PointerBuffer;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLRendererQuirks;
-import jogamp.opengl.GLContextImpl;
 import com.jogamp.common.util.PropertyAccess;
-import jogamp.opengl.Debug;
+import com.jogamp.common.util.ReflectionUtil;
+import com.jogamp.nativewindow.*;
+import com.jogamp.nativewindow.windows.WindowsGraphicsDevice;
+import com.jogamp.opengl.*;
+import jogamp.nativewindow.WrappedSurface;
+import jogamp.nativewindow.windows.GDI;
+import jogamp.nativewindow.windows.GDIDummyUpstreamSurfaceHook;
+import jogamp.nativewindow.windows.GDISurface;
+import jogamp.nativewindow.windows.RegisteredClassFactory;
+import jogamp.opengl.*;
+
 import java.nio.Buffer;
 import java.nio.ShortBuffer;
-import jogamp.nativewindow.windows.GDI;
-import com.jogamp.opengl.GLDrawable;
-import com.jogamp.nativewindow.GenericUpstreamSurfacelessHook;
-import jogamp.nativewindow.windows.GDISurface;
-import jogamp.nativewindow.windows.GDIDummyUpstreamSurfaceHook;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import jogamp.nativewindow.WrappedSurface;
-import com.jogamp.opengl.GLException;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.nativewindow.DefaultGraphicsScreen;
-import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.nativewindow.UpstreamSurfaceHook;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLDrawableFactory;
-import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import java.util.List;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import jogamp.opengl.GLDynamicLookupHelper;
-import jogamp.nativewindow.windows.RegisteredClassFactory;
-import com.jogamp.common.util.ReflectionUtil;
-import com.jogamp.opengl.GLProfile;
 import java.security.AccessController;
-import com.jogamp.common.os.DynamicLookupHelper;
-import jogamp.opengl.DesktopGLDynamicLibraryBundleInfo;
 import java.security.PrivilegedAction;
-import jogamp.opengl.SharedResourceRunner;
-import com.jogamp.nativewindow.windows.WindowsGraphicsDevice;
-import jogamp.opengl.DesktopGLDynamicLookupHelper;
-import jogamp.opengl.GLDrawableFactoryImpl;
+import java.util.List;
 
 public class WindowsWGLDrawableFactory extends GLDrawableFactoryImpl
 {

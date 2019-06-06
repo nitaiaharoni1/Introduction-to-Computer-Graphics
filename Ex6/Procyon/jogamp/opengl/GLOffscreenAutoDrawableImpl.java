@@ -4,15 +4,9 @@
 
 package jogamp.opengl;
 
-import com.jogamp.opengl.FBObject;
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GLException;
-import com.jogamp.nativewindow.NativeWindowException;
 import com.jogamp.common.util.locks.RecursiveLock;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLDrawable;
-import com.jogamp.opengl.GLOffscreenAutoDrawable;
-import com.jogamp.opengl.GLAutoDrawableDelegate;
+import com.jogamp.nativewindow.NativeWindowException;
+import com.jogamp.opengl.*;
 
 public class GLOffscreenAutoDrawableImpl extends GLAutoDrawableDelegate implements GLOffscreenAutoDrawable
 {

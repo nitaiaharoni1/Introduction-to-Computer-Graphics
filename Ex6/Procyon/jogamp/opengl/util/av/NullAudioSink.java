@@ -4,8 +4,9 @@
 
 package jogamp.opengl.util.av;
 
-import java.nio.ByteBuffer;
 import com.jogamp.opengl.util.av.AudioSink;
+
+import java.nio.ByteBuffer;
 
 public class NullAudioSink implements AudioSink
 {

@@ -4,38 +4,14 @@
 
 package jogamp.opengl;
 
-import java.util.Set;
-import java.util.Iterator;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.opengl.GLFBODrawable;
-import com.jogamp.nativewindow.UpstreamSurfaceHookMutableSize;
-import com.jogamp.opengl.GLAutoDrawableDelegate;
-import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.common.util.locks.RecursiveLock;
-import com.jogamp.opengl.GLOffscreenAutoDrawable;
-import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.nativewindow.OffscreenLayerSurface;
-import com.jogamp.nativewindow.UpstreamSurfaceHook;
-import com.jogamp.nativewindow.DelegatedUpstreamSurfaceHookWithSurfaceSize;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.nativewindow.MutableSurface;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.nativewindow.NativeWindowFactory;
-import com.jogamp.nativewindow.MutableGraphicsConfiguration;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLRendererQuirks;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.opengl.GLDrawable;
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.opengl.GLContext;
-import java.util.HashMap;
+import com.jogamp.nativewindow.*;
+import com.jogamp.opengl.*;
+
 import java.nio.Buffer;
+import java.util.HashMap;
 import java.util.Map;
-import com.jogamp.opengl.GLDrawableFactory;
+import java.util.Set;
 
 public abstract class GLDrawableFactoryImpl extends GLDrawableFactory
 {

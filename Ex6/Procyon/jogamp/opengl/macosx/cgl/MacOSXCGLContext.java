@@ -4,42 +4,24 @@
 
 package jogamp.opengl.macosx.cgl;
 
-import com.jogamp.common.nio.PointerBuffer;
-import java.nio.IntBuffer;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.nativewindow.NativeWindowFactory;
-import jogamp.nativewindow.macosx.OSXUtil;
-import jogamp.opengl.GLFBODrawableImpl;
-import com.jogamp.nativewindow.OffscreenLayerSurface;
-import com.jogamp.common.util.VersionNumber;
-import jogamp.common.os.PlatformPropsImpl;
-import com.jogamp.opengl.GL;
-import com.jogamp.common.util.locks.RecursiveLock;
-import com.jogamp.gluegen.runtime.FunctionAddressResolver;
-import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
-import jogamp.opengl.GLDynamicLookupHelper;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
+import com.jogamp.common.nio.PointerBuffer;
 import com.jogamp.common.os.Platform;
-import java.util.Map;
+import com.jogamp.common.util.VersionNumber;
+import com.jogamp.common.util.locks.RecursiveLock;
 import com.jogamp.gluegen.runtime.ProcAddressTable;
-import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.opengl.GLUniformData;
+import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
+import com.jogamp.nativewindow.*;
+import com.jogamp.opengl.*;
 import com.jogamp.opengl.util.PMVMatrix;
-import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.util.glsl.ShaderCode;
 import com.jogamp.opengl.util.glsl.ShaderProgram;
-import com.jogamp.opengl.GL3ES3;
-import com.jogamp.opengl.GLRendererQuirks;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import jogamp.opengl.GLContextImpl;
+import jogamp.common.os.PlatformPropsImpl;
+import jogamp.nativewindow.macosx.OSXUtil;
+import jogamp.opengl.*;
+
+import java.nio.IntBuffer;
+import java.util.Map;
 
 public class MacOSXCGLContext extends GLContextImpl
 {

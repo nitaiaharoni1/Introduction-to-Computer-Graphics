@@ -4,22 +4,23 @@
 
 package jogamp.opengl.util.glsl.fixedfunc;
 
+import com.jogamp.common.nio.Buffers;
+import com.jogamp.common.util.ValueConv;
+import com.jogamp.opengl.GL2ES2;
+import com.jogamp.opengl.GLArrayData;
+import com.jogamp.opengl.GLException;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.fixedfunc.GLLightingFunc;
+import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
+import com.jogamp.opengl.fixedfunc.GLPointerFunc;
 import com.jogamp.opengl.util.GLArrayDataWrapper;
 import com.jogamp.opengl.util.GLBuffers;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLArrayData;
-import com.jogamp.common.util.ValueConv;
-import com.jogamp.common.nio.Buffers;
-import java.nio.IntBuffer;
-import java.nio.FloatBuffer;
-import java.nio.Buffer;
-import com.jogamp.opengl.util.glsl.fixedfunc.ShaderSelectionMode;
-import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.util.PMVMatrix;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.fixedfunc.GLPointerFunc;
-import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
-import com.jogamp.opengl.fixedfunc.GLLightingFunc;
+import com.jogamp.opengl.util.glsl.fixedfunc.ShaderSelectionMode;
+
+import java.nio.Buffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 public class FixedFuncHook implements GLLightingFunc, GLMatrixFunc, GLPointerFunc
 {

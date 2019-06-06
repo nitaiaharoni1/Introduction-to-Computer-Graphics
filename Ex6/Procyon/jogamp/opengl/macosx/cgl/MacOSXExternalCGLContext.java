@@ -4,18 +4,15 @@
 
 package jogamp.opengl.macosx.cgl;
 
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import jogamp.nativewindow.WrappedSurface;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
 import com.jogamp.nativewindow.DefaultGraphicsScreen;
+import com.jogamp.nativewindow.NativeSurface;
 import com.jogamp.nativewindow.NativeWindowFactory;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLDrawableFactory;
-import jogamp.opengl.GLContextShareSet;
+import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLContext;
-import jogamp.opengl.GLDrawableImpl;
+import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.opengl.GLException;
+import jogamp.nativewindow.WrappedSurface;
+import jogamp.opengl.GLContextShareSet;
 
 public class MacOSXExternalCGLContext extends MacOSXCGLContext
 {

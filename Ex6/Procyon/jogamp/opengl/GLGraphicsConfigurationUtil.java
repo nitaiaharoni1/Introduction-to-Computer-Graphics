@@ -4,13 +4,8 @@
 
 package jogamp.opengl;
 
-import com.jogamp.opengl.GLRendererQuirks;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
+import com.jogamp.opengl.*;
 
 public class GLGraphicsConfigurationUtil
 {

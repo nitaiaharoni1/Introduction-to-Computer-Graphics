@@ -4,9 +4,10 @@
 
 package jogamp.opengl.windows.wgl;
 
+import jogamp.opengl.DesktopGLDynamicLibraryBundleInfo;
+
 import java.util.ArrayList;
 import java.util.List;
-import jogamp.opengl.DesktopGLDynamicLibraryBundleInfo;
 
 public final class WindowsWGLDynamicLibraryBundleInfo extends DesktopGLDynamicLibraryBundleInfo
 {

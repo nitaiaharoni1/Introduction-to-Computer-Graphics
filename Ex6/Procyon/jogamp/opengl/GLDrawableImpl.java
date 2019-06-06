@@ -4,17 +4,11 @@
 
 package jogamp.opengl;
 
-import com.jogamp.opengl.GL;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
+import com.jogamp.nativewindow.AbstractGraphicsDevice;
 import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.opengl.GLDrawable;
+import com.jogamp.nativewindow.ProxySurface;
+import com.jogamp.opengl.*;
 
 public abstract class GLDrawableImpl implements GLDrawable
 {

@@ -4,8 +4,8 @@
 
 package jogamp.opengl.glu.mipmap;
 
-import java.nio.ShortBuffer;
 import java.nio.ByteBuffer;
+import java.nio.ShortBuffer;
 
 public class ExtractSShort implements ExtractPrimitive
 {

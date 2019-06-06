@@ -4,46 +4,22 @@
 
 package jogamp.opengl.macosx.cgl;
 
-import jogamp.opengl.SharedResourceRunner;
-import java.nio.ShortBuffer;
-import java.nio.Buffer;
-import java.nio.FloatBuffer;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.nativewindow.GenericUpstreamSurfacelessHook;
-import jogamp.nativewindow.macosx.OSXDummyUpstreamSurfaceHook;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import jogamp.nativewindow.WrappedSurface;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.nativewindow.DefaultGraphicsScreen;
-import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.nativewindow.UpstreamSurfaceHook;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.nativewindow.MutableGraphicsConfiguration;
-import com.jogamp.opengl.GLDrawableFactory;
-import jogamp.opengl.GLDrawableImpl;
-import java.util.List;
-import com.jogamp.opengl.GLRendererQuirks;
-import com.jogamp.opengl.GL;
-import jogamp.opengl.GLContextImpl;
-import com.jogamp.opengl.GLDrawable;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import jogamp.opengl.GLDynamicLookupHelper;
 import com.jogamp.common.os.DynamicLibraryBundle;
 import com.jogamp.common.util.ReflectionUtil;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLException;
-import jogamp.opengl.DesktopGLDynamicLibraryBundleInfo;
-import java.util.HashSet;
+import com.jogamp.nativewindow.*;
 import com.jogamp.nativewindow.macosx.MacOSXGraphicsDevice;
+import com.jogamp.opengl.*;
+import jogamp.nativewindow.WrappedSurface;
+import jogamp.nativewindow.macosx.OSXDummyUpstreamSurfaceHook;
+import jogamp.opengl.*;
+
+import java.nio.Buffer;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 import java.util.HashMap;
-import jogamp.opengl.DesktopGLDynamicLookupHelper;
-import jogamp.opengl.GLDrawableFactoryImpl;
+import java.util.HashSet;
+import java.util.List;
 
 public class MacOSXCGLDrawableFactory extends GLDrawableFactoryImpl
 {

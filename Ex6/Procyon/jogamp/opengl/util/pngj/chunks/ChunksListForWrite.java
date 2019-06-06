@@ -4,13 +4,14 @@
 
 package jogamp.opengl.util.pngj.chunks;
 
-import java.util.Iterator;
-import java.io.OutputStream;
-import jogamp.opengl.util.pngj.PngjOutputException;
-import jogamp.opengl.util.pngj.PngjException;
-import java.util.ArrayList;
 import jogamp.opengl.util.pngj.ImageInfo;
+import jogamp.opengl.util.pngj.PngjException;
+import jogamp.opengl.util.pngj.PngjOutputException;
+
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class ChunksListForWrite extends ChunksList

@@ -4,8 +4,8 @@
 
 package jogamp.opengl.util;
 
-import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.util.GLArrayDataEditable;
 
 public class GLDataArrayHandler extends GLVBOArrayHandler

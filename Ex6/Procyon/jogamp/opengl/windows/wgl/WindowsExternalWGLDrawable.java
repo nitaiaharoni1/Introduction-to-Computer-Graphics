@@ -4,17 +4,15 @@
 
 package jogamp.opengl.windows.wgl;
 
-import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import jogamp.nativewindow.WrappedSurface;
 import com.jogamp.nativewindow.DefaultGraphicsScreen;
-import com.jogamp.nativewindow.NativeWindowFactory;
-import com.jogamp.opengl.GLException;
-import jogamp.nativewindow.windows.GDI;
-import com.jogamp.opengl.GLProfile;
 import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.nativewindow.NativeWindowFactory;
+import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.opengl.GLException;
+import com.jogamp.opengl.GLProfile;
+import jogamp.nativewindow.WrappedSurface;
+import jogamp.nativewindow.windows.GDI;
 
 public class WindowsExternalWGLDrawable extends WindowsWGLDrawable
 {

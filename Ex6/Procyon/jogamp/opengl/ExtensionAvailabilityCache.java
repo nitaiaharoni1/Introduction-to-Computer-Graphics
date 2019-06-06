@@ -4,16 +4,13 @@
 
 package jogamp.opengl;
 
-import java.io.ObjectInputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import com.jogamp.common.util.VersionNumber;
 import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GLContext;
-import java.util.StringTokenizer;
 import com.jogamp.opengl.GL2ES3;
+import com.jogamp.opengl.GLContext;
+
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 final class ExtensionAvailabilityCache
 {

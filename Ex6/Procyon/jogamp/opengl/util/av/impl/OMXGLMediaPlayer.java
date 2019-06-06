@@ -4,12 +4,13 @@
 
 package jogamp.opengl.util.av.impl;
 
-import com.jogamp.opengl.egl.EGL;
-import java.io.IOException;
-import com.jogamp.opengl.util.texture.TextureSequence;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GLException;
+import com.jogamp.opengl.egl.EGL;
+import com.jogamp.opengl.util.texture.TextureSequence;
 import jogamp.opengl.util.av.EGLMediaPlayerImpl;
+
+import java.io.IOException;
 
 public class OMXGLMediaPlayer extends EGLMediaPlayerImpl
 {

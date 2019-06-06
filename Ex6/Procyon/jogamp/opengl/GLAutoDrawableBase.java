@@ -4,29 +4,17 @@
 
 package jogamp.opengl;
 
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
+import com.jogamp.common.ExceptionUtils;
+import com.jogamp.common.util.RunnableTask;
+import com.jogamp.common.util.locks.RecursiveLock;
+import com.jogamp.nativewindow.AbstractGraphicsDevice;
+import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.nativewindow.NativeWindowException;
+import com.jogamp.nativewindow.WindowClosingProtocol;
+import com.jogamp.opengl.*;
+
 import java.io.PrintStream;
 import java.util.List;
-import com.jogamp.opengl.GLRunnable;
-import com.jogamp.common.util.RunnableTask;
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GLEventListener;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.opengl.GLAnimatorControl;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.common.ExceptionUtils;
-import com.jogamp.nativewindow.WindowClosingProtocol;
-import com.jogamp.opengl.GLException;
-import com.jogamp.nativewindow.NativeWindowException;
-import com.jogamp.common.util.locks.RecursiveLock;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLDrawable;
-import com.jogamp.opengl.GLEventListenerState;
-import com.jogamp.opengl.GLSharedContextSetter;
-import com.jogamp.opengl.FPSCounter;
-import com.jogamp.opengl.GLStateKeeper;
-import com.jogamp.opengl.GLAutoDrawable;
 
 public abstract class GLAutoDrawableBase implements GLAutoDrawable, GLStateKeeper, FPSCounter, GLSharedContextSetter
 {

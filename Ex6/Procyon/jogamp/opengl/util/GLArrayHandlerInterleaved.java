@@ -5,8 +5,9 @@
 package jogamp.opengl.util;
 
 import com.jogamp.opengl.GL;
-import java.util.ArrayList;
 import com.jogamp.opengl.util.GLArrayDataEditable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GLArrayHandlerInterleaved extends GLVBOArrayHandler

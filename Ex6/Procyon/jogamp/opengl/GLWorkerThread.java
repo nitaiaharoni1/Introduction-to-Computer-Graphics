@@ -5,11 +5,12 @@
 package jogamp.opengl;
 
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.opengl.GLContext;
-import java.util.ArrayList;
-import java.lang.reflect.InvocationTargetException;
-import com.jogamp.common.util.InterruptedRuntimeException;
 import com.jogamp.common.util.InterruptSource;
+import com.jogamp.common.util.InterruptedRuntimeException;
+import com.jogamp.opengl.GLContext;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GLWorkerThread

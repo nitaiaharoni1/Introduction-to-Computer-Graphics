@@ -4,21 +4,18 @@
 
 package jogamp.opengl.windows.wgl;
 
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.opengl.GLProfile;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
 import com.jogamp.common.nio.Buffers;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import com.jogamp.nativewindow.NativeWindowException;
+import com.jogamp.nativewindow.AbstractGraphicsDevice;
 import com.jogamp.nativewindow.MutableSurface;
-import com.jogamp.opengl.GLException;
+import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.nativewindow.NativeWindowException;
+import com.jogamp.opengl.*;
 import jogamp.nativewindow.windows.GDI;
 import jogamp.opengl.GLDrawableImpl;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.opengl.GLDrawableFactory;
+import jogamp.opengl.GLGraphicsConfigurationUtil;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 public class WindowsPbufferWGLDrawable extends WindowsWGLDrawable
 {

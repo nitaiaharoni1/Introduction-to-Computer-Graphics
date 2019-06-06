@@ -4,22 +4,14 @@
 
 package jogamp.opengl.util.pngj;
 
-import java.util.Iterator;
-import jogamp.opengl.util.pngj.chunks.PngChunkSkipped;
-import jogamp.opengl.util.pngj.chunks.PngChunkTextVar;
-import jogamp.opengl.util.pngj.chunks.ChunkHelper;
+import jogamp.opengl.util.pngj.chunks.*;
+
 import java.io.IOException;
-import jogamp.opengl.util.pngj.chunks.PngChunkIHDR;
-import java.util.List;
-import jogamp.opengl.util.pngj.chunks.PngChunk;
-import jogamp.opengl.util.pngj.chunks.PngChunkIEND;
-import java.util.Arrays;
-import java.util.zip.Deflater;
-import jogamp.opengl.util.pngj.chunks.ChunksList;
 import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
-import jogamp.opengl.util.pngj.chunks.PngMetadata;
-import jogamp.opengl.util.pngj.chunks.ChunksListForWrite;
 
 public class PngWriter
 {

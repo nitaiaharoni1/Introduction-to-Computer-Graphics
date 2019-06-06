@@ -4,10 +4,10 @@
 
 package jogamp.opengl;
 
+import com.jogamp.common.util.PropertyAccess;
+
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.security.AccessControlException;
-import com.jogamp.common.util.PropertyAccess;
 
 public class Debug extends PropertyAccess
 {

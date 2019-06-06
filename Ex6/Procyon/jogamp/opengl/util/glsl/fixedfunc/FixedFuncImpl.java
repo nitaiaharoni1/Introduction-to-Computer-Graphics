@@ -4,34 +4,16 @@
 
 package jogamp.opengl.util.glsl.fixedfunc;
 
+import com.jogamp.opengl.*;
+import com.jogamp.opengl.fixedfunc.GLLightingFunc;
+import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
+import com.jogamp.opengl.fixedfunc.GLPointerFunc;
 import jogamp.opengl.Debug;
+
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import com.jogamp.opengl.GLArrayData;
-import java.nio.Buffer;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLES3;
-import com.jogamp.opengl.GLES2;
-import com.jogamp.opengl.GLES1;
-import com.jogamp.opengl.GL4bc;
-import com.jogamp.opengl.GL4ES3;
-import com.jogamp.opengl.GL4;
-import com.jogamp.opengl.GL3bc;
-import com.jogamp.opengl.GL3ES3;
-import com.jogamp.opengl.GL3;
-import com.jogamp.opengl.GL2GL3;
-import com.jogamp.opengl.GL2ES3;
-import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLBufferStorage;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GL2ES2;
-import com.jogamp.opengl.GL2ES1;
-import com.jogamp.opengl.fixedfunc.GLLightingFunc;
-import com.jogamp.opengl.fixedfunc.GLPointerFunc;
-import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
-import com.jogamp.opengl.GL;
 
 public class FixedFuncImpl implements GL, GLMatrixFunc, GLPointerFunc, GLLightingFunc, GL2ES1
 {

@@ -4,11 +4,11 @@
 
 package jogamp.opengl.util.pngj;
 
-import java.io.OutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.zip.CRC32;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.zip.CRC32;
 
 public class PngHelperInternal
 {

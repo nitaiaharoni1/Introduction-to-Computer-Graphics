@@ -4,19 +4,16 @@
 
 package jogamp.opengl;
 
-import com.jogamp.opengl.GLRendererQuirks;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import java.util.Collection;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
-import com.jogamp.common.util.SourcedInterruptedException;
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.common.util.InterruptedRuntimeException;
 import com.jogamp.common.util.InterruptSource;
+import com.jogamp.common.util.InterruptedRuntimeException;
+import com.jogamp.common.util.SourcedInterruptedException;
 import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import java.util.HashSet;
+import com.jogamp.nativewindow.AbstractGraphicsScreen;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.GLRendererQuirks;
+
+import java.util.*;
 
 public class SharedResourceRunner implements Runnable
 {

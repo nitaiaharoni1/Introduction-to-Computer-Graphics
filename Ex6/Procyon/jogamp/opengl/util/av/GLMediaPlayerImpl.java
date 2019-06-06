@@ -5,33 +5,23 @@
 package jogamp.opengl.util.av;
 
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.common.util.SourcedInterruptedException;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.common.util.InterruptedRuntimeException;
-import com.jogamp.opengl.GLDrawable;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.common.util.PropertyAccess;
-import java.util.Iterator;
-import com.jogamp.common.os.Platform;
-import java.nio.Buffer;
-import com.jogamp.opengl.util.texture.Texture;
-import java.io.IOException;
-import com.jogamp.common.util.LFRingbuffer;
-import com.jogamp.common.util.InterruptSource;
-import com.jogamp.common.net.UriQueryProps;
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.util.glsl.ShaderCode;
-import java.util.HashMap;
-import java.util.ArrayList;
-import com.jogamp.common.util.Ringbuffer;
-import com.jogamp.opengl.util.texture.TextureSequence;
-import com.jogamp.opengl.util.av.AudioSink;
-import java.util.Map;
 import com.jogamp.common.net.Uri;
+import com.jogamp.common.net.UriQueryProps;
+import com.jogamp.common.os.Platform;
+import com.jogamp.common.util.*;
+import com.jogamp.nativewindow.AbstractGraphicsDevice;
+import com.jogamp.opengl.*;
+import com.jogamp.opengl.util.av.AudioSink;
 import com.jogamp.opengl.util.av.GLMediaPlayer;
+import com.jogamp.opengl.util.glsl.ShaderCode;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureSequence;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public abstract class GLMediaPlayerImpl implements GLMediaPlayer
 {

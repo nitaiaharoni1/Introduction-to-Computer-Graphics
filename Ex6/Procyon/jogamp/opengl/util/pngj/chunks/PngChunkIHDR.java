@@ -4,11 +4,11 @@
 
 package jogamp.opengl.util.pngj.chunks;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import jogamp.opengl.util.pngj.PngjException;
-import jogamp.opengl.util.pngj.PngHelperInternal;
 import jogamp.opengl.util.pngj.ImageInfo;
+import jogamp.opengl.util.pngj.PngHelperInternal;
+import jogamp.opengl.util.pngj.PngjException;
+
+import java.io.ByteArrayInputStream;
 
 public class PngChunkIHDR extends PngChunkSingle
 {

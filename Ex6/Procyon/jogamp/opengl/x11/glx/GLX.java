@@ -4,15 +4,15 @@
 
 package jogamp.opengl.x11.glx;
 
-import com.jogamp.gluegen.runtime.FunctionAddressResolver;
-import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
-import com.jogamp.common.nio.PointerBuffer;
-import java.nio.LongBuffer;
 import com.jogamp.common.nio.Buffers;
-import java.nio.IntBuffer;
-import java.nio.ByteBuffer;
+import com.jogamp.common.nio.PointerBuffer;
+import com.jogamp.gluegen.runtime.opengl.GLProcAddressResolver;
 import com.jogamp.opengl.GLException;
 import jogamp.nativewindow.x11.XVisualInfo;
+
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import java.nio.LongBuffer;
 
 public class GLX
 {

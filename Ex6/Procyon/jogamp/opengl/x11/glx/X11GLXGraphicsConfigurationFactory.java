@@ -5,33 +5,22 @@
 package jogamp.opengl.x11.glx;
 
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.opengl.DefaultGLCapabilitiesChooser;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.common.nio.Buffers;
+import com.jogamp.common.nio.PointerBuffer;
+import com.jogamp.nativewindow.*;
+import com.jogamp.nativewindow.x11.X11GraphicsDevice;
+import com.jogamp.nativewindow.x11.X11GraphicsScreen;
+import com.jogamp.opengl.*;
 import jogamp.nativewindow.x11.X11Lib;
 import jogamp.nativewindow.x11.XVisualInfo;
-import com.jogamp.common.nio.PointerBuffer;
+import jogamp.opengl.GLGraphicsConfigurationFactory;
+import jogamp.opengl.GLGraphicsConfigurationUtil;
+
 import java.nio.IntBuffer;
 import java.util.ArrayList;
-import com.jogamp.common.nio.Buffers;
-import java.util.Comparator;
 import java.util.Collections;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLException;
+import java.util.Comparator;
 import java.util.List;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.nativewindow.x11.X11GraphicsScreen;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.nativewindow.CapabilitiesChooser;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.nativewindow.x11.X11GraphicsDevice;
-import com.jogamp.nativewindow.GraphicsConfigurationFactory;
-import com.jogamp.nativewindow.VisualIDHolder;
-import jogamp.opengl.GLGraphicsConfigurationFactory;
 
 public class X11GLXGraphicsConfigurationFactory extends GLGraphicsConfigurationFactory
 {

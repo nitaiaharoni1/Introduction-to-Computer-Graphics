@@ -4,8 +4,8 @@
 
 package jogamp.opengl.util.pngj;
 
-import java.io.IOException;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 abstract class ProgressiveOutputStream extends ByteArrayOutputStream
 {

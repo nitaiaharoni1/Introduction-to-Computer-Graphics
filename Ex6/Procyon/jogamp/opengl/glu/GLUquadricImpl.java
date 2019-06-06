@@ -4,10 +4,10 @@
 
 package jogamp.opengl.glu;
 
-import com.jogamp.opengl.util.ImmModeSink;
-import com.jogamp.opengl.util.glsl.ShaderState;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.glu.GLUquadric;
+import com.jogamp.opengl.util.ImmModeSink;
+import com.jogamp.opengl.util.glsl.ShaderState;
 
 public class GLUquadricImpl implements GLUquadric
 {

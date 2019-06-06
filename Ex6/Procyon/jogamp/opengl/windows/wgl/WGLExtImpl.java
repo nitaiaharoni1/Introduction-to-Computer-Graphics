@@ -4,15 +4,11 @@
 
 package jogamp.opengl.windows.wgl;
 
-import java.nio.LongBuffer;
-import com.jogamp.common.nio.PointerBuffer;
-import java.nio.ByteBuffer;
-import java.nio.ShortBuffer;
-import java.nio.Buffer;
-import java.nio.FloatBuffer;
 import com.jogamp.common.nio.Buffers;
-import java.nio.IntBuffer;
+import com.jogamp.common.nio.PointerBuffer;
 import com.jogamp.opengl.GLException;
+
+import java.nio.*;
 
 public class WGLExtImpl implements WGLExt
 {

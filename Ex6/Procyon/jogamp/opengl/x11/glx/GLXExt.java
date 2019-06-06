@@ -4,11 +4,12 @@
 
 package jogamp.opengl.x11.glx;
 
-import java.nio.LongBuffer;
 import com.jogamp.common.nio.PointerBuffer;
-import java.nio.ByteBuffer;
+
 import java.nio.Buffer;
+import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.nio.LongBuffer;
 
 public interface GLXExt
 {

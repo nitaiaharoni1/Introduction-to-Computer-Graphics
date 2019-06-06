@@ -4,13 +4,14 @@
 
 package jogamp.opengl.util.pngj.chunks;
 
-import java.io.ByteArrayInputStream;
+import jogamp.opengl.util.pngj.PngHelperInternal;
 import jogamp.opengl.util.pngj.PngjBadCrcException;
-import java.io.InputStream;
 import jogamp.opengl.util.pngj.PngjOutputException;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.zip.CRC32;
-import jogamp.opengl.util.pngj.PngHelperInternal;
 
 public class ChunkRaw
 {

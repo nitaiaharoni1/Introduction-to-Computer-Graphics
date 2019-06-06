@@ -5,11 +5,11 @@
 package jogamp.opengl.glu.mipmap;
 
 import com.jogamp.common.nio.Buffers;
-import java.nio.ByteBuffer;
-import com.jogamp.opengl.GLException;
-import java.nio.Buffer;
-import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.GLException;
+
+import java.nio.ByteBuffer;
 
 public class Mipmap
 {

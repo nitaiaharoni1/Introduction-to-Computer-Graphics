@@ -4,14 +4,14 @@
 
 package jogamp.opengl.util.av;
 
-import java.nio.ByteBuffer;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.AudioSystem;
-import java.util.Arrays;
-import javax.sound.sampled.SourceDataLine;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.AudioFormat;
 import com.jogamp.opengl.util.av.AudioSink;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.SourceDataLine;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 public class JavaSoundAudioSink implements AudioSink
 {

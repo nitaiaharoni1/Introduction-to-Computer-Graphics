@@ -5,18 +5,18 @@
 package jogamp.opengl.util.av.impl;
 
 import com.jogamp.common.ExceptionUtils;
-import com.jogamp.opengl.GLProfile;
+import com.jogamp.common.os.DynamicLibraryBundle;
+import com.jogamp.common.os.DynamicLibraryBundleInfo;
 import com.jogamp.common.util.RunnableExecutor;
+import com.jogamp.common.util.VersionNumber;
+import com.jogamp.opengl.GLProfile;
+
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.security.AccessController;
-import com.jogamp.common.os.DynamicLibraryBundle;
-import java.security.PrivilegedAction;
-import com.jogamp.common.util.VersionNumber;
 import java.util.List;
-import com.jogamp.common.os.DynamicLibraryBundleInfo;
 
 class FFMPEGDynamicLibraryBundleInfo implements DynamicLibraryBundleInfo
 {

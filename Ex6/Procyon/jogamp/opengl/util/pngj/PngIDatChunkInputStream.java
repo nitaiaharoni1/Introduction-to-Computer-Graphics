@@ -4,13 +4,14 @@
 
 package jogamp.opengl.util.pngj;
 
-import java.util.Arrays;
-import java.io.IOException;
 import jogamp.opengl.util.pngj.chunks.ChunkHelper;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.zip.CRC32;
-import java.io.InputStream;
 
 class PngIDatChunkInputStream extends InputStream
 {

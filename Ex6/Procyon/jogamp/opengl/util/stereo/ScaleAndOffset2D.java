@@ -4,10 +4,10 @@
 
 package jogamp.opengl.util.stereo;
 
-import com.jogamp.opengl.math.VectorUtil;
-import com.jogamp.nativewindow.util.RectangleImmutable;
 import com.jogamp.nativewindow.util.DimensionImmutable;
+import com.jogamp.nativewindow.util.RectangleImmutable;
 import com.jogamp.opengl.math.FovHVHalves;
+import com.jogamp.opengl.math.VectorUtil;
 
 public final class ScaleAndOffset2D
 {

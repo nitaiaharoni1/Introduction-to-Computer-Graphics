@@ -4,8 +4,9 @@
 
 package jogamp.opengl.util.pngj;
 
-import jogamp.opengl.util.pngj.chunks.ChunkRaw;
 import jogamp.opengl.util.pngj.chunks.ChunkHelper;
+import jogamp.opengl.util.pngj.chunks.ChunkRaw;
+
 import java.io.OutputStream;
 
 class PngIDatChunkOutputStream extends ProgressiveOutputStream

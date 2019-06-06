@@ -4,40 +4,25 @@
 
 package jogamp.opengl.windows.wgl;
 
-import jogamp.nativewindow.windows.PIXELFORMATDESCRIPTOR;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 import com.jogamp.common.ExceptionUtils;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GLCapabilities;
-import jogamp.nativewindow.windows.GDIUtil;
+import com.jogamp.nativewindow.*;
+import com.jogamp.nativewindow.windows.WindowsGraphicsDevice;
+import com.jogamp.opengl.*;
 import jogamp.nativewindow.windows.GDI;
-import com.jogamp.nativewindow.ProxySurface;
-import com.jogamp.nativewindow.NativeSurface;
-import java.util.ArrayList;
+import jogamp.nativewindow.windows.GDIUtil;
+import jogamp.nativewindow.windows.PIXELFORMATDESCRIPTOR;
 import jogamp.opengl.GLContextImpl;
 import jogamp.opengl.GLDrawableImpl;
-import java.util.Comparator;
-import java.util.Collections;
-import java.util.Collection;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLException;
-import java.util.List;
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import jogamp.opengl.GLGraphicsConfigurationUtil;
-import com.jogamp.opengl.GLDrawableFactory;
-import com.jogamp.nativewindow.DefaultGraphicsScreen;
-import com.jogamp.nativewindow.NativeWindowFactory;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.nativewindow.CapabilitiesChooser;
-import com.jogamp.nativewindow.CapabilitiesImmutable;
-import com.jogamp.nativewindow.GraphicsConfigurationFactory;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.nativewindow.windows.WindowsGraphicsDevice;
-import com.jogamp.nativewindow.VisualIDHolder;
 import jogamp.opengl.GLGraphicsConfigurationFactory;
+import jogamp.opengl.GLGraphicsConfigurationUtil;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class WindowsWGLGraphicsConfigurationFactory extends GLGraphicsConfigurationFactory
 {

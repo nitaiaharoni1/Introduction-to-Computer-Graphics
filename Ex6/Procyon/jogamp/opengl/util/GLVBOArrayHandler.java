@@ -4,9 +4,10 @@
 
 package jogamp.opengl.util;
 
-import java.nio.Buffer;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.util.GLArrayDataEditable;
+
+import java.nio.Buffer;
 
 public abstract class GLVBOArrayHandler implements GLArrayHandler
 {

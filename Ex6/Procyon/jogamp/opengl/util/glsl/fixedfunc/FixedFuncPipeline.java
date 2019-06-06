@@ -4,28 +4,19 @@
 
 package jogamp.opengl.util.glsl.fixedfunc;
 
-import com.jogamp.common.util.PropertyAccess;
-import jogamp.opengl.Debug;
-import com.jogamp.opengl.util.glsl.ShaderCode;
-import com.jogamp.opengl.GLES2;
-import java.nio.ShortBuffer;
-import java.nio.ByteBuffer;
-import java.nio.Buffer;
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GLArrayData;
-import com.jogamp.opengl.fixedfunc.GLPointerFuncUtil;
-import com.jogamp.opengl.GLUniformData;
-import com.jogamp.opengl.GLException;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GL2ES2;
-import com.jogamp.opengl.util.glsl.fixedfunc.ShaderSelectionMode;
+import com.jogamp.common.util.IntIntHashMap;
+import com.jogamp.common.util.PropertyAccess;
+import com.jogamp.opengl.*;
+import com.jogamp.opengl.fixedfunc.GLPointerFuncUtil;
+import com.jogamp.opengl.util.PMVMatrix;
+import com.jogamp.opengl.util.glsl.ShaderCode;
 import com.jogamp.opengl.util.glsl.ShaderProgram;
 import com.jogamp.opengl.util.glsl.ShaderState;
-import com.jogamp.opengl.util.PMVMatrix;
-import java.nio.IntBuffer;
-import com.jogamp.common.util.IntIntHashMap;
-import java.nio.FloatBuffer;
-import com.jogamp.opengl.GLRunnable2;
+import com.jogamp.opengl.util.glsl.fixedfunc.ShaderSelectionMode;
+import jogamp.opengl.Debug;
+
+import java.nio.*;
 
 public class FixedFuncPipeline
 {

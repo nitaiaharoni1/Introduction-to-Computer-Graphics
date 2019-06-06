@@ -4,14 +4,15 @@
 
 package jogamp.opengl.macosx.cgl;
 
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLContext;
-import java.util.ArrayList;
 import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLDrawableFactory;
-import java.lang.ref.WeakReference;
-import java.util.List;
+import com.jogamp.opengl.GLException;
 import jogamp.opengl.GLDrawableImpl;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class MacOSXCGLDrawable extends GLDrawableImpl
 {

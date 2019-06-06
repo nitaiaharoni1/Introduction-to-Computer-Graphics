@@ -4,21 +4,14 @@
 
 package jogamp.opengl.x11.glx;
 
-import java.nio.IntBuffer;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import jogamp.nativewindow.WrappedSurface;
-import com.jogamp.opengl.GLCapabilitiesChooser;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.nativewindow.x11.X11GraphicsScreen;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GLException;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.nativewindow.NativeSurface;
+import com.jogamp.nativewindow.x11.X11GraphicsScreen;
+import com.jogamp.opengl.*;
+import jogamp.nativewindow.WrappedSurface;
 import jogamp.opengl.GLContextShareSet;
-import com.jogamp.opengl.GLContext;
-import jogamp.opengl.GLDrawableImpl;
+
+import java.nio.IntBuffer;
 
 public class X11ExternalGLXContext extends X11GLXContext
 {

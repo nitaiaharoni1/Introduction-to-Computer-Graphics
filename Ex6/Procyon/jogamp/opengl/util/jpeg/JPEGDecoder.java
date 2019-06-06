@@ -5,14 +5,15 @@
 package jogamp.opengl.util.jpeg;
 
 import com.jogamp.common.util.ArrayHashSet;
-import com.jogamp.common.util.VersionNumber;
-import jogamp.opengl.Debug;
-import com.jogamp.opengl.util.texture.TextureData;
-import java.util.ArrayList;
-import java.io.IOException;
-import java.util.Arrays;
-import java.io.InputStream;
 import com.jogamp.common.util.Bitstream;
+import com.jogamp.common.util.VersionNumber;
+import com.jogamp.opengl.util.texture.TextureData;
+import jogamp.opengl.Debug;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class JPEGDecoder
 {

@@ -5,20 +5,13 @@
 package jogamp.opengl.windows.wgl;
 
 import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.nativewindow.NativeSurface;
-import com.jogamp.nativewindow.AbstractGraphicsConfiguration;
-import jogamp.nativewindow.WrappedSurface;
-import com.jogamp.opengl.GLCapabilitiesImmutable;
-import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.nativewindow.DefaultGraphicsScreen;
+import com.jogamp.nativewindow.NativeSurface;
 import com.jogamp.nativewindow.NativeWindowFactory;
-import com.jogamp.opengl.GLException;
+import com.jogamp.opengl.*;
+import jogamp.nativewindow.WrappedSurface;
 import jogamp.nativewindow.windows.GDI;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.GLDrawableFactory;
 import jogamp.opengl.GLContextShareSet;
-import com.jogamp.opengl.GLContext;
-import jogamp.opengl.GLDrawableImpl;
 
 public class WindowsExternalWGLContext extends WindowsWGLContext
 {
